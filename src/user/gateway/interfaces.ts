@@ -2,7 +2,7 @@ import {
   IAggregatePaginationResponse,
   IGeneralRepositoryGateway,
   IPaginationQueryParams
-} from '../../common/repository/gateway/gateway.interfaces'
+} from '../../common/gateway/repository/gateway.interfaces'
 
 import {
   UserBase
