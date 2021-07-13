@@ -151,9 +151,8 @@ export const ErrorResponse = (res: Response, AppErrorMessage: any, httpStatusCod
         })
       } else {
         res.status(httpStatusCode).send({
-          errors: err
+          errors: err.message
         })
-        console.log('err: ', err)
         // res.status(httpStatusCode).send({
         //   errors: [err.location ? err : new AppError({param: 'SYSTEM', value: '', msg: new AppError(AppErrorMessage, err.message), location: 'param'})]
         // })

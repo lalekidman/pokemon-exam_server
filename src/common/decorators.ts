@@ -8,6 +8,18 @@ export const IsString = () => {
     console.log("first(): called");
   };
 }
+export const IsBoolean = () => {
+  console.log("IsBoolean(): factory evaluated");
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log("IsBoolean(): called");
+  };
+}
+export const IsNumber = () => {
+  console.log("IsNumber(): factory evaluated");
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log("IsNumber(): num");
+  };
+}
 // export const Number = () => {
 //   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
 

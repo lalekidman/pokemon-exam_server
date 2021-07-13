@@ -17,7 +17,8 @@ export class App {
     if (process.env.PORT) {
       this.port = parseInt(process.env.PORT as string, 2)
     }
-    this.DBURI = `${process.env.DB_PREFIX}://${process.env.DB_HOST}/sample_db?authSource=${process.env.DB_AUTH_SOURCE}`
+    this.DBURI = `mongodb://localhost:28017/sample_db`
+    // this.DBURI = `${process.env.DB_PREFIX}://${process.env.DB_HOST}/sample_db?authSource=${process.env.DB_AUTH_SOURCE}`
     this.connectDatabase()
     this.loadMiddlewares()
     this.exposeRoutes()
@@ -46,10 +47,11 @@ export class App {
    * connect to the repository/database
    */
   private connectDatabase() {
+    console.log('this.DBURI :>> ', this.DBURI);
     mongoose
       .connect(this.DBURI, {
-        user: process.env.DB_USER,
-        pass: process.env.DB_PWD,
+        // user: process.env.DB_USER,
+        // pass: process.env.DB_PWD,
         useNewUrlParser: true,
       })
       .then(() => {
