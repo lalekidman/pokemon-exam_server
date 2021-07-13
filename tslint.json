@@ -11,7 +11,8 @@
       "forin": false,
       "jsdoc-format": false,
       "no-unused-expression": true,
-      "no-trailing-whitespace": false
+      "no-trailing-whitespace": false,
+      "only-arrow-functions": false
   },
   "rulesDirectory": []
 }

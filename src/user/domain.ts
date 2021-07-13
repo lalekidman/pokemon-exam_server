@@ -1,3 +1,4 @@
+import { Length, IsString, IsBoolean, IsNumber } from "../common/decorators";
 import {
   IGeneralEntityDependencies
 } from "../common/interfaces";
@@ -7,47 +8,47 @@ import {
 
 export const UserDomain = ({
   generateId
-}: IGeneralEntityDependencies) => (
+}: IGeneralEntityDependencies) => {
   class UserEntity implements UserBase {
     readonly _id: string;
-
+  
     private _firstName: string = '';
     private _lastName: string = '';
-
+  
     private _suspended: boolean = false;
     private _suspendedAt: number = 0;
-
+  
     readonly createdAt: number = Date.now();
     readonly updatedAt: number = Date.now();
-
+  
     constructor(data: Partial < UserBase > ) {
       const {
         _id = generateId(),
-
+  
         firstName = this.firstName,
         lastName = this.lastName,
-
+  
         suspended = this.suspended,
         suspendedAt = this.suspendedAt,
-
+  
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
       } = data
-
+  
       this._id = _id
-
+  
       this.firstName = firstName
       this.lastName = lastName
-
+  
       this.suspended = suspended
       this.suspendedAt = suspendedAt
-
-
+  
+  
       this.createdAt = createdAt
       this.updatedAt = updatedAt
     }
-
-
+  
+  
     /**
      * Getter firstName
      * @return {string }
@@ -55,7 +56,20 @@ export const UserDomain = ({
     public get firstName(): string {
       return this._firstName;
     }
-
+  
+    /**
+     * Setter firstName
+     * @param {string } value
+     */
+    @Length({
+      max: 32,
+      min: 2
+    })
+    @IsString()
+    public set firstName(value: string) {
+      this._firstName = value;
+    }
+  
     /**
      * Getter lastName
      * @return {string }
@@ -63,7 +77,20 @@ export const UserDomain = ({
     public get lastName(): string {
       return this._lastName;
     }
-
+    
+    /**
+     * Setter lastName
+     * @param {string } value
+     */
+    @Length({
+      max: 32,
+      min: 2
+    })
+    @IsString()
+    public set lastName(value: string) {
+      this._lastName = value;
+    }
+  
     /**
      * Getter suspended
      * @return {boolean }
@@ -71,39 +98,25 @@ export const UserDomain = ({
     public get suspended(): boolean {
       return this._suspended;
     }
-
-    /**
-     * Getter suspendedAt
-     * @return {number }
-     */
-    public get suspendedAt(): number {
-      return this._suspendedAt;
-    }
-
-    /**
-     * Setter firstName
-     * @param {string } value
-     */
-    public set firstName(value: string) {
-      this._firstName = value;
-    }
-
-    /**
-     * Setter lastName
-     * @param {string } value
-     */
-    public set lastName(value: string) {
-      this._lastName = value;
-    }
-
+  
     /**
      * Setter suspended
      * @param {boolean } value
      */
+    @IsBoolean()
     public set suspended(value: boolean) {
       this._suspended = value;
     }
-
+  
+    /**
+     * Getter suspendedAt
+     * @return {number }
+     */
+    @IsNumber()
+    public get suspendedAt(): number {
+      return this._suspendedAt;
+    }
+  
     /**
      * Setter suspendedAt
      * @param {number } value
@@ -111,6 +124,6 @@ export const UserDomain = ({
     public set suspendedAt(value: number) {
       this._suspendedAt = value;
     }
-
   }
-)
+  return UserEntity
+}

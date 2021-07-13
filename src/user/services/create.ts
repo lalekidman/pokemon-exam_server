@@ -12,6 +12,7 @@ import {
 import {
   UserEntity
 } from '../index'
+import { Length } from '../../common/decorators'
 
 interface IServiceDependencies extends IGeneralServiceDependencies<IUserRepositoryGateway> {
 }
