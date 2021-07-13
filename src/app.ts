@@ -17,7 +17,7 @@ export class App {
     if (process.env.PORT) {
       this.port = parseInt(process.env.PORT as string, 2)
     }
-    this.DBURI = `${process.env.DB_PREFIX}://${process.env.DB_HOST}/kyoodb_partner?authSource=${process.env.DB_AUTH_SOURCE}`
+    this.DBURI = `${process.env.DB_PREFIX}://${process.env.DB_HOST}/sample_db?authSource=${process.env.DB_AUTH_SOURCE}`
     this.connectDatabase()
     this.loadMiddlewares()
     this.exposeRoutes()
