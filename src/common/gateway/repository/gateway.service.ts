@@ -19,36 +19,33 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
     this.collectionModel = DB
   }
   /**
-   * find all data
-   * @param queryParams
+   * get list
+   * @param query 
+   * @param queryParams 
    */
-  public async findAll(
+  public async list (
     query?: Record<keyof K, any>,
     queryParams: IPaginationQueryParams<K> = {}
   ) {
-    try {
-      const { limit = 10, offset = 0, sort = ''} = queryParams
-      
-      const coll = this.collectionModel.find(query as any)
-      if (sort) {
-        const sortOption = sort.split(':')
-        if (sortOption.length >= 1) {
-          coll.sort({
-            [sortOption[0]]: sortOption[1] === 'asc' ? 1 : -1
-          })
-        }
-      }
-      if (offset >= 0) {
-        coll.skip(offset)
-      }
-      if (limit >= 1) {
-        coll.limit(limit)
-      }
-      const documents = await coll.exec()
-      return documents
-    } catch (error) {
-      throw error
-    }
+    const { limit = 10, offset = 0, sort = '', search = '', searchFields = [], fields = null} = queryParams
+    const matches = searchFields.map((field) => ({[field]: {
+      $regex: new RegExp(search, 'gi')
+    }}))
+    const sortField = sort.split(':')
+    const projections = fields ? fields.split(':').map((f) => ({[f]: 1})) : null
+    const documentQuery = this.collectionModel.find({
+      $and: [
+        query,
+        matches
+      ]
+    } as any,
+    projections,
+    {
+      limit,
+      skip: offset,
+      sort: sortField.length >= 2 ? {[sortField[0]]: sortField[1]} : {createdAt: 1}
+    })
+    return documentQuery
   }
   /**
    * by data by id

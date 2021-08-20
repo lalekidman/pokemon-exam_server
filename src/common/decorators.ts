@@ -1,53 +1,74 @@
-interface ILengthArgs {
+interface IisStringOptions {
+  required?: boolean,
+  maxLength?: number
+  minLength?: number
+}
+interface IisNumericOptions {
+  required?: boolean,
   max?: number
   min?: number
 }
-export const IsString = () => {
-  console.log("first(): factory evaluated");
+export const IsString = (options?: IisStringOptions) => {
+  const {
+    maxLength = -1,
+    minLength = -1,
+    required = false
+  } = options ?? {}
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log("first(): called");
+    const setter = function (declaredValue: any) {
+      if (!(typeof declaredValue === 'string')) {
+        throw new Error(`"${propertyKey}" must be string. found ${typeof declaredValue}.`)
+      }
+      if (required && !declaredValue) {
+        throw new Error(`"${propertyKey}" must is a required field.`)
+      }
+      if (maxLength >= 0 && declaredValue.length > maxLength) {
+        throw new Error(`"${propertyKey}" exceed the maximum character limit which is ${maxLength}.`)
+      }
+      if (minLength >= 0 && declaredValue.length < minLength) {
+        throw new Error(`"${propertyKey}" exceed the minimum character limit which is ${minLength}.`)
+      }
+    }
+    Object.defineProperty(target, propertyKey, {
+      ...descriptor,
+      set: setter,
+    })
   };
 }
 export const IsBoolean = () => {
-  console.log("IsBoolean(): factory evaluated");
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log("IsBoolean(): called");
-  };
-}
-export const IsNumber = () => {
-  console.log("IsNumber(): factory evaluated");
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log("IsNumber(): num");
-  };
-}
-// export const Number = () => {
-//   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-
-//     console.log("first(): called");
-//   };
-// }
-
-export const Length = (args?: ILengthArgs) => {
-  const {
-    max,
-    min = 0,
-  } = args || {}
-  
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    const original = descriptor.get
-    console.log('target :>> ', target);
-    console.log('propertyKey :>> ', propertyKey);
-    descriptor.get = function () {
-      const result = original?.apply(this)
-      if (max && max > result) {
-        throw new Error('Exceed the allow maximum characters.')
+    const setter = function (declaredValue: any) {
+      if (!(typeof declaredValue === 'boolean')) {
+        throw new Error(`"${propertyKey}" must be boolean. found ${typeof declaredValue}.`)
       }
-      if (min >= 0 && min > result) {
-        throw new Error('Exceed the allow maximum characters.')
-      }
-      console.log('result :>> ', result);
-      return result
     }
-    return descriptor
+    Object.defineProperty(target, propertyKey, {
+      ...descriptor,
+      set: setter,
+    })
+  };
+}
+export const IsNumeric = (options: IisNumericOptions) => {
+  const {
+    min = -1,
+    max = -1,
+    required = false
+  } = options ?? {}
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const setter = function (declaredValue: any) {
+      if (!(typeof declaredValue === 'number')) {
+        throw new Error(`"${propertyKey}" must be number. found ${typeof declaredValue}.`)
+      }
+      if (max >= 0 && declaredValue < max) {
+        throw new Error(`"${propertyKey}" must be less than ${max}.`)
+      }
+      if (min >= 0 && declaredValue < min) {
+        throw new Error(`"${propertyKey}" must be greather than ${min}.`)
+      }
+    }
+    Object.defineProperty(target, propertyKey, {
+      ...descriptor,
+      set: setter,
+    })
   };
 }

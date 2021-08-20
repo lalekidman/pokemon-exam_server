@@ -11,7 +11,7 @@ export interface IPaginationQueryParams<T> {
   limit?: number
   offset?: number
   sort?: string
-  fields?: string
+  fields?: string|null
   search?: string
   searchFields?: (keyof T)[]
 }
@@ -20,10 +20,9 @@ type IRepositoryGatewayData<T> = Omit<Partial<T>, '_id' | 'id' | 'createdAt'>
 type IRespositoryGatewayQuery<T> = Partial<Record<keyof T, any>>
 export interface IGeneralRepositoryGateway<T> {
   findByProperty(query: IRespositoryGatewayQuery<T>): Promise<T>
-  findAll(
-    queryParams?: IRespositoryGatewayQuery<T>,
+  list(
+    query?: IRespositoryGatewayQuery<T>,
     paginationQuery?: IPaginationQueryParams<T>,
-    project?: Partial<Record<keyof T, 1 | 0>>
   ): Promise<T[]>
   insertOne(data: T): Promise<T>
   insertMany(data: T[]): Promise<T[]>
