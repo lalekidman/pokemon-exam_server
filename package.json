@@ -58,7 +58,6 @@
     "jest-extended": "^0.11.5",
     "ts-jest": "^27.0.4",
     "ts-loader": "^9.2.5",
-    "ts-node": "^10.2.0",
-  },
-  "description": ""
+    "ts-node": "^10.2.0"
+  }
 }

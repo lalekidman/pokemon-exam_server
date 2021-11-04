@@ -7,13 +7,11 @@ import {
 
 import {
   IGeneralServiceDependencies,
-} from '../../common/interfaces'
+} from '../../../common/interfaces'
 
 import {
   UserEntity
 } from '../index'
-import { Length } from '../../common/decorators'
-
 interface IServiceDependencies extends IGeneralServiceDependencies<IUserRepositoryGateway> {
 }
 export class UserCreateService {
@@ -29,7 +27,6 @@ export class UserCreateService {
   ) {
 
     const userEntity = new UserEntity(data)
-
     const user = await this.deps.repositoryGateway.insertOne({
       _id: userEntity._id,
       firstName: userEntity.firstName,

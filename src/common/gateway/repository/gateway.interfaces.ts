@@ -1,4 +1,5 @@
 // interfaces for
+import {Model} from 'mongoose'
 export interface IAggregatePagination<T> {
   data: T[]
   pages: number
@@ -17,7 +18,7 @@ export interface IPaginationQueryParams<T> {
 }
 type IRepositoryGatewayData<T> = Omit<Partial<T>, '_id' | 'id' | 'createdAt'>
 
-type IRespositoryGatewayQuery<T> = Partial<Record<keyof T, any>>
+type IRespositoryGatewayQuery<T> = Parameters<Model<T>['find']>[0]
 export interface IGeneralRepositoryGateway<T> {
   findByProperty(query: IRespositoryGatewayQuery<T>): Promise<T>
   list(
@@ -28,7 +29,7 @@ export interface IGeneralRepositoryGateway<T> {
   insertMany(data: T[]): Promise<T[]>
   findById(id: string): Promise<T|null>
   findOne(
-    query: Partial<T>,
+    query: Parameters<Model<T>['findOne']>[0],
     projection?: Partial<Record<keyof T, 1 | 0>>
   ): Promise<T>
   updateById(id: string, data: IRepositoryGatewayData<T>): Promise<T|null>
@@ -41,9 +42,10 @@ export interface IGeneralRepositoryGateway<T> {
   //   data: IRepositoryGatewayData<T>
   // ): Promise<T[]>
   removeById(id: string): Promise<T|null>
-  removeOne(query: Partial<T>): Promise<T|null>
-  remove(query: Partial<T>): Promise<boolean|null>
-  count(query: Partial<T>): Promise<number>
+  removeOne(query: IRespositoryGatewayQuery<T>): Promise<T|null>
+  remove(query: Parameters<Model<T>['find']>[0]): Promise<boolean|null>
+  count(query: IRespositoryGatewayQuery<T>): Promise<number>
+  aggregate(pipeline: Parameters<Model<T>['aggregate']>[0]): Promise<any[]>
 }
 export interface IGeneralPaginationListGateway<T> {
   paginationList(

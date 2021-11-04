@@ -1,6 +1,6 @@
 import {
   IGeneralEntityProperties
-} from '../common/interfaces'
+} from '../../common/interfaces'
 
 export interface UserBaseInput {
   firstName: string

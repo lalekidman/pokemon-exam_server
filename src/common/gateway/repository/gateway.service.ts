@@ -24,27 +24,52 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
    * @param queryParams 
    */
   public async list (
-    query?: Record<keyof K, any>,
+    query?: Parameters<Model<T>['find']>[0],
     queryParams: IPaginationQueryParams<K> = {}
   ) {
-    const { limit = 10, offset = 0, sort = '', search = '', searchFields = [], fields = null} = queryParams
+    const {
+      limit = 10,
+      offset = 0,
+      sort = 'createdAt:asc',
+      search = '',
+      searchFields = [],
+      fields = null
+    } = queryParams
+
+    const queryOptions = {} as any
+    if (limit >= 1) {
+      queryOptions.limit = +limit
+    }
+    if (offset >= 0) {
+      queryOptions.offset = +offset
+    }
     const matches = searchFields.map((field) => ({[field]: {
       $regex: new RegExp(search, 'gi')
     }}))
-    const sortField = sort.split(':')
-    const projections = fields ? fields.split(':').map((f) => ({[f]: 1})) : null
+    
+    queryOptions.sort = sort.split(',').reduce((sortFields: any, field) => {
+      const sortValue = field.split(':')
+      return {
+        ...sortFields,
+        [sortValue[0]]: sortValue[1] === 'asc' ? 1 : -1
+      }
+    }, {})
+    
+    const projections = fields ? fields.split(',').reduce((fields: any, fieldName) => ({
+      ...fields,
+      [fieldName]: 1
+    }), {}) : null
     const documentQuery = this.collectionModel.find({
       $and: [
         query,
-        matches
+        {
+          $or: matches
+        }
       ]
     } as any,
-    projections,
-    {
-      limit,
-      skip: offset,
-      sort: sortField.length >= 2 ? {[sortField[0]]: sortField[1]} : {createdAt: 1}
-    })
+      projections,
+      queryOptions
+    )
     return documentQuery
   }
   /**
@@ -169,7 +194,7 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
    * @param data
    */
   public async updateOne(
-    query: Partial<Record<keyof K, any>>,
+    query: Parameters<Model<T>['find']>[0],
     data: Partial<K>
   ): Promise<K|null>{
     try {
@@ -193,7 +218,8 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
     }
     return document
   }
-  public removeOne(query: Record<keyof K, any>) {
+  public removeOne(query: Parameters<Model<T>['find']>[0],
+) {
     return this.collectionModel.findOne(query as any).then(document => {
       if (document) {
         document.remove()
@@ -202,11 +228,12 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
     })
   }
 
-  public async remove(query: Record<keyof K, any>) {
+  public async remove(query: Parameters<Model<T>['find']>[0]) {
     await this.collectionModel.remove(query as any)
     return true
   }
-  public count(query: Record<keyof K, any>) {
+
+  public count(query: Parameters<Model<T>['find']>[0]) {
     return this.collectionModel
       .find(query as any)
       .countDocuments()
@@ -235,14 +262,24 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
     } = queryParams || {}
     limit = +limit
     offset = +offset
-    let sortTo = { createdAt: -1 } as any
+
+    // let sortTo = { createdAt: -1 } as any
+    let sortTo: any = {}
     if (sort) {
-      const sortOption = sort.split(':')
-      if (sortOption.length >= 1) {
-        sortTo = {
-          [sortOption[0]]: sortOption[1] === 'asc' ? 1 : -1
-        }
+      // proposal multiple sorting fields formating process
+      const sortArrayOptions = sort.split(',');
+      for (let i = 0; i < sortArrayOptions.length; i++) {
+        let sortOption = sortArrayOptions[i].split(':');
+        sortTo[sortOption[0]] = sortOption[1] === 'asc' ? 1 : -1;
       }
+
+      // const sortOption = sort.split(':')
+      // if (sortOption.length >= 1) {
+      //   sortTo = {
+      //     [sortOption[0]]: sortOption[1] === 'asc' ? 1 : -1
+      //   }
+      // }
+
       // sortTo = Array.isArray(sortBy)
       //   ? sortBy.reduce((obj, s) => {
       //       obj[s.fieldName] = parseInt(s.status)
@@ -330,5 +367,20 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
         }
         return paginationResponse
       })
+  }
+  /**
+   * 
+   * @param pipeline 
+   * @param paginationQuery 
+   */
+  public aggregate (
+    pipeline: any[],
+    paginationQuery?: Partial<IPaginationQueryParams<K>>
+  ): Promise<any[]> {
+    const {
+      limit = 0,
+      offset = 0
+    } = paginationQuery || {}
+    return this.collectionModel.aggregate(pipeline as any).exec()
   }
 }
