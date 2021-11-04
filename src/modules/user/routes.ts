@@ -1,5 +1,8 @@
 import {Router} from 'express'
-import {requestParamsValidatorMiddleware, formValidatorMiddleware } from '../common/helper';
+import {
+  requestParamsValidatorMiddleware,
+  formValidatorMiddleware
+} from '../../common/helper';
 import {
   UserValidation
 } from './middlewares/validators/input'

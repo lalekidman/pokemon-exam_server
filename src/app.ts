@@ -6,7 +6,7 @@ import compressor from 'compression'
 import helmet from 'helmet'
 import cors from 'cors'
 
-import UserRoute from './user/routes'
+import UserRoute from './modules/user/routes'
 export class App {
   public app: any
   public io: any

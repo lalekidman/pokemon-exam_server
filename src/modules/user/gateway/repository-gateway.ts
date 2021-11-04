@@ -1,4 +1,4 @@
-import GeneralGatewayService from "../../common/gateway/repository/gateway.service";
+import GeneralGatewayService from "../../../common/gateway/repository/gateway.service";
 import {
   IUserCollectionModel,
   UserCollectionModel

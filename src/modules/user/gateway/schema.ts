@@ -44,4 +44,4 @@ const CollectionModelSchemaObject:Record<keyof UserBase, SchemaTypeOpts<any>> = 
   }
 }
 const CollectionModelSchema = new Schema(CollectionModelSchemaObject)
-export const UserCollectionModel = model(USER_COLLECTION_NAME, CollectionModelSchema)
+export const UserCollectionModel = model<IUserCollectionModel>(USER_COLLECTION_NAME, CollectionModelSchema)

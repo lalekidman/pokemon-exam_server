@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
-import { ErrorResponse } from '../common/helper';
+import { ErrorResponse } from '../../common/helper';
 import * as EC from './error-codes'
 import {
   userCreateService,

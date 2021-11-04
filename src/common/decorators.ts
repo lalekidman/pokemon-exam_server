@@ -1,3 +1,7 @@
+interface ILengthArgs {
+  max?: number
+  min?: number
+}
 interface IisStringOptions {
   required?: boolean,
   maxLength?: number
@@ -48,7 +52,7 @@ export const IsBoolean = () => {
     })
   };
 }
-export const IsNumeric = (options: IisNumericOptions) => {
+export const IsNumeric = (options?: IisNumericOptions) => {
   const {
     min = -1,
     max = -1,

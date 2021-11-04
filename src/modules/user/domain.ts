@@ -1,7 +1,7 @@
-import { Length, IsString, IsBoolean, IsNumber } from "../common/decorators";
+import { IsString, IsBoolean, IsNumeric } from "../../common/decorators";
 import {
   IGeneralEntityDependencies
-} from "../common/interfaces";
+} from "../../common/interfaces";
 import {
   UserBase
 } from './interfaces'
@@ -61,11 +61,10 @@ export const UserDomain = ({
      * Setter firstName
      * @param {string } value
      */
-    @Length({
-      max: 32,
-      min: 2
+    @IsString({
+      maxLength: 32,
+      minLength: 2
     })
-    @IsString()
     public set firstName(value: string) {
       this._firstName = value;
     }
@@ -82,9 +81,9 @@ export const UserDomain = ({
      * Setter lastName
      * @param {string } value
      */
-    @Length({
-      max: 32,
-      min: 2
+    @IsString({
+      maxLength: 32,
+      minLength: 2
     })
     @IsString()
     public set lastName(value: string) {
@@ -112,7 +111,7 @@ export const UserDomain = ({
      * Getter suspendedAt
      * @return {number }
      */
-    @IsNumber()
+    @IsNumeric()
     public get suspendedAt(): number {
       return this._suspendedAt;
     }
