@@ -13,9 +13,18 @@
     "forceConsistentCasingInFileNames": true        /* Disallow inconsistently-cased references to the same file. */,
     "baseUrl": "./",
     "paths": {
-      "@common/*": [
+      "@app/common/*": [
         "./src/common/*"
-      ]
+      ],
+      "@app/modules/*": [
+        "./src/modules/*"
+      ],
+      "@app/routes/*": [
+        "./src/routes/*"
+      ],
+      "@app/controllers/*": [
+        "./src/controllers/*"
+      ],
     }
   },
   "include": [
