@@ -20,7 +20,6 @@ type IRepositoryGatewayData<T> = Omit<Partial<T>, '_id' | 'id' | 'createdAt'>
 
 type IRespositoryGatewayQuery<T> = Parameters<Model<T>['find']>[0]
 export interface IGeneralRepositoryGateway<T> {
-  findByProperty(query: IRespositoryGatewayQuery<T>): Promise<T>
   list(
     query?: IRespositoryGatewayQuery<T>,
     paginationQuery?: IPaginationQueryParams<T>,
@@ -32,15 +31,13 @@ export interface IGeneralRepositoryGateway<T> {
     query: Parameters<Model<T>['findOne']>[0],
     projection?: Partial<Record<keyof T, 1 | 0>>
   ): Promise<T>
+  
   updateById(id: string, data: IRepositoryGatewayData<T>): Promise<T|null>
   updateOne(
     query: IRespositoryGatewayQuery<T>,
     data: IRepositoryGatewayData<T>
   ): Promise<T|null>
-  // updateMany(
-  //   query: IRespositoryGatewayQuery<T>,
-  //   data: IRepositoryGatewayData<T>
-  // ): Promise<T[]>
+
   removeById(id: string): Promise<T|null>
   removeOne(query: IRespositoryGatewayQuery<T>): Promise<T|null>
   remove(query: Parameters<Model<T>['find']>[0]): Promise<boolean|null>

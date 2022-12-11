@@ -1,15 +1,15 @@
-import { IsString, IsBoolean, IsNumeric } from "../../common/decorators";
+import { IsString, IsBoolean, IsNumeric } from "@common/decorators";
 import {
   IGeneralEntityDependencies
-} from "../../common/interfaces";
+} from "@common/interfaces";
 import {
-  UserBase
+  IUserEntity
 } from './interfaces'
 
-export const UserDomain = ({
+export const makeUserEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
-  class UserEntity implements UserBase {
+  class UserEntity implements IUserEntity {
     readonly _id: string;
   
     private _firstName: string = '';
@@ -21,7 +21,7 @@ export const UserDomain = ({
     readonly createdAt: number = Date.now();
     readonly updatedAt: number = Date.now();
   
-    constructor(data: Partial < UserBase > ) {
+    constructor(data: Partial < IUserEntity > ) {
       const {
         _id = generateId(),
   

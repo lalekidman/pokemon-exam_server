@@ -1,14 +1,13 @@
 import {
   IGeneralRepositoryGateway,
-  IPaginationQueryParams
-} from '../../../common/gateway/repository/gateway.interfaces'
+  // IPaginationQueryParams
+} from '@common/gateway/repository/gateway.interfaces'
 
 import {
-  UserBase
-} from '../interfaces'
+  IUserEntity
+} from '../entity/interfaces'
 
-export interface IUserPaginationQuery extends IPaginationQueryParams<UserBase> {
-}
-export interface IUserRepositoryGateway extends IGeneralRepositoryGateway < UserBase > {
-  // paginationList(filterQuery: IUserPaginationQuery): Promise < IAggregatePaginationResponse < UserBase >>
+// export interface IUserPaginationQuery extends IPaginationQueryParams<IUserEntity> {
+// }
+export interface IUserRepositoryGateway extends IGeneralRepositoryGateway < IUserEntity > {
 }

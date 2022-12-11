@@ -1,4 +1,4 @@
-import GeneralGatewayService from "../../../common/gateway/repository/gateway.service";
+import GeneralGatewayService from "@common/gateway/repository/gateway.service";
 import {
   IUserCollectionModel,
   UserCollectionModel
@@ -8,25 +8,12 @@ import {
 } from './interfaces'
 
 import {
-  UserBase,
-} from '../interfaces'
+  IUserEntity
+} from '../entity/interfaces'
 // import { IAggregatePaginationResponse } from "../../common/repository/gateway/gateway.interfaces";
 
-export class UserRepositoryGateway extends GeneralGatewayService<IUserCollectionModel, UserBase> implements IUserRepositoryGateway {
+export class UserRepositoryGateway extends GeneralGatewayService<IUserCollectionModel, IUserEntity> implements IUserRepositoryGateway {
   constructor () {
     super(UserCollectionModel)
   }
-
-  // /**
-  //  * 
-  //  * @param filterQuery 
-  //  */
-  // paginationList(filterQuery: IIndustryPaginationQuery): Promise<IAggregatePaginationResponse<IndustryBase>> {
-  //   return this.aggregateWithPagination([
-  //     {
-  //       $match: {}
-  //     },
-  //   ]
-  //   ,filterQuery)
-  // }
 }

@@ -1,28 +1,30 @@
 import {
-  UserBaseInput
-} from '../interfaces'
+  IGeneralUsecaseDependencies,
+} from '@common/interfaces'
+
+import {
+  IUserBaseInput
+} from '../entity/interfaces'
 import {
   IUserRepositoryGateway
 } from '../gateway/interfaces'
 
-import {
-  IGeneralServiceDependencies,
-} from '../../../common/interfaces'
 
 import {
   UserEntity
-} from '../index'
-interface IServiceDependencies extends IGeneralServiceDependencies<IUserRepositoryGateway> {
+} from '../entity'
+// modules or services?
+interface IUsecaseDependencies extends IGeneralUsecaseDependencies<IUserRepositoryGateway> {
 }
-export class UserCreateService {
-  constructor(private readonly deps: IServiceDependencies) {}
+export class UserCreateUsecase {
+  constructor(private readonly deps: IUsecaseDependencies) {}
   /**
    *
    * @param data
    * @param authorId user who did the request.
    */
   public async execute(
-    data: UserBaseInput,
+    data: IUserBaseInput,
     // authorId: string
   ) {
 

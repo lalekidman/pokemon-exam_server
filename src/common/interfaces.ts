@@ -32,7 +32,7 @@ export interface IGeneralEntityProperties {
 export interface IGeneralEntityDependencies {
   generateId: () => string
 }
-export interface IGeneralServiceDependencies<T> {
+export interface IGeneralUsecaseDependencies<T> {
   repositoryGateway: T
 }
 export interface RequestToken extends Request {

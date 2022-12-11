@@ -98,30 +98,6 @@ export default abstract class GeneralGatewayService<T extends Document, K> {
   }
 
   /**
-   * @param search ex: { branchId: value, name: value }
-   */
-  public async findByProperty(search: Partial<Record<keyof K, any>>) {
-    const query = {} as any
-
-    for (const key in search) {
-      if (key === 'branchId') {
-        query[key] = search[key]
-      } else {
-        query[key] = { $regex: new RegExp(search[key], 'gi') }
-      }
-    }
-
-    try {
-      const document = await this.collectionModel.findOne(query)
-      if (!document) {
-        throw new Error('No document found.')
-      }
-      return document
-    } catch (error) {
-      throw error
-    }
-  }
-  /**
    * insert data
    * @param data
    */
