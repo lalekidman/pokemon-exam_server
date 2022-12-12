@@ -7,7 +7,6 @@ export interface IAggregatePagination<T> {
 }
 export type IAggregatePaginationResponse<T> = IAggregatePagination<T>
 
-
 export interface IPaginationQueryParams<T> {
   limit?: number
   offset?: number

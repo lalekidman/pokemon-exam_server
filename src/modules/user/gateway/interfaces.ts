@@ -1,7 +1,7 @@
 import {
   IGeneralRepositoryGateway,
   // IPaginationQueryParams
-} from '@common/gateway/repository/gateway.interfaces'
+} from '@app/common/gateway/repository/gateway.interfaces'
 
 import {
   IUserEntity

@@ -6,14 +6,14 @@ import {
 } from 'mongoose'
 import { USER_COLLECTION_NAME } from '../constants'
 import {
-  UserBase
-} from '../interfaces'
+  IUserEntity
+} from '../entity/interfaces'
 
-export interface IUserCollectionModel extends UserBase, Document {
+export interface IUserCollectionModel extends IUserEntity, Document {
   _id: string
 }
 
-const CollectionModelSchemaObject:Record<keyof UserBase, SchemaTypeOpts<any>> = {
+const CollectionModelSchemaObject:Record<keyof IUserEntity, SchemaTypeOpts<any>> = {
   _id: {
     type: String,
     required: true,

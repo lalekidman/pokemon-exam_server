@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",                                /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ES2021', or 'ESNEXT'. */
+    "target": "es2017",                                /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ES2021', or 'ESNEXT'. */
     "module": "commonjs",                           /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     "outDir": "./dist",                              /* Redirect output structure to the directory. */
     "strict": true,                                 /* Enable all strict type-checking options. */
+    "lib": [
+      "es2019"
+    ],
     "esModuleInterop": true,                        /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "experimentalDecorators": true,              /* Enables experimental support for ES7 decorators. */
     "emitDecoratorMetadata": true,               /* Enables experimental support for emitting type metadata for decorators. */
@@ -16,12 +19,24 @@
       "@app/common/*": [
         "./src/common/*"
       ],
+      
+      "@app/configs": [
+        "./src/configs"
+      ],
+      "@app/configs/*": [
+        "./src/configs/*"
+      ],
       "@app/modules/*": [
         "./src/modules/*"
+      ],
+
+      "@app/routes": [
+        "./src/routes",
       ],
       "@app/routes/*": [
         "./src/routes/*"
       ],
+
       "@app/controllers/*": [
         "./src/controllers/*"
       ],
