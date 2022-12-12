@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import passport from 'passport'
 import HttpStatus from 'http-status'
 
-import { HttpErrorResponse, ErrorCodes } from '@app/common/http-error-response';
+import { HttpErrorResponse, ErrorCodes } from '@app/common/http-response';
 
 const JWTAuthBearerHandler = (req: Request, res: Response, next: NextFunction) => () => (error: any, data: any, errCode: any) {
   if (errCode) {

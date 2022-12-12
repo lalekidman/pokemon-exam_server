@@ -17,7 +17,7 @@ export default {
           reject(err)
           return
         }
-        console.log(`Connected to ${redisHost}.`);
+        console.log(`Connected to ${redisHost}.`);  ``
         resolve(redisClient)
       });
     }) as Promise<Redis>

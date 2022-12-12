@@ -131,32 +131,3 @@ export const generateQueryString = (queryString: string, queryData: any, fieldNa
   }
   return queryString
 }
-/**
- * custom error checker
- * @param res
- * @param AppErrorMessage
- * @param httpStatusCode
- *  - optional,
- */
-export const ErrorResponse = (res: Response, AppErrorMessage: any, httpStatusCode: number = HttpStatus.BAD_REQUEST) => {
-  return (err: any) => {
-    // check if the error is have a statusCode.
-    // ##DEVNOTE: it means the err is AppError
-    if (err.statusCode) {
-      res.status(httpStatusCode).send(err)
-    } else {
-      if (Array.isArray(err)) {
-        res.status(httpStatusCode).send({
-          errors: err
-        })
-      } else {
-        res.status(httpStatusCode).send({
-          errors: err.message
-        })
-        // res.status(httpStatusCode).send({
-        //   errors: [err.location ? err : new AppError({param: 'SYSTEM', value: '', msg: new AppError(AppErrorMessage, err.message), location: 'param'})]
-        // })
-      }
-    }
-  }
-}

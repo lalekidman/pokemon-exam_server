@@ -1,7 +1,6 @@
 import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
-import { ErrorResponse } from '../../common/helper';
-import * as EC from './error-codes'
+import {ErrorCodes} from '@app/common/http-response'
 import {
   userCreateService,
 } from './index'
@@ -23,7 +22,7 @@ export default class AppController {
           result: user
         })
       })
-      .catch(ErrorResponse(res, EC.CREATE_USER_DETAILS_FAILED))
+      .catch(ErrorResponse(res, ErrorCodes.CREATE_USER_DETAILS_FAILED))
   }
   public updateRoute = (req: Request, res: Response, next: NextFunction) => {
   }

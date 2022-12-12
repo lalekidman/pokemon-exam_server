@@ -6,8 +6,8 @@ import {
   UserCreateUsecase
 } from './usecases'
 
-export const userCreateService = () => (
-  new UserCreateService({
+export const userCreateUsecase = () => (
+  new UserCreateUsecase({
     repositoryGateway: new UserRepositoryGateway()
   })
 )
