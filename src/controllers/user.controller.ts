@@ -1,9 +1,9 @@
 import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
-import {ErrorCodes} from '@app/common/http-response'
+import {ErrorCodes, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
 import {
-  userCreateService,
-} from './index'
+  UserCreateUsecase
+} from '@app/domain/user/usecases'
 export default class AppController {
   
   public addRoute = (req: Request, res: Response, next: NextFunction) => {
@@ -11,18 +11,21 @@ export default class AppController {
       firstName = '',
       lastName = '',
     } = req.body
-    userCreateService()
+    new UserCreateUsecase()
       .execute({
         firstName,
         lastName
       })
       .then((user) => {
-        res.status(HttpStatus.CREATED).send({
-          success: true,
-          result: user
-        })
+        res.status(HttpStatus.CREATED).send(SuccessResponse(user))
       })
-      .catch(ErrorResponse(res, ErrorCodes.CREATE_USER_DETAILS_FAILED))
+      .catch((error) => {
+        // ## TODO ##
+        // - how could I support the error from the throw?
+        new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
+          .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
+          .throw()
+      })
   }
   public updateRoute = (req: Request, res: Response, next: NextFunction) => {
   }

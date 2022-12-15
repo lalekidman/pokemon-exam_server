@@ -4,7 +4,7 @@ import {
 
 import {
   IUserEntity
-} from '../user/entity'
+} from './entity'
 
 // export interface IUserPaginationQuery extends IPaginationQueryParams<IUserEntity> {
 // }

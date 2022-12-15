@@ -1,6 +1,7 @@
 import {
   IGeneralUsecaseDependencies,
 } from '@app/common/interfaces'
+
 import {
   IUserRepositoryGateway
 } from '../repository-gateway.interfaces'

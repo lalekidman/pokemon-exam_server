@@ -30,8 +30,13 @@
       "@app/configs/*": [
         "./configs/*"
       ],
-      "@app/modules/*": [
-        "./modules/*"
+      
+      "@app/domain": [
+        "./domain"
+      ],
+
+      "@app/domain/*": [
+        "./domain/*"
       ],
 
       "@app/routes": [
@@ -48,11 +53,11 @@
         "./controllers/*"
       ],
 
-      "@app/persistents/*": [
-        "./persistents/*"
+      "@app/persistent/*": [
+        "./persistent/*"
       ],
-      "@app/persistents": [
-        "./persistents"
+      "@app/persistent": [
+        "./persistent"
       ],
     }
   },

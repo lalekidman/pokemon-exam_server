@@ -8,7 +8,7 @@ import {
 
 import {
   IUserEntity
-} from '@app/modules/user'
+} from 'domain/user'
 
 export interface IUserCollectionModel extends IUserEntity, Document {
   _id: string

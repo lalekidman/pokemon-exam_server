@@ -4,7 +4,7 @@ import HttpStatus from 'http-status'
 
 import { HttpErrorResponse, ErrorCodes } from '@app/common/http-response';
 
-const JWTAuthBearerHandler = (req: Request, res: Response, next: NextFunction) => () => (error: any, data: any, errCode: any) {
+const JWTAuthBearerHandler = (req: Request, res: Response, next: NextFunction) => () => (error: any, data: any, errCode: any) => {
   if (errCode) {
     new HttpErrorResponse(res, HttpStatus.UNAUTHORIZED)
       .track(ErrorCodes.INVALID_ACCESS_TOKEN_FORMAT)
