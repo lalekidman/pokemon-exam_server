@@ -6,16 +6,15 @@ import { HttpErrorResponse, ErrorCodes } from '@app/common/http-response';
 
 const JWTAuthBearerHandler = (req: Request, res: Response, next: NextFunction) => () => (error: any, data: any, errCode: any) {
   if (errCode) {
-    res.status(HttpStatus.UNAUTHORIZED).send(new HttpErrorResponse(ErrorCodes.INVALID_ACCESS_TOKEN_FORMAT))
+    new HttpErrorResponse(res, HttpStatus.UNAUTHORIZED)
+      .track(ErrorCodes.INVALID_ACCESS_TOKEN_FORMAT)
+      .throw()
     return
   } else if (error) {
-    if (error.statusCode) {
-      res.status(HttpStatus.UNAUTHORIZED).send(error)
-      return
-    } else {
-      res.status(HttpStatus.UNAUTHORIZED).send(new HttpErrorResponse(ErrorCodes.ACCESS_TOKEN_EXPIRED))
-      return
-    }
+    new HttpErrorResponse(res, HttpStatus.UNAUTHORIZED)
+      .track(ErrorCodes.ACCESS_TOKEN_EXPIRED)
+      .throw()
+    return
   } else {
     req.user = data
     next()

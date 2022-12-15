@@ -1,6 +1,5 @@
 import {Router} from 'express'
 import UserController from '@app/controllers/user.controller'
-// const multiPartMiddleWare = require('connect-multiparty')()
 export class UserRoute {
   /**
    * expose the routes

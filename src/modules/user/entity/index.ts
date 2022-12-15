@@ -6,3 +6,5 @@ import {
 export const UserEntity = makeUserEntity({
   generateId: uuid
 })
+
+export * from './interfaces'

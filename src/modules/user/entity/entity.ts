@@ -1,7 +1,7 @@
-import { IsString, IsBoolean, IsNumeric } from "@common/decorators";
+import { IsString, IsBoolean, IsNumeric } from "@app/common/decorators";
 import {
   IGeneralEntityDependencies
-} from "@common/interfaces";
+} from "@app/common/interfaces";
 import {
   IUserEntity
 } from './interfaces'

@@ -1,13 +1,14 @@
+import { COLLECTION_NAMES } from '@app/common/constants'
 import {
   SchemaTypeOpts,
   Document,
   Schema,
   model
 } from 'mongoose'
-import { USER_COLLECTION_NAME } from '../constants'
+
 import {
   IUserEntity
-} from '../entity/interfaces'
+} from '@app/modules/user'
 
 export interface IUserCollectionModel extends IUserEntity, Document {
   _id: string
@@ -44,4 +45,4 @@ const CollectionModelSchemaObject:Record<keyof IUserEntity, SchemaTypeOpts<any>>
   }
 }
 const CollectionModelSchema = new Schema(CollectionModelSchemaObject)
-export const UserCollectionModel = model<IUserCollectionModel>(USER_COLLECTION_NAME, CollectionModelSchema)
+export const UserCollectionModel = model<IUserCollectionModel>(COLLECTION_NAMES.USERS, CollectionModelSchema)

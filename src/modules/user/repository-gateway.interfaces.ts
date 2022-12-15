@@ -1,11 +1,10 @@
 import {
   IGeneralRepositoryGateway,
-  // IPaginationQueryParams
-} from '@app/common/gateway/repository/gateway.interfaces'
+} from '@app/common/gateway/repository/repository-gateway.interfaces'
 
 import {
   IUserEntity
-} from '../entity/interfaces'
+} from '../user/entity'
 
 // export interface IUserPaginationQuery extends IPaginationQueryParams<IUserEntity> {
 // }

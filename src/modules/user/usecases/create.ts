@@ -1,23 +1,13 @@
-import {
-  IGeneralUsecaseDependencies,
-} from '@common/interfaces'
 
 import {
+  UserEntity,
   IUserBaseInput
-} from '../entity/interfaces'
-import {
-  IUserRepositoryGateway
-} from '../gateway/interfaces'
-
-
-import {
-  UserEntity
 } from '../entity'
-// modules or services?
-interface IUsecaseDependencies extends IGeneralUsecaseDependencies<IUserRepositoryGateway> {
-}
+
+import { IUserUsecaseDependencies } from './interfaces'
+
 export class UserCreateUsecase {
-  constructor(private readonly deps: IUsecaseDependencies) {}
+  constructor(private readonly deps: IUserUsecaseDependencies) {}
   /**
    *
    * @param data
