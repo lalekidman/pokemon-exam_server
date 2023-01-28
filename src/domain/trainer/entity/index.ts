@@ -1,9 +1,10 @@
 import {v4 as uuid} from 'uuid'
 import {
-  makeUserEntity
+  makeTrainerEntity
 } from './entity'
 
-export const UserEntity = makeUserEntity({
+export const TrainerEntity = makeTrainerEntity({
+  // could use another library.
   generateId: uuid
 })
 

@@ -3,13 +3,13 @@ import {
   IGeneralEntityDependencies
 } from "@app/common/interfaces";
 import {
-  IUserEntity
+  ITrainerEntity
 } from './interfaces'
 
-export const makeUserEntity = ({
+export const makeTrainerEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
-  class UserEntity implements IUserEntity {
+  class TrainerEntity implements ITrainerEntity {
     readonly _id: string;
   
     private _firstName: string = '';
@@ -21,7 +21,7 @@ export const makeUserEntity = ({
     readonly createdAt: number = Date.now();
     readonly updatedAt: number = Date.now();
   
-    constructor(data: Partial < IUserEntity > ) {
+    constructor(data: Partial < ITrainerEntity > ) {
       const {
         _id = generateId(),
   
@@ -124,5 +124,5 @@ export const makeUserEntity = ({
       this._suspendedAt = value;
     }
   }
-  return UserEntity
+  return TrainerEntity
 }

@@ -2,12 +2,12 @@ import {
   IGeneralEntityProperties
 } from '@app/common/interfaces'
 
-export interface IUserBaseInput {
+export interface ITrainerBase {
   firstName: string
   lastName: string
 }
 
-export interface IUserEntity extends IGeneralEntityProperties, IUserBaseInput {
+export interface ITrainerEntity extends IGeneralEntityProperties, ITrainerBase {
   suspended: boolean
   suspendedAt: number // milis
 }
