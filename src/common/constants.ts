@@ -12,5 +12,6 @@ export const SUSPEND_QUEUE_INPUT = {
 
 export const COLLECTION_NAMES = {
   TRAINER: 'trainer',
-  POKEMON: 'pokemon'
+  POKEMON: 'pokemon',
+  POKEMON_STATS: 'pokemon-stats',
 }
