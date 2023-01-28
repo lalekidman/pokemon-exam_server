@@ -7,14 +7,14 @@ import {
 } from 'mongoose'
 
 import {
-  IUserEntity
+  ITrainerEntity
 } from '@app/domain/trainer'
 
-export interface IUserCollectionModel extends IUserEntity, Document {
+export interface ITrainerCollectionModel extends ITrainerEntity, Document {
   _id: string
 }
 
-const CollectionModelSchemaObject:Record<keyof IUserEntity, SchemaTypeOpts<any>> = {
+const CollectionModelSchemaObject:Record<keyof ITrainerEntity, SchemaTypeOpts<any>> = {
   _id: {
     type: String,
     required: true,
@@ -44,5 +44,9 @@ const CollectionModelSchemaObject:Record<keyof IUserEntity, SchemaTypeOpts<any>>
     defaul: 0
   }
 }
-const CollectionModelSchema = new Schema(CollectionModelSchemaObject)
-export const UserCollectionModel = model<IUserCollectionModel>(COLLECTION_NAMES.USERS, CollectionModelSchema)
+const CollectionModelSchema = new Schema(CollectionModelSchemaObject, {
+  timestamps: {
+    currentTime: Date.now
+  }
+})
+export const TrainerCollectionModel = model<ITrainerCollectionModel>(COLLECTION_NAMES.USERS, CollectionModelSchema)

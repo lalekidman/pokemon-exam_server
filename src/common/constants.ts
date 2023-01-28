@@ -11,5 +11,5 @@ export const SUSPEND_QUEUE_INPUT = {
 }
 
 export const COLLECTION_NAMES = {
-  USERS: 'users'
+  USERS: 'trainer'
 }

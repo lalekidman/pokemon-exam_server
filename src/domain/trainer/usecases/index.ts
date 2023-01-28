@@ -1,13 +1,13 @@
 import {
-  UserRepositoryGateway
+  TrainerRepositoryGateway
 } from '@app/persistent/repository/user'
 
 import {
-  makeUserCreateUsecase
+  makeTrainerCreateUsecase
 } from './create'
 
-const repositoryGateway = new UserRepositoryGateway()
+const repositoryGateway = new TrainerRepositoryGateway()
 
-export const UserCreateUsecase = makeUserCreateUsecase({
+export const TrainerCreateUsecase = makeTrainerCreateUsecase({
   repositoryGateway
 })

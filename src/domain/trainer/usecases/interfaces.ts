@@ -3,8 +3,8 @@ import {
 } from '@app/common/interfaces'
 
 import {
-  IUserRepositoryGateway
+  ITrainerRepositoryGateway
 } from '../repository-gateway.interfaces'
 
-export interface IUserUsecaseDependencies extends IGeneralUsecaseDependencies<IUserRepositoryGateway> {
+export interface ITrainerUsecaseDependencies extends IGeneralUsecaseDependencies<ITrainerRepositoryGateway> {
 }

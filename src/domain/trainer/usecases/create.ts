@@ -1,42 +1,43 @@
 
 import {
-  UserEntity,
-  IUserBaseInput
+  ITrainerInput,
+  TrainerEntity
 } from '../entity'
 
-import { IUserUsecaseDependencies } from './interfaces'
+import {
+  ITrainerUsecaseDependencies
+} from './interfaces'
 
-export const makeUserCreateUsecase = (
+export const makeTrainerCreateUsecase = (
   {
     repositoryGateway
-  }: IUserUsecaseDependencies
+  }: ITrainerUsecaseDependencies
 ) => {
-  return class UserCreateUsecase {
+  return class TrainerCreateUsecase {
     constructor() {}
     /**
      *
      * @param data
-     * @param authorId user who did the request.
      */
     public async execute(
-      data: IUserBaseInput,
-      // authorId: string
+      dataInput: ITrainerInput,
     ) {
   
-      const userEntity = new UserEntity(data)
-      const user = await repositoryGateway.insertOne({
-        _id: userEntity._id,
-        firstName: userEntity.firstName,
-        lastName: userEntity.lastName,
+      const trainerEntity = new TrainerEntity(dataInput)
+
+      const trainer = await repositoryGateway.insertOne({
+        _id: trainerEntity._id,
+        firstName: trainerEntity.firstName,
+        lastName: trainerEntity.lastName,
         
-        suspended: userEntity.suspended,
-        suspendedAt: userEntity.suspendedAt,
+        suspended: trainerEntity.suspended,
+        suspendedAt: trainerEntity.suspendedAt,
   
-        createdAt: userEntity.createdAt,
-        updatedAt: userEntity.updatedAt,
+        createdAt: trainerEntity.createdAt,
+        updatedAt: trainerEntity.updatedAt,
       })
   
-      return user
+      return trainer
     }
   }
 }

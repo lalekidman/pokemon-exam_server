@@ -1,16 +1,16 @@
-import GeneralGatewayService from "@app/common/gateway/repository/repository-gateway.service"
+import GeneralGatewayService from "@app/common/gateway/repository/services/mongodb"
 import {
-  IUserCollectionModel,
-  UserCollectionModel
+  ITrainerCollectionModel,
+  TrainerCollectionModel
 } from './schema'
 
 import {
-  IUserEntity,
-  IUserRepositoryGateway
+  ITrainerEntity,
+  ITrainerRepositoryGateway
 } from '@app/domain/trainer'
 
-export class UserRepositoryGateway extends GeneralGatewayService<IUserCollectionModel, IUserEntity> implements IUserRepositoryGateway {
+export class TrainerRepositoryGateway extends GeneralGatewayService<ITrainerCollectionModel, ITrainerEntity> implements ITrainerRepositoryGateway {
   constructor () {
-    super(UserCollectionModel)
+    super(TrainerCollectionModel)
   }
 }
