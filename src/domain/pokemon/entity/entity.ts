@@ -14,6 +14,7 @@ export const makePokemonEntity = ({
   
     private _name: string = '';
     private _type: string = '';
+    private _pokemonStats: string = '';
   
     readonly createdAt: number = Date.now();
     readonly updatedAt: number = Date.now();
@@ -22,8 +23,9 @@ export const makePokemonEntity = ({
       const {
         _id = generateId(),
   
-        name = this.name,
-        type = this.type,
+        name = this._name,
+        type = this._type,
+        pokemonStats = this._pokemonStats,
 
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
@@ -33,6 +35,7 @@ export const makePokemonEntity = ({
   
       this.name = name
       this.type = type
+      this.pokemonStats = pokemonStats
   
       this.createdAt = createdAt
       this.updatedAt = updatedAt
@@ -79,6 +82,34 @@ export const makePokemonEntity = ({
     public set type(value: string) {
       // could add more validation here for the allowed types.
       this._type = value;
+    }
+
+
+    /**
+     * Getter pokemonStats
+     * @return {string }
+     */
+    public get pokemonStats(): string  {
+      return this._pokemonStats;
+    }
+
+      /**
+       * Setter pokemonStats
+       * @param {string } value
+       */
+    public set pokemonStats(value: string ) {
+      this._pokemonStats = value;
+    }
+
+    public toObject (): IPokemonEntity {
+      return {
+        _id: this._id,
+        name: this._name,
+        type: this._type,
+        pokemonStats: this._pokemonStats,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt
+      }
     }
   }
   return PokemonEntity
