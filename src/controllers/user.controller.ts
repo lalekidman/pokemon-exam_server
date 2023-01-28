@@ -3,7 +3,7 @@ import * as HttpStatus from 'http-status'
 import {ErrorCodes, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
 import {
   UserCreateUsecase
-} from '@app/domain/user/usecases'
+} from '@app/domain/trainer/usecases'
 export default class AppController {
   
   public addRoute = (req: Request, res: Response, next: NextFunction) => {

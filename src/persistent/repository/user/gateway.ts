@@ -7,7 +7,7 @@ import {
 import {
   IUserEntity,
   IUserRepositoryGateway
-} from '@app/domain/user'
+} from '@app/domain/trainer'
 
 export class UserRepositoryGateway extends GeneralGatewayService<IUserCollectionModel, IUserEntity> implements IUserRepositoryGateway {
   constructor () {

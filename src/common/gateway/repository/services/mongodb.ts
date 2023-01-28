@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid'
 import {
   IAggregatePagination,
   IPaginationQueryParams,
-} from './repository-gateway.interfaces'
+} from '../repository-gateway.interfaces'
 
-export default abstract class GeneralGatewayService<T extends Document, K> {
+export default abstract class MongoRepositoryGatewayService<T extends Document, K> {
   // db instance
   protected collectionModel: Model<T>
   /**
