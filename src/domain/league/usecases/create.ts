@@ -15,24 +15,27 @@ export const makeLeagueCreateUsecase = (
 ) => {
   return class LeagueCreateUsecase {
     constructor() {}
+    
     /**
-     *
-     * @param data
+     * to create a league
+     * @param trainer id of the trainer
+     * @param dataInput 
+     * @returns 
      */
     public async execute(
-      trainerId: string,
+      trainer: string,
       dataInput: ILeagueInput,
     ) {
   
-      const trainerEntity = new LeagueEntity({
+      const leagueEntity = new LeagueEntity({
         ...dataInput,
-        ownerId: trainerId,
-        authorId: trainerId
+        owner: trainer,
+        author: trainer
       })
 
-      const trainer = await repositoryGateway.insertOne(trainerEntity.toObject())
+      const league = await repositoryGateway.insertOne(leagueEntity.toObject())
   
-      return trainer
+      return league
     }
   }
 }

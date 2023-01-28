@@ -3,11 +3,11 @@ import {
 } from '@app/persistent/repository/trainer'
 
 import {
-  makeTrainerCreateUsecase
+  makeLeagueCreateUsecase
 } from './create'
 
 const repositoryGateway = new TrainerRepositoryGateway()
 
-export const TrainerCreateUsecase = makeTrainerCreateUsecase({
+export const LeagueCreateUsecase = makeLeagueCreateUsecase({
   repositoryGateway
 })
