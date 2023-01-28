@@ -49,4 +49,4 @@ const CollectionModelSchema = new Schema(CollectionModelSchemaObject, {
     currentTime: Date.now
   }
 })
-export const TrainerCollectionModel = model<ITrainerCollectionModel>(COLLECTION_NAMES.USERS, CollectionModelSchema)
+export const TrainerCollectionModel = model<ITrainerCollectionModel>(COLLECTION_NAMES.TRAINER, CollectionModelSchema)
