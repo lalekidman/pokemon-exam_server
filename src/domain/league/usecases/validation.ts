@@ -33,7 +33,7 @@ export const makeLeagueValidateUsecase = (
     /**
      * 
      * @param id 
-     * @param slotSize size to validate
+     * @param maxStats overall stats to validate
      * @returns 
      */
     public async validateMaxPokemonStats(

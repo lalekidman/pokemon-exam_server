@@ -9,6 +9,13 @@ import {
   makeLeagueValidateUsecase
 } from './validation'
 
+import {
+  makeLeagueViewDetailsUsecase
+} from './view-details'
+import {
+  makeLeagueListUsecase
+} from './list'
+
 const repositoryGateway = new TrainerRepositoryGateway()
 
 export const LeagueCreateUsecase = makeLeagueCreateUsecase({
@@ -16,6 +23,12 @@ export const LeagueCreateUsecase = makeLeagueCreateUsecase({
 })
 
 export const LeagueValidateUsecase = makeLeagueValidateUsecase({
+  repositoryGateway,
+})
+export const LeagueViewDetailsUsecase = makeLeagueViewDetailsUsecase({
+  repositoryGateway,
+})
+export const LeagueListUsecase = makeLeagueListUsecase({
   repositoryGateway,
 })
 

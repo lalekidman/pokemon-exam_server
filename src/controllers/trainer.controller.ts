@@ -2,16 +2,19 @@ import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
 import {ErrorCodes, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
 import {
-  UserCreateUsecase
+  TrainerCreateUsecase
 } from '@app/domain/trainer/usecases'
 export default class AppController {
   
-  public addRoute = (req: Request, res: Response, next: NextFunction) => {
+  public addRoute = (
+    req: Request,
+    res: Response
+  ) => {
     const {
       firstName = '',
       lastName = '',
     } = req.body
-    new UserCreateUsecase()
+    new TrainerCreateUsecase()
       .execute({
         firstName,
         lastName
@@ -21,16 +24,10 @@ export default class AppController {
       })
       .catch((error) => {
         // ## TODO ##
-        // - how could I support the error from the throw?
+        // - how could I support the error from Error object?
         new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
           .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
           .throw()
       })
-  }
-  public updateRoute = (req: Request, res: Response, next: NextFunction) => {
-  }
-  public listRoute = (req: Request, res: Response, next: NextFunction) => {
-  }
-  public detailsRoute = (req: Request, res: Response, next: NextFunction) => {
   }
 }

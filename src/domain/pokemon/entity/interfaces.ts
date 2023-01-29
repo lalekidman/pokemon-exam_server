@@ -12,7 +12,6 @@ export interface IPokemonBase {
 export interface IPokemonInput extends Pick<IPokemonBase,
 | 'name'
 | 'type'
-| 'pokemonStats'
 >{
 }
 
