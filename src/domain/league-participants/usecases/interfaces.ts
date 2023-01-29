@@ -6,5 +6,5 @@ import {
   ILeagueSlotEntityRepositoryGateway
 } from '../repository-gateway.interfaces'
 
-export interface ILeagueSlotUsecaseDependencies extends IGeneralUsecaseDependencies<ILeagueSlotEntityRepositoryGateway> {
+export interface ILeagueParticipantUsecaseDependencies extends IGeneralUsecaseDependencies<ILeagueSlotEntityRepositoryGateway> {
 }

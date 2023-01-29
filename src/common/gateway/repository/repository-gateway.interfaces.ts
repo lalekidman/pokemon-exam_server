@@ -15,9 +15,7 @@ export interface IPaginationQueryParams<T> {
 }
 type IRepositoryGatewayData<T> = Omit<Partial<T>, '_id' | 'id' | 'createdAt'>
 
-type IRespositoryGatewayQuery<T> = Partial<T> & {
-  name: string
-}
+type IRespositoryGatewayQuery<T> = Partial<T>
 
 export interface IGeneralRepositoryGateway<T> {
   list(

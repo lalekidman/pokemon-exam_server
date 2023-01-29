@@ -5,15 +5,19 @@ import {
 } from '../entity'
 
 import {
-  ILeagueUsecaseDependencies
+  ILeagueSlotUsecaseDependencies
 } from './interfaces'
 
-export const makeLeagueCreateUsecase = (
+interface ILeagueSlotCreateUsecaseDependencies extends ILeagueSlotUsecaseDependencies {
+  checkSlotLimit: (league: string, slotSize: number) => Promise<boolean>
+}
+export const makeLeagueSlotCreateUsecase = (
   {
-    repositoryGateway
-  }: ILeagueUsecaseDependencies
+    repositoryGateway,
+    checkSlotLimit
+  }: ILeagueSlotCreateUsecaseDependencies
 ) => {
-  return class LeagueCreateUsecase {
+  return class LeagueSlotCreateUsecase {
     constructor() {}
     
     /**
@@ -25,8 +29,17 @@ export const makeLeagueCreateUsecase = (
       dataInput: ILeagueSlotInput,
     ) {
   
+      // could add limit here?
       const leagueSlotEntity = new LeagueSlotsEntity(dataInput)
-
+      const size = await repositoryGateway.count({
+        league: leagueSlotEntity.league
+      })
+      const result = await checkSlotLimit(leagueSlotEntity.league, size)
+      if (!result) {
+        // throw error here that already reached the limit.
+        throw new Error("reached the maximum slot limit.")
+      }
+      // else create new league slot.
       const leagueSlot = await repositoryGateway.insertOne(leagueSlotEntity.toObject())
   
       return leagueSlot
