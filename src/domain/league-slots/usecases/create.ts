@@ -1,7 +1,12 @@
 
+import { ILeagueParticipantEntity, ILeagueParticipantInput } from '@app/domain/league-participants'
+import { ILeagueEntity } from '@app/domain/league/entity'
+import { IPokemonEntity } from '@app/domain/pokemon'
+import { IPokemonStatsEntity } from '@app/domain/pokemon-stats'
 import {
   LeagueSlotsEntity,
-  ILeagueSlotInput
+  ILeagueSlotInput,
+  ILeagueSlotEntity
 } from '../entity'
 
 import {
@@ -9,12 +14,18 @@ import {
 } from './interfaces'
 
 interface ILeagueSlotCreateUsecaseDependencies extends ILeagueSlotUsecaseDependencies {
-  validateMaximumSlotLimit: (league: string, slotSize: number) => Promise<boolean>
+  validateMaximumSlotLimit: (league: ILeagueEntity, slotSize: number) => Promise<boolean>,
+  validatePokemonMaximumStats: (league: ILeagueEntity, slotOverallStats: number) => Promise<boolean>,
+  createLeagueParticipants: (leagueSlot: ILeagueSlotEntity, dataInput: ILeagueParticipantInput) => Promise<ILeagueParticipantEntity>,
+  getPokemonDetails: (pokemon: string) => Promise<IPokemonEntity & {stats: IPokemonStatsEntity}>
 }
 export const makeLeagueSlotCreateUsecase = (
   {
     repositoryGateway,
-    validateMaximumSlotLimit
+    validateMaximumSlotLimit,
+    validatePokemonMaximumStats,
+    createLeagueParticipants,
+    getPokemonDetails
   }: ILeagueSlotCreateUsecaseDependencies
 ) => {
   return class LeagueSlotCreateUsecase {
@@ -26,20 +37,43 @@ export const makeLeagueSlotCreateUsecase = (
      * @returns 
      */
     public async execute(
-      dataInput: ILeagueSlotInput,
+      league: ILeagueEntity,
+      dataInput: ILeagueSlotInput & {
+        participants: ILeagueParticipantInput[]
+      },
     ) {
-  
+      const {
+        participants,
+        type,
+      } = dataInput
       // could add limit here?
-      const leagueSlotEntity = new LeagueSlotsEntity(dataInput)
+      const leagueSlotEntity = new LeagueSlotsEntity({
+        league: league._id,
+        type
+      })
       const size = await repositoryGateway.count({
         league: leagueSlotEntity.league
       })
-      const result = await validateMaximumSlotLimit(leagueSlotEntity.league, size)
+      const result = await validateMaximumSlotLimit(league, size)
       if (!result) {
         // throw error here that already reached the limit.
         throw new Error("reached the maximum slot limit.")
       }
-      // else create new league slot.
+      for (const participant of participants) {
+        const pokemon = await getPokemonDetails(participant.pokemon)
+        leagueSlotEntity.totalAttack += pokemon.stats.attack
+        leagueSlotEntity.totalDefense += pokemon.stats.defense
+        leagueSlotEntity.totalSpeed += pokemon.stats.speed
+      }
+      // validate the maximum stats allowed
+      await validatePokemonMaximumStats(league, leagueSlotEntity.overallTotal)
+      // save all of the participants.
+      const pokemonParticipants = await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlotEntity, {
+        pokemon: participant.pokemon,
+        trainerId: participant.trainerId
+      })))
+      // then save it to the repository.
+      // could enhance more here like if there's any error, revert the action.
       const leagueSlot = await repositoryGateway.insertOne(leagueSlotEntity.toObject())
   
       return leagueSlot

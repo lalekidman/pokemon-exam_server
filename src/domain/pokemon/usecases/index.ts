@@ -7,7 +7,12 @@ import {
 } from './create'
 
 import {
-  PokemonStatsCreateUsecase
+  makePokemonViewDetailsUsecase
+} from './view-details'
+
+import {
+  PokemonStatsCreateUsecase,
+  PokemonStatsViewDetailsUsecase
 } from '@app/domain/pokemon-stats/usecases'
 
 const repositoryGateway = new PokemonRepositoryGateway()
@@ -22,4 +27,9 @@ export const PokemonCreateUsecase = makePokemonCreateUsecase({
       throw new Error("Failed to create pokemon stats. \nMessage: " + error.message)
     }
   }
+})
+
+export const PokemonViewDetailsUsecase = makePokemonViewDetailsUsecase({
+  repositoryGateway,
+  getPokemonStats: new PokemonStatsViewDetailsUsecase().getOne
 })

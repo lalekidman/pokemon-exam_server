@@ -11,9 +11,8 @@ export const makeLeagueViewDetailsUsecase = (
     constructor() {}
     
     /**
-     * to create a league
-     * @param trainer id of the trainer
-     * @param dataInput 
+     * get league object
+     * @param id 
      * @returns 
      */
     public async getOne(
@@ -22,7 +21,22 @@ export const makeLeagueViewDetailsUsecase = (
       const league = await repositoryGateway.findOne({
         _id: id
       })
-  
+      return league
+    }
+    
+    /**
+     * get league object
+     * throw error if no data found.
+     * @param id 
+     * @returns 
+     */
+    public async getOneStrict (
+      id: string
+    ) {
+      const league = await this.getOne(id)
+      if (!league) {
+        throw new Error("No league data found.")
+      }
       return league
     }
   }

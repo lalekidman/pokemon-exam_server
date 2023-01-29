@@ -1,3 +1,4 @@
+import { ILeagueEntity } from '../entity'
 import {
   ILeagueUsecaseDependencies
 } from './interfaces'
@@ -17,12 +18,9 @@ export const makeLeagueValidateUsecase = (
      * @returns 
      */
     public async validateMaxSlot(
-      id: string,
+      league: ILeagueEntity,
       slotSize: number
     ): Promise<boolean> {
-      const league = await repositoryGateway.findOne({
-        _id: id
-      })
       if (league) {
         if (league.requiredSlotSize < slotSize) {
           throw new Error("Unable to add slot, reached the maximum required slot.")
@@ -37,12 +35,9 @@ export const makeLeagueValidateUsecase = (
      * @returns 
      */
     public async validateMaxPokemonStats(
-      id: string,
+      league: ILeagueEntity,
       maxStats: number
     ): Promise<boolean> {
-      const league = await repositoryGateway.findOne({
-        _id: id
-      })
       if (league) {
         if (league.pokemonMaxStats < maxStats) {
           throw new Error("Unable to add slot, reached the maximum stats allowed.")

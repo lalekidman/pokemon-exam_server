@@ -12,8 +12,8 @@ export interface ILeagueParticipantBase {
 export interface ILeagueParticipantInput extends Pick<ILeagueParticipantBase,
 | 'pokemon'
 | 'trainerId'
-| 'league'
-| 'leagueSlot'
+// | 'league'
+// | 'leagueSlot'
 >{
 }
 
