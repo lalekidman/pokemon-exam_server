@@ -6,16 +6,16 @@ export interface ILeagueBase {
   title: string
   location: string
   terrain: string
-  minSlot: number
-  maxSlot: number
+  requiredSlotSize: number // required number of slot.
+  pokemonMaxStats: number // maximum pokemon stats for the league.
 }
 
 export interface ILeagueInput extends Pick<ILeagueBase,
 | 'title'
 | 'location'
 | 'terrain'
-| 'minSlot'
-| 'maxSlot'
+| 'requiredSlotSize'
+| 'pokemonMaxStats'
 >{
 }
 

@@ -14,8 +14,10 @@ export const makeLeagueEntity = ({
     private _title: string = '';
     private _location: string = '';
     private _terrain: string = '';
-    private _minSlot: number = 1;
-    private _maxSlot: number = 1;
+
+
+    private _pokemonMaxStats: number = 0;
+    private _requiredSlotSize: number = 0;
 
     private _owner: string = '';
     private _author: string = '';
@@ -33,8 +35,8 @@ export const makeLeagueEntity = ({
           location = this._location,
           terrain = this._terrain,
 
-          minSlot = this._minSlot,
-          maxSlot = this._maxSlot,
+          pokemonMaxStats = this._pokemonMaxStats,
+          requiredSlotSize = this._requiredSlotSize,
 
           owner = this._owner,
           author = this._author,
@@ -49,8 +51,8 @@ export const makeLeagueEntity = ({
       this.location = location
       this.terrain = terrain
 
-      this.minSlot = minSlot
-      this.maxSlot = maxSlot
+      this.pokemonMaxStats = pokemonMaxStats
+      this.requiredSlotSize = requiredSlotSize
 
       this.owner = owner
       this.author = author
@@ -112,37 +114,38 @@ export const makeLeagueEntity = ({
 
 
     /**
-     * Getter minSlot
+     * Getter pokemonMaxStats
      * @return {number }
      */
-    public get minSlot(): number {
-      return this._minSlot;
-    }
+	public get pokemonMaxStats(): number  {
+		return this._pokemonMaxStats;
+	}
 
     /**
-     * Setter minSlot
+     * Setter pokemonMaxStats
      * @param {number } value
      */
-    public set minSlot(value: number) {
-      this._minSlot = value;
-    }
+	public set pokemonMaxStats(value: number ) {
+		this._pokemonMaxStats = value;
+	}
 
 
     /**
-     * Getter maxSlot
+     * Getter requiredSlotSize
      * @return {number }
      */
-    public get maxSlot(): number {
-      return this._maxSlot;
-    }
+	public get requiredSlotSize(): number  {
+		return this._requiredSlotSize;
+	}
 
     /**
-     * Setter maxSlot
+     * Setter requiredSlotSize
      * @param {number } value
      */
-    public set maxSlot(value: number) {
-      this._maxSlot = value;
-    }
+	public set requiredSlotSize(value: number ) {
+		this._requiredSlotSize = value;
+	}
+
 
 
     /**
