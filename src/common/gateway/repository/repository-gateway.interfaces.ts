@@ -5,7 +5,7 @@ export interface IAggregatePagination<T> {
 }
 export type IAggregatePaginationResponse<T> = IAggregatePagination<T>
 
-export interface IPaginationQueryParams<T> {
+export interface IListOption<T> {
   limit?: number
   offset?: number
   sort?: string
@@ -15,12 +15,12 @@ export interface IPaginationQueryParams<T> {
 }
 type IRepositoryGatewayData<T> = Omit<Partial<T>, '_id' | 'id' | 'createdAt'>
 
-type IRespositoryGatewayQuery<T> = Partial<T>
+export type IRespositoryGatewayQuery<T> = Partial<T>
 
 export interface IGeneralRepositoryGateway<T> {
   list(
     query?: IRespositoryGatewayQuery<T>,
-    paginationQuery?: IPaginationQueryParams<T>,
+    options?: IListOption<T>,
   ): Promise<T[]>
   insertOne(data: T): Promise<T>
   insertMany(data: T[]): Promise<T[]>
