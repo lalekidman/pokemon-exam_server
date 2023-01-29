@@ -8,11 +8,13 @@ import {
 import {
   ILeagueParticipantUsecaseDependencies
 } from './interfaces'
-
+interface ILeagueParticipantÇreateUsecaseDependencies extends ILeagueParticipantUsecaseDependencies {
+  validatePokemonMaximumStats: (league: string, slotOverallStats: number) => Promise<boolean>
+}
 export const makeLeagueParticipantCreateUsecase = (
   {
     repositoryGateway
-  }: ILeagueParticipantUsecaseDependencies
+  }: ILeagueParticipantÇreateUsecaseDependencies
 ) => {
   return class LeagueParticipantCreateUsecase {
     constructor() {}
@@ -57,6 +59,7 @@ export const makeLeagueParticipantCreateUsecase = (
           throw new Error("same pokemon for a pair type is not allowed.")
         }
       }
+      // should also validate the maximum stats
       // then if all of the business usecase is good or pass, then just create the participant
       const leagueParticipant = await repositoryGateway.insertOne(leagueParticipantEntity.toObject())
   

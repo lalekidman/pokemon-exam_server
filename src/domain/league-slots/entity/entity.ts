@@ -19,17 +19,19 @@ export const makeLeagueSlotsEntity = ({
     private _totalAttack: number = 0;
     private _totalDefense: number = 0;
     private _totalSpeed: number = 0;
-    private _overallTotal: number = 0;
 
     readonly createdAt: number = Date.now();
     readonly updatedAt: number = Date.now();
 
-    constructor(data: Partial < ILeagueSlotEntity > ) {
+    constructor(data: Partial < Omit<ILeagueSlotEntity, 'overallTotal'> > ) {
       const {
         _id = generateId(),
 
         type = this._type,
         league = this._league,
+        totalAttack = this._totalAttack,
+        totalDefense = this._totalDefense,
+        totalSpeed = this._totalSpeed,
 
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
@@ -38,6 +40,10 @@ export const makeLeagueSlotsEntity = ({
       this._id = _id
       this.type = type
       this.league = league
+
+      this.totalAttack = totalAttack
+      this.totalDefense = totalDefense
+      this.totalSpeed = totalSpeed
 
       this.createdAt = createdAt
       this.updatedAt = updatedAt
@@ -134,15 +140,7 @@ export const makeLeagueSlotsEntity = ({
      * @return {number }
      */
 	public get overallTotal(): number  {
-		return this._overallTotal;
-	}
-
-    /**
-     * Setter overallTotal
-     * @param {number } value
-     */
-	public set overallTotal(value: number ) {
-		this._overallTotal = value;
+		return this._totalAttack + this._totalDefense + this._totalSpeed
 	}
 
 
@@ -158,7 +156,7 @@ export const makeLeagueSlotsEntity = ({
         totalAttack: this._totalAttack,
         totalDefense: this._totalDefense,
         totalSpeed: this._totalSpeed,
-        overallTotal: this._overallTotal,
+        overallTotal: this.overallTotal,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt
       }
