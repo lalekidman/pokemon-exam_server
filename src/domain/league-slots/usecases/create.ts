@@ -9,12 +9,12 @@ import {
 } from './interfaces'
 
 interface ILeagueSlotCreateUsecaseDependencies extends ILeagueSlotUsecaseDependencies {
-  checkSlotLimit: (league: string, slotSize: number) => Promise<boolean>
+  validateMaximumSlotLimit: (league: string, slotSize: number) => Promise<boolean>
 }
 export const makeLeagueSlotCreateUsecase = (
   {
     repositoryGateway,
-    checkSlotLimit
+    validateMaximumSlotLimit
   }: ILeagueSlotCreateUsecaseDependencies
 ) => {
   return class LeagueSlotCreateUsecase {
@@ -34,7 +34,7 @@ export const makeLeagueSlotCreateUsecase = (
       const size = await repositoryGateway.count({
         league: leagueSlotEntity.league
       })
-      const result = await checkSlotLimit(leagueSlotEntity.league, size)
+      const result = await validateMaximumSlotLimit(leagueSlotEntity.league, size)
       if (!result) {
         // throw error here that already reached the limit.
         throw new Error("reached the maximum slot limit.")
