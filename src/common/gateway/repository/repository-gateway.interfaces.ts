@@ -15,30 +15,29 @@ export interface IListOption<T> {
 }
 type IRepositoryGatewayData<T> = Omit<Partial<T>, '_id' | 'id' | 'createdAt'>
 
-export type IRespositoryGatewayQuery<T> = Partial<T>
-
+export type IRepositoryProjectionOption<T> = Partial<Record<keyof T, 1 | 0>>
+export type IRepositoryGatewayQuery<T> = Partial<T>
+export type IRepositoryUpdateProperties<T> = Partial<Omit<T, 'id' | '_id' | 'createdAt'>>
 export interface IGeneralRepositoryGateway<T> {
   list(
-    query?: IRespositoryGatewayQuery<T>,
+    query?: IRepositoryGatewayQuery<T>,
     options?: IListOption<T>,
   ): Promise<T[]>
   insertOne(data: T): Promise<T>
   insertMany(data: T[]): Promise<T[]>
-  findById(id: string): Promise<T|null>
   findOne(
-    query: IRespositoryGatewayQuery<T>,
-    projection?: Partial<Record<keyof T, 1 | 0>>
+    query: IRepositoryGatewayQuery<T>
   ): Promise<T>
   
-  updateById(id: string, data: IRepositoryGatewayData<T>): Promise<T|null>
+  updateById(id: string, data: IRepositoryUpdateProperties<T>): Promise<T|null>
   updateOne(
-    query: IRespositoryGatewayQuery<T>,
-    data: IRepositoryGatewayData<T>
+    query: IRepositoryGatewayQuery<T>,
+    data: IRepositoryUpdateProperties<T>
   ): Promise<T|null>
 
   removeById(id: string): Promise<T|null>
-  removeOne(query: IRespositoryGatewayQuery<T>): Promise<T|null>
-  remove(query: IRespositoryGatewayQuery<T>): Promise<boolean|null>
-  count(query: IRespositoryGatewayQuery<T>): Promise<number>
+  removeOne(query: IRepositoryGatewayQuery<T>): Promise<T|null>
+  remove(query: IRepositoryGatewayQuery<T>): Promise<boolean|null>
+  count(query: IRepositoryGatewayQuery<T>): Promise<number>
   // aggregate(pipeline: Parameters<Model<T>['aggregate']>[0]): Promise<any[]>
 }

@@ -3,8 +3,8 @@ import {
 } from '@app/common/interfaces'
 
 import {
-  ILeagueSlotEntityRepositoryGateway
+  ILeagueParticipantsEntityRepositoryGateway
 } from '../repository-gateway.interfaces'
 
-export interface ILeagueParticipantUsecaseDependencies extends IGeneralUsecaseDependencies<ILeagueSlotEntityRepositoryGateway> {
+export interface ILeagueParticipantUsecaseDependencies extends IGeneralUsecaseDependencies<ILeagueParticipantsEntityRepositoryGateway> {
 }

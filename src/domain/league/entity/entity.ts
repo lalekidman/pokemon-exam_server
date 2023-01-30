@@ -9,7 +9,7 @@ export const makeLeagueEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
   class LeagueEntity implements ILeagueEntity {
-    readonly _id: string;
+    readonly id!: string;
 
     private _title: string = '';
     private _location: string = '';
@@ -29,7 +29,7 @@ export const makeLeagueEntity = ({
 
     constructor(data: Partial < ILeagueEntity > ) {
       const {
-        _id = generateId(),
+        id = generateId(),
 
           title = this._title,
           location = this._location,
@@ -45,7 +45,7 @@ export const makeLeagueEntity = ({
           updatedAt = this.updatedAt,
       } = data
 
-      this._id = _id
+      this.id = id
 
       this.title = title
       this.location = location
@@ -187,12 +187,13 @@ export const makeLeagueEntity = ({
      */
     public toObject(): ILeagueEntity {
       return {
-        _id: this._id,
+        id: this.id,
         title: this._title,
         location: this._location,
         terrain: this._terrain,
-        minSlot: this._minSlot,
-        maxSlot: this._maxSlot,
+
+        pokemonMaxStats: this._pokemonMaxStats,
+        requiredSlotSize: this._requiredSlotSize,
 
         owner: this._owner,
         author: this._author,

@@ -1,0 +1,31 @@
+import "reflect-metadata"
+import { DataSource } from "typeorm"
+import {
+    LeagueParticipantsRepositoryEntity,
+    LeagueRepositoryEntity,
+    LeagueSlotRepositoryEntity,
+    PokemonRepositoryEntity,
+    PokemonStatsRepositoryEntity,
+    TrainerRepositoryEntity,
+} from "./persistent/repository/mysql/entity"
+
+export const AppDataSource = new DataSource({
+    type: "mysql",
+    host: "localhost",
+    port: 5506,
+    username: "pokemon_admin",
+    password: "admin54321",
+    database: "pokemon_exam",
+    synchronize: true,
+    logging: false,
+    entities: [
+        LeagueParticipantsRepositoryEntity,
+        LeagueRepositoryEntity,
+        LeagueSlotRepositoryEntity,
+        PokemonRepositoryEntity,
+        PokemonStatsRepositoryEntity,
+        TrainerRepositoryEntity,
+    ],
+    migrations: [],
+    subscribers: [],
+})

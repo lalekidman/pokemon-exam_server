@@ -1,27 +1,29 @@
 import {
-  EntityOptions,
-  EntityManager
+  ObjectLiteral,
+  Repository
 } from 'typeorm'
-import { v4 as uuid } from 'uuid'
 import {
-  IAggregatePagination,
   IGeneralRepositoryGateway,
   IListOption,
-  IPaginationQueryParams,
-  IRespositoryGatewayQuery,
+  IRepositoryUpdateProperties,
+  IRepositoryGatewayQuery,
 } from '../repository-gateway.interfaces'
+import { AppDataSource } from '@app/data-source'
 
-export default abstract class MySQLRepositoryGatewayService<T = any> implements IGeneralRepositoryGateway<T> {
+export abstract class MySQLRepositoryGatewayService<T extends ObjectLiteral & {id: string}> implements IGeneralRepositoryGateway<T> {
+  protected readonly repository: Repository<T>
   constructor(
-    private readonly entity: EntityManager
-  ) {}
+    private readonly entity: new () => T
+  ) {
+    this.repository = AppDataSource.getRepository(entity)
+  }
   /**
    * get list
    * @param query 
    * @param queryParams 
    */
   public async list (
-    query?: IRespositoryGatewayQuery<T>,
+    query?: IRepositoryGatewayQuery<T>,
     options?: IListOption<T>
   ) {
     const {
@@ -56,7 +58,7 @@ export default abstract class MySQLRepositoryGatewayService<T = any> implements 
       [fieldName]: 1
     }), {}) : null
 
-    const documentQuery = this.entity.find({
+    const documentQuery = this.repository.find({
       $and: [
         query,
         ...(matches.length >= 1 ? [
@@ -67,30 +69,18 @@ export default abstract class MySQLRepositoryGatewayService<T = any> implements 
       ]
     } as any
     )
-    return documentQuery
-  }
-  /**
-   * by data by id
-   * @param id
-   */
-  public async findById(id: string) {
-    try {
-      const document = await this.collectionModel
-        .findById(id)
-      return document
-    } catch (error) {
-      throw error
-    }
+    return documentQuery as unknown as T[]
   }
   /**
    * by data by id
    * @param id
    */
   public async findOne(
-    query: Partial<K>,
-    projection?: Partial<Record<keyof K, 0 | 1>>
+    query: IRepositoryGatewayQuery<T>
   ) {
-    const document = await this.collectionModel.findOne(query as any, projection).lean()
+    const document = await this.repository.findOne({
+      where: query,
+    })
     return document as T
   }
 
@@ -98,241 +88,123 @@ export default abstract class MySQLRepositoryGatewayService<T = any> implements 
    * insert data
    * @param data
    */
-  public async insertOne(data: K) {
-    const newDocument = await this.initialize(data).save()
-    return newDocument.toObject()
+  // public abstract insertOne(data: T): Promise<T>
+  public async insertOne(data: IRepositoryUpdateProperties<T>): Promise<T> {
+    // const entity = await this.repository.findOneBy(query)
+    const newEntity = new this.entity()
+    let updated = false
+    const keys = Reflect.ownKeys(data)
+    for (const key of keys) {
+      if (typeof (key) === 'string') {
+        // @ts-expect-error
+        newEntity[key] = data[key]
+        updated = true
+      }
+    }
+    await this.repository.save(newEntity)
+    return newEntity
   }
   /**
    * insert bulk/mutiple data
    * @param data
    */
-  public insertMany(data: K[]) {
+  public insertMany(data: T[]) {
     return Promise.all(data.map(elem => this.insertOne(elem)))
   }
-  /**
-   * initialize object
-   * @param data
-   */
-  public initialize(data: K) {
-    return new this.collectionModel({
-      _id: uuid(),
-      createdAt: Date.now(),
-      updatedat: 0,
-      ...data,
-    })
-  }
-  /**
-   *
-   * @param id
-   * @param data
-   */
-  public async updateById(id: string, data: Partial<K>) {
-    try {
-      // @ts-expect-error
-      delete data._id
-      // @ts-expect-error
-      delete data.id
-      // @ts-expect-error
-      delete data.createdAt
-      const document = await this.findById(id)
-      if (document) {
-        document.set(data)
-        document.save()
-        return document.toObject()
+
+  // public abstract updateById(id: string, data: IRepositoryUpdateProperties<T>): Promise<T|null>
+  // public abstract updateOne(query: IRepositoryGatewayQuery<T>, data: IRepositoryUpdateProperties<T>): Promise<T|null>
+
+  public async updateOne(query: IRepositoryGatewayQuery<T>, data: IRepositoryUpdateProperties<T>): Promise<T | null> {
+    const entity = await this.repository.findOneBy(query)
+    if (entity) {
+      let updated = false
+      const keys = Reflect.ownKeys(data)
+      for (const key of keys) {
+        if (typeof (key) === 'string') {
+          // @ts-expect-error
+          entity[key] = data[key]
+          updated = true
+        }
       }
-      return null
-    } catch (err) {
-      throw err
+      if (updated) {
+        // @ts-expect-error
+        entity.updatedAt = Date.now()
+      }
+      await this.repository.save(entity)
     }
+    return entity
   }
-  /**
-   * update single document
-   * @param query
-   * @param data
-   */
-  public async updateOne(
-    query: Parameters<Model<T>['find']>[0],
-    data: Partial<K>
-  ) {
-    const document = await this.collectionModel.findOne(query as any)
-    if (document) {
-      document.set(data)
-      await document.save()
-      return document.toObject()
+  public async updateById(id: string, data: IRepositoryUpdateProperties<T>): Promise<T | null> {
+    const entity = await this.repository.findOneBy({
+      id
+    } as any)
+    if (entity) {
+      let updated = false
+      const keys = Reflect.ownKeys(data)
+      for (const key of keys) {
+        if (typeof (key) === 'string') {
+          // @ts-expect-error
+          entity[key] = data[key]
+          updated = true
+        }
+      }
+      if (updated) {
+        // @ts-expect-error
+        entity.updatedAt = Date.now()
+      }
+      await this.repository.save(entity)
     }
-    return null
+    return entity
   }
+
   public async removeById(id: string) {
-    const document = await this.findById(id)
-    if (document) {
-      document.remove()
-      return document.toObject()
-    }
-    return document
-  }
-
-  public async removeOne(query: Parameters<Model<T>['find']>[0]) {
-    const document = await this.collectionModel.findOne(query as any)
-    if (document) {
-      document.remove()
-      return document.toObject()
-    }
-    return null
-  }
-
-  public async remove(query: Parameters<Model<T>['find']>[0]) {
-    await this.collectionModel.remove(query as any)
-    return true
-  }
-
-  public count(query: Parameters<Model<T>['find']>[0]) {
-    return this.collectionModel
-      .find(query as any)
-      .countDocuments()
-      .then(count => {
-        return count
-      })
-  }
-  /**
-   *
-   * @param pipeline a pipeline query for aggregation on mongodb
-   * @param queryParams for filtering, like limitTo, startAt, sortby etc..
-   * @param searchFields2 array of fields that needed to be search or to filter,
-   * a function that return a pagination data.
-   */
-  public aggregateWithPagination (
-    pipeline: any[],
-    queryParams: IPaginationQueryParams<K>
-  ): Promise<IAggregatePagination<K>> {
-    let {
-      fields = {},
-      limit = 0,
-      offset = 0,
-      search = '',
-      searchFields = [],
-      sort = ''
-    } = queryParams || {}
-    limit = +limit
-    offset = +offset
-
-    // let sortTo = { createdAt: -1 } as any
-    let sortTo: any = {}
-    if (sort) {
-      // proposal multiple sorting fields formating process
-      const sortArrayOptions = sort.split(',');
-      for (let i = 0; i < sortArrayOptions.length; i++) {
-        let sortOption = sortArrayOptions[i].split(':');
-        sortTo[sortOption[0]] = sortOption[1] === 'asc' ? 1 : -1;
-      }
-
-      // const sortOption = sort.split(':')
-      // if (sortOption.length >= 1) {
-      //   sortTo = {
-      //     [sortOption[0]]: sortOption[1] === 'asc' ? 1 : -1
-      //   }
-      // }
-
-      // sortTo = Array.isArray(sortBy)
-      //   ? sortBy.reduce((obj, s) => {
-      //       obj[s.fieldName] = parseInt(s.status)
-      //       return obj
-      //     }, {})
-      //   : { [sortBy.fieldName]: sortBy.status }
-    }
-    const firstPipeline = [
-      {
-        $sort: sortTo,
-      },
-      {
-        $skip: offset,
-      },
-      {
-        $limit: limit,
-      },
-    ] as any[]
-    // if limitTO is equal to = 0, will remove the $limit on the pipeline
-    if (limit === 0) {
-      const ind = firstPipeline.findIndex(
-        stage => Object.keys(stage)[0] === '$limit'
-      )
-      if (ind >= 0) {
-        // remove ethe $limit on the pipeline.
-        firstPipeline.splice(ind, 1)
+    const data = await this.repository.findOneBy({
+      id
+    } as any)
+    if (data) {
+      const result = await this.repository.remove(data)
+      if (result) {
+        // added some validatio here.
       }
     }
+    return data
+  }
 
-    // @ts-expect-error
-    const searchFilters = searchFields.map((field: string) => ({
-        [field]: {
-          $regex: new RegExp(search, 'gi'),
-        },
-      })
-    )
-    const paginationQuery = pipeline.concat([
-      {
-        $match: searchFilters.length >= 1 ? {
-            $or: searchFilters,
-          } : {},
-      },
-      {
-        $facet: {
-          data: firstPipeline,
-          totalPages: [
-            {
-              $group: {
-                _id: null,
-                counts: {
-                  $sum: 1,
-                },
-              },
-            },
-          ],
-        },
-      },
-      {
-        $unwind: {
-          preserveNullAndEmptyArrays: false,
-          path: '$totalPages',
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          data: 1,
-          counts: '$totalPages.counts',
-        },
-      },
-    ])
-    return this.collectionModel
-      .aggregate(paginationQuery)
-      .then((response: any) => {
-        const paginationResponse = {
-          data: [],
-          total: 0,
-          pages: 0,
-        }
-        if (response.length >= 1) {
-          paginationResponse.data = response[0].data
-          paginationResponse.pages =
-            offset >= 1 ? Math.ceil(response[0].counts / offset) : 1
-          paginationResponse.total = response[0].counts
-        }
-        return paginationResponse
-      })
+  public async removeOne(query: IRepositoryGatewayQuery<T>) {
+    const data = await this.repository.findOneBy(query)
+    if (data) {
+      const result = await this.repository.remove(data)
+      if (result) {
+        // added some validatio here.
+      }
+    }
+    return data
   }
   /**
    * 
-   * @param pipeline 
-   * @param paginationQuery 
+   * @param query 
+   * @returns 
    */
-  public aggregate (
-    pipeline: any[],
-    paginationQuery?: Partial<IPaginationQueryParams<K>>
-  ): Promise<any[]> {
-    const {
-      limit = 0,
-      offset = 0
-    } = paginationQuery || {}
-    return this.collectionModel.aggregate(pipeline as any).exec()
+  public async remove(query: IRepositoryGatewayQuery<T>) {
+    const data = await this.repository.findOneBy(query)
+    if (data) {
+      const result = await this.repository.remove(data)
+      if (result) {
+        // added some validatio here.
+      }
+    }
+    return !!data
+  }
+  /**
+   * 
+   * @param query 
+   * @returns 
+   */
+  public async count(query: IRepositoryGatewayQuery<T>) {
+    const count = await this.repository.count({
+      where: query
+    })
+    return count
   }
 }

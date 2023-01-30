@@ -10,7 +10,7 @@ export const makeTrainerEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
   class TrainerEntity implements ITrainerEntity {
-    readonly _id: string;
+    readonly id!: string;
   
     private _firstName: string = '';
     private _lastName: string = '';
@@ -23,7 +23,7 @@ export const makeTrainerEntity = ({
   
     constructor(data: Partial < ITrainerEntity > ) {
       const {
-        _id = generateId(),
+        id = generateId(),
   
         firstName = this.firstName,
         lastName = this.lastName,
@@ -35,7 +35,7 @@ export const makeTrainerEntity = ({
         updatedAt = this.updatedAt,
       } = data
   
-      this._id = _id
+      this.id = id
   
       this.firstName = firstName
       this.lastName = lastName
@@ -122,6 +122,18 @@ export const makeTrainerEntity = ({
      */
     public set suspendedAt(value: number) {
       this._suspendedAt = value;
+    }
+
+    public toObject (): ITrainerEntity {
+      return {
+        id: this.id,
+        firstName: this._firstName,
+        lastName: this._lastName,
+        suspended: this._suspended,
+        suspendedAt: this._suspendedAt,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt
+      }
     }
   }
   return TrainerEntity

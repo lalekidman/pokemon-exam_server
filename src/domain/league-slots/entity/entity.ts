@@ -10,7 +10,7 @@ export const makeLeagueSlotsEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
   class LeagueSlotsEntity implements ILeagueSlotEntity {
-    readonly _id: string;
+    readonly id!: string;
 
     private _type: string = LEAGUE_SLOT_TYPE.SOLO;
     private _league: string = '';
@@ -25,7 +25,7 @@ export const makeLeagueSlotsEntity = ({
 
     constructor(data: Partial < Omit<ILeagueSlotEntity, 'overallTotal'> > ) {
       const {
-        _id = generateId(),
+        id = generateId(),
 
         type = this._type,
         league = this._league,
@@ -37,7 +37,7 @@ export const makeLeagueSlotsEntity = ({
         updatedAt = this.updatedAt,
       } = data
 
-      this._id = _id
+      this.id = id
       this.type = type
       this.league = league
 
@@ -150,7 +150,7 @@ export const makeLeagueSlotsEntity = ({
      */
     public toObject(): ILeagueSlotEntity {
       return {
-        _id: this._id,
+        id: this.id,
         league: this._league,
         type: this._type,
         totalAttack: this._totalAttack,

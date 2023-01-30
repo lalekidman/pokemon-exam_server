@@ -10,7 +10,7 @@ export const makePokemonStatsEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
   class PokemonStatsEntity implements IPokemonStatsEntity {
-    readonly _id: string;
+    readonly id!: string;
   
     private _attack: number = 0;
     private _defense: number = 0;
@@ -21,7 +21,7 @@ export const makePokemonStatsEntity = ({
   
     constructor(data: Partial < IPokemonStatsEntity > ) {
       const {
-        _id = generateId(),
+        id = generateId(),
   
         attack = this._attack,
         defense = this._defense,
@@ -31,11 +31,11 @@ export const makePokemonStatsEntity = ({
         updatedAt = this.updatedAt,
       } = data
   
-      this._id = _id
+      this.id = id
 
-      this.attack = this._attack,
-      this.defense = this._defense,
-      this.speed = this._speed,
+      this.attack = attack,
+      this.defense = defense,
+      this.speed = speed,
 
       this.createdAt = createdAt
       this.updatedAt = updatedAt
@@ -101,7 +101,7 @@ export const makePokemonStatsEntity = ({
      */
     public toObject (): IPokemonStatsEntity {
       return {
-        _id: this._id,
+        id: this.id,
         attack: this._attack,
         defense: this._defense,
         speed: this._speed,

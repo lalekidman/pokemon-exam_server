@@ -1,6 +1,6 @@
 import {
-  TrainerRepositoryGateway
-} from '@app/persistent/repository/trainer'
+  LeagueRepositoryGateway
+} from '@app/persistent/repository/mysql/entity/league'
 
 import {
   makeLeagueCreateUsecase
@@ -16,7 +16,7 @@ import {
   makeLeagueListUsecase
 } from './list'
 
-const repositoryGateway = new TrainerRepositoryGateway()
+const repositoryGateway = new LeagueRepositoryGateway()
 
 export const LeagueCreateUsecase = makeLeagueCreateUsecase({
   repositoryGateway

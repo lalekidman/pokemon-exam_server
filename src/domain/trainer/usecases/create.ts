@@ -25,17 +25,7 @@ export const makeTrainerCreateUsecase = (
   
       const trainerEntity = new TrainerEntity(dataInput)
 
-      const trainer = await repositoryGateway.insertOne({
-        _id: trainerEntity._id,
-        firstName: trainerEntity.firstName,
-        lastName: trainerEntity.lastName,
-        
-        suspended: trainerEntity.suspended,
-        suspendedAt: trainerEntity.suspendedAt,
-  
-        createdAt: trainerEntity.createdAt,
-        updatedAt: trainerEntity.updatedAt,
-      })
+      const trainer = await repositoryGateway.insertOne(trainerEntity.toObject())
   
       return trainer
     }

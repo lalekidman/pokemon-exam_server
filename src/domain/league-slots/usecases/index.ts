@@ -1,6 +1,6 @@
 import {
-  TrainerRepositoryGateway
-} from '@app/persistent/repository/trainer'
+  LeagueSlotRepositoryGateway
+} from '@app/persistent/repository/mysql/entity/league-slots'
 
 import {
   makeLeagueSlotCreateUsecase
@@ -9,12 +9,24 @@ import {
   LeagueValidateUsecase
 } from '@app/domain/league/usecases'
 
-const repositoryGateway = new TrainerRepositoryGateway()
+import {
+  LeagueParticipantCreateUsecase
+} from '@app/domain/league-participants/usecases'
+
+import {
+  PokemonViewDetailsUsecase
+} from '@app/domain/pokemon/usecases'
+
+const repositoryGateway = new LeagueSlotRepositoryGateway()
 
 export const LeagueSlotCreateUsecase = makeLeagueSlotCreateUsecase({
   repositoryGateway,
-  validateMaximumSlotLimit: async (league, slotSize) => await (new LeagueValidateUsecase()).validateMaxSlot(league, slotSize)
-  // ### DEVNOTE ###
+  validateMaximumSlotLimit: async (league, slotSize) => await (new LeagueValidateUsecase()).validateMaxSlot(league, slotSize),
+  validatePokemonMaximumStats: async (league, slotOverallStats) => await (new LeagueValidateUsecase()).validateMaxPokemonStats(league, slotOverallStats),
+  createLeagueParticipants: (leagueSlot, dataInput) => {
+    return new LeagueParticipantCreateUsecase().execute(leagueSlot, dataInput)
+  },
+  getPokemonDetails: (id) => new PokemonViewDetailsUsecase().getOne(id)
   // can be do in much short way but seems complicated to read.
   // checkSlotLimit: (new LeagueValidateUsecase()).validateMaxSlot
 })

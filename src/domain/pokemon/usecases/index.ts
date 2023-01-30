@@ -1,6 +1,6 @@
 import {
   PokemonRepositoryGateway
-} from '@app/persistent/repository/pokemon'
+} from '@app/persistent/repository/mysql/entity/pokemon'
 
 import {
   makePokemonCreateUsecase

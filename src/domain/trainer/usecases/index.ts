@@ -1,6 +1,6 @@
 import {
   TrainerRepositoryGateway
-} from '@app/persistent/repository/trainer'
+} from '@app/persistent/repository/mysql/entity/trainer'
 
 import {
   makeTrainerCreateUsecase

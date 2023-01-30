@@ -25,7 +25,7 @@ export interface IFingerprint {
   // components: any
 }
 export interface IGeneralEntityProperties {
-  readonly _id: any
+  readonly _id?: any
   readonly id: any
   readonly createdAt: number
   readonly updatedAt: number

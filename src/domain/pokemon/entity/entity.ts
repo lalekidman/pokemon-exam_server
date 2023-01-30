@@ -10,7 +10,7 @@ export const makePokemonEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
   class PokemonEntity implements IPokemonEntity {
-    readonly _id: string;
+    readonly id!: string;
   
     private _name: string = '';
     private _type: string = '';
@@ -22,7 +22,7 @@ export const makePokemonEntity = ({
   
     constructor(data: Partial < IPokemonEntity > ) {
       const {
-        _id = generateId(),
+        id = generateId(),
   
         name = this._name,
         type = this._type,
@@ -33,7 +33,7 @@ export const makePokemonEntity = ({
         updatedAt = this.updatedAt,
       } = data
   
-      this._id = _id
+      this.id = id
   
       this.name = name
       this.type = type
@@ -123,7 +123,7 @@ export const makePokemonEntity = ({
 
     public toObject (): IPokemonEntity {
       return {
-        _id: this._id,
+        id: this.id,
         name: this._name,
         type: this._type,
         pokemonStats: this._pokemonStats,

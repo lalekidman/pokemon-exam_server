@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
     
 services:
   mysql-db:
@@ -8,8 +8,11 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
-      - 3306:3306
+      - 5506:3306
     environment:
-      MYSQL_ROOT_PASSWORD: example
-    volumes:
-      - '../mysql:/docker-entrypoint-initdb.d'
+      # NOT RECOMMENDED, could use env files instead but just for this exam.
+      MYSQL_USER: pokemon_admin
+      MYSQL_PASSWORD: admin54321
+      MYSQL_ROOT_PASSWORD: admin54321
+    # volumes:
+      # - '../mysql:/docker-entrypoint-initdb.d'

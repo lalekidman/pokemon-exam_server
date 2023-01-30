@@ -10,7 +10,7 @@ export const makeLeagueParticipantEntity = ({
   generateId
 }: IGeneralEntityDependencies) => {
   class LeagueParticipantEntity implements ILeagueParticipantEntity {
-    readonly _id: string;
+    readonly id: string;
 
     private _pokemon: string = '';
     private _trainerId: string = '';
@@ -22,7 +22,7 @@ export const makeLeagueParticipantEntity = ({
 
     constructor(data: Partial < ILeagueParticipantEntity > ) {
       const {
-        _id = generateId(),
+        id = generateId(),
 
         pokemon = this._pokemon,
         trainerId = this._trainerId,
@@ -33,7 +33,7 @@ export const makeLeagueParticipantEntity = ({
         updatedAt = this.updatedAt,
       } = data
 
-      this._id = _id
+      this.id = id
       this.pokemon = pokemon
       this.trainerId = trainerId
       this.league = league
@@ -117,7 +117,7 @@ export const makeLeagueParticipantEntity = ({
      */
     public toObject(): ILeagueParticipantEntity {
       return {
-        _id: this._id,
+        id: this.id,
         league: this._league,
         leagueSlot: this._leagueSlot,
         trainerId: this._trainerId,

@@ -4,7 +4,7 @@ import morgan from 'morgan'
 import compressor from 'compression'
 import helmet from 'helmet'
 import cors from 'cors'
-import {Database} from '@app/configs/database'
+import '@app/configs/repository/mysql'
 import {AppRoute} from '@app/routes'
 export class App {
   public app: any
@@ -16,7 +16,7 @@ export class App {
       this.port = +process.env.PORT
     }
     this.loadMiddlewares()
-    new Database().connect()
+    // new Database().connect()
     // expose the main route here.
     this.app.use(new AppRoute().expose())
   }
