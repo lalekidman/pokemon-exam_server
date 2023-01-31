@@ -2,7 +2,7 @@ version: '3.9'
     
 services:
   mysql-db:
-    image: mysql
+    image: mysql:latest
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
     # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password
@@ -11,8 +11,12 @@ services:
       - 5506:3306
     environment:
       # NOT RECOMMENDED, could use env files instead but just for this exam.
-      MYSQL_USER: pokemon_admin
-      MYSQL_PASSWORD: admin54321
+      # MYSQL_USER: pokemon_admin
+      # MYSQL_PASSWORD: admin54321
       MYSQL_ROOT_PASSWORD: admin54321
+    networks: 
+      - pokemon-exam-network
     # volumes:
       # - '../mysql:/docker-entrypoint-initdb.d'
+networks:
+  pokemon-exam-network:

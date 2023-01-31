@@ -1,6 +1,6 @@
 {
    "scripts": {
-      "start": "ts-node src/server.ts",
+      "start": "TS_NODE_BASEURL=./dist ts-node -r tsconfig-paths/register src/server.ts",
       "start:dev": "tsc -w",
       "dev": "TS_NODE_BASEURL=./dist nodemon -r tsconfig-paths/register dist/server.js",
       "build": "tsc -p .",

@@ -21,7 +21,7 @@ export interface ILeagueInput extends Pick<ILeagueBase,
 
 export interface ILeagueEntity extends IGeneralEntityProperties, ILeagueBase {
   // what would be the date? date when it's created?
-  date: Date // date
+  date: number // date
 
   owner: string // owner of the league, in the future, could support transfer the owner of the league.
   author: string // who created the league

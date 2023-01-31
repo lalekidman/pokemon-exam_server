@@ -22,8 +22,8 @@ __decorate([
     __metadata("design:type", String)
 ], LeagueRepositoryEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "datetime", default: (new Date()).toISOString() }),
-    __metadata("design:type", Date)
+    (0, typeorm_1.Column)({ type: "double", default: Date.now() }),
+    __metadata("design:type", Number)
 ], LeagueRepositoryEntity.prototype, "date", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => trainer_1.TrainerRepositoryEntity, (trainer) => trainer.id),
@@ -54,11 +54,11 @@ __decorate([
     __metadata("design:type", Number)
 ], LeagueRepositoryEntity.prototype, "pokemonMaxStats", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 100 }),
+    (0, typeorm_1.Column)({ type: "double" }),
     __metadata("design:type", Number)
 ], LeagueRepositoryEntity.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "double" }),
     __metadata("design:type", Number)
 ], LeagueRepositoryEntity.prototype, "updatedAt", void 0);
 LeagueRepositoryEntity = __decorate([

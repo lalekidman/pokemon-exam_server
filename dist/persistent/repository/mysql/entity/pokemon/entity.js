@@ -44,7 +44,7 @@ __decorate([
     __metadata("design:type", Number)
 ], PokemonRepositoryEntity.prototype, "updatedAt", void 0);
 PokemonRepositoryEntity = __decorate([
-    (0, typeorm_1.Entity)({ name: "trainers" })
+    (0, typeorm_1.Entity)({ name: "pokemon" })
 ], PokemonRepositoryEntity);
 exports.PokemonRepositoryEntity = PokemonRepositoryEntity;
 //# sourceMappingURL=entity.js.map

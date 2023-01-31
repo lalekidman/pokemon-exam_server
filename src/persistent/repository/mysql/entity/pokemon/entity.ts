@@ -9,7 +9,7 @@ import {
 import { TrainerRepositoryEntity } from '../trainer';
 import { PokemonStatsRepositoryEntity } from '../pokemon-stats'
 
-@Entity({name: "trainers"})
+@Entity({name: "pokemon"})
 export class PokemonRepositoryEntity implements Omit<IPokemonEntity, '_id'> {
 
   @PrimaryGeneratedColumn("uuid")

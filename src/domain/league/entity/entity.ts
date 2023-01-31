@@ -22,7 +22,7 @@ export const makeLeagueEntity = ({
     private _owner: string = '';
     private _author: string = '';
 
-    readonly date: Date = new Date();
+    readonly date: number = Date.now()
 
     readonly createdAt: number = Date.now();
     readonly updatedAt: number = Date.now();

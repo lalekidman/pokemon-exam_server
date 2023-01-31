@@ -13,7 +13,7 @@ export const AppDataSource = new DataSource({
     type: "mysql",
     host: "localhost",
     port: 5506,
-    username: "pokemon_admin",
+    username: "root",
     password: "admin54321",
     database: "pokemon_exam",
     synchronize: true,

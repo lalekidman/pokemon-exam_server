@@ -11,7 +11,7 @@ const makeLeagueEntity = ({ generateId }) => {
             this._requiredSlotSize = 0;
             this._owner = '';
             this._author = '';
-            this.date = new Date();
+            this.date = Date.now();
             this.createdAt = Date.now();
             this.updatedAt = Date.now();
             const { id = generateId(), title = this._title, location = this._location, terrain = this._terrain, pokemonMaxStats = this._pokemonMaxStats, requiredSlotSize = this._requiredSlotSize, owner = this._owner, author = this._author, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;

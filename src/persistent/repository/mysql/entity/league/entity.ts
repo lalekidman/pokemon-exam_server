@@ -13,8 +13,8 @@ export class LeagueRepositoryEntity implements Omit<ILeagueEntity, '_id'> {
   @PrimaryGeneratedColumn("uuid")
   id: string = '';
 
-  @Column({type: "datetime", default: (new Date()).toISOString()})
-  date!: Date;
+  @Column({type: "double", default: Date.now()})
+  date!: number;
 
   @ManyToOne(() => TrainerRepositoryEntity, (trainer) => trainer.id)
   owner!: string;
@@ -38,9 +38,9 @@ export class LeagueRepositoryEntity implements Omit<ILeagueEntity, '_id'> {
   pokemonMaxStats!: number ;
   
 
-  @Column({type: "varchar", length: 100})
+  @Column({type: "double"})
   createdAt!: number ;
 
-  @Column()
+  @Column({type: "double"})
   updatedAt!: number ;
 }
