@@ -15,7 +15,7 @@ export const makePokemonEntity = ({
     private _name: string = '';
     private _type: string = '';
     private _pokemonStats: string = '';
-    private _trainerId: string = '';
+    private _trainer: string = '';
   
     readonly createdAt: number = Date.now();
     readonly updatedAt: number = Date.now();
@@ -27,7 +27,7 @@ export const makePokemonEntity = ({
         name = this._name,
         type = this._type,
         pokemonStats = this._pokemonStats,
-        trainerId = this._trainerId,
+        trainer = this._trainer,
 
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
@@ -38,7 +38,7 @@ export const makePokemonEntity = ({
       this.name = name
       this.type = type
       this.pokemonStats = pokemonStats
-      this.trainerId = trainerId
+      this.trainer = trainer
   
       this.createdAt = createdAt
       this.updatedAt = updatedAt
@@ -106,19 +106,19 @@ export const makePokemonEntity = ({
 
 
     /**
-     * Getter trainerId
+     * Getter trainer
      * @return {string }
      */
-    public get trainerId(): string  {
-      return this._trainerId;
+    public get trainer(): string  {
+      return this._trainer;
     }
 
     /**
-     * Setter trainerId
+     * Setter trainer
      * @param {string } value
      */
-    public set trainerId(value: string ) {
-      this._trainerId = value;
+    public set trainer(value: string ) {
+      this._trainer = value;
     }
 
     public toObject (): IPokemonEntity {
@@ -127,7 +127,7 @@ export const makePokemonEntity = ({
         name: this._name,
         type: this._type,
         pokemonStats: this._pokemonStats,
-        trainerId: this._trainerId,
+        trainer: this._trainer,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt
       }

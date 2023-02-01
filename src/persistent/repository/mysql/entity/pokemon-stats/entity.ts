@@ -1,3 +1,4 @@
+import { TABLE_NAMES } from '@app/common/constants';
 import { IPokemonStatsEntity } from '@app/domain/pokemon-stats/entity';
 import {
   Entity,
@@ -5,7 +6,7 @@ import {
   Column
 } from 'typeorm'
 
-@Entity({name: "pokemon_stats"})
+@Entity({name: TABLE_NAMES.POKEMON_STATS})
 export class PokemonStatsRepositoryEntity implements Omit<IPokemonStatsEntity, '_id'> {
 
   @PrimaryGeneratedColumn("uuid")

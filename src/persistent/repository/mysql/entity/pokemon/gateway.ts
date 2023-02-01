@@ -1,3 +1,4 @@
+import { TABLE_NAMES } from '@app/common/constants'
 import {
   MySQLRepositoryGatewayService
 } from '@app/common/gateway/repository/services/mysql'
@@ -10,7 +11,7 @@ import {
 
 export class PokemonRepositoryGateway extends MySQLRepositoryGatewayService<PokemonRepositoryEntity> implements IPokemonRepositoryGateway  {
   constructor () {
-    super(PokemonRepositoryEntity)
+    super(PokemonRepositoryEntity, TABLE_NAMES.LEAGUE_SLOT)
   }
   // public async insertOne(data: Trainer): Promise<Trainer> {
   //   const trainer = new Trainer()

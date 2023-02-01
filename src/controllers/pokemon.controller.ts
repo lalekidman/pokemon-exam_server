@@ -63,7 +63,7 @@ export default class PokemonController {
     try {
       const pokemon = await new PokemonListUsecase()
         .getList({
-          trainerId: trainer_id
+          trainer: trainer_id
         })
       res.status(HttpStatus.OK).send(SuccessResponse(pokemon))
     } catch (error: any) {

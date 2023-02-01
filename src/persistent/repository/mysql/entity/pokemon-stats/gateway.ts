@@ -1,3 +1,4 @@
+import { TABLE_NAMES } from '@app/common/constants'
 import {
   MySQLRepositoryGatewayService
 } from '@app/common/gateway/repository/services/mysql'
@@ -10,6 +11,6 @@ import {
 
 export class PokemonStatsRepositoryGateway extends MySQLRepositoryGatewayService<PokemonStatsRepositoryEntity> implements IPokemonStatsRepositoryGateway  {
   constructor () {
-    super(PokemonStatsRepositoryEntity)
+    super(PokemonStatsRepositoryEntity, TABLE_NAMES.POKEMON)
   }
 }

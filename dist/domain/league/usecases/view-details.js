@@ -11,7 +11,7 @@ const makeLeagueViewDetailsUsecase = ({ repositoryGateway }) => {
          */
         async getOne(id) {
             const league = await repositoryGateway.findOne({
-                _id: id
+                id
             });
             return league;
         }

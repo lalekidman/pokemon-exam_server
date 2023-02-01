@@ -21,7 +21,7 @@ exports.PokemonCreateUsecase = (0, create_1.makePokemonCreateUsecase)({
 });
 exports.PokemonViewDetailsUsecase = (0, view_details_1.makePokemonViewDetailsUsecase)({
     repositoryGateway,
-    getPokemonStats: new usecases_1.PokemonStatsViewDetailsUsecase().getOne
+    getPokemonStats: new usecases_1.PokemonStatsViewDetailsUsecase().getOneStrict
 });
 exports.PokemonListUsecase = (0, list_1.makePokemonListUsecase)({
     repositoryGateway

@@ -1,3 +1,4 @@
+import { TABLE_NAMES } from '@app/common/constants';
 import { ILeagueEntity } from '@app/domain/league/entity';
 import {
   Entity,
@@ -7,7 +8,7 @@ import {
 } from 'typeorm'
   import { TrainerRepositoryEntity } from '../trainer';
 
-@Entity({name: "league"})
+@Entity({name: TABLE_NAMES.LEAGUE})
 export class LeagueRepositoryEntity implements Omit<ILeagueEntity, '_id'> { 
 
   @PrimaryGeneratedColumn("uuid")

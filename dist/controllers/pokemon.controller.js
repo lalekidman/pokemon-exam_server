@@ -59,7 +59,7 @@ class PokemonController {
             try {
                 const pokemon = await new usecases_1.PokemonListUsecase()
                     .getList({
-                    trainerId: trainer_id
+                    trainer: trainer_id
                 });
                 res.status(HttpStatus.OK).send((0, http_response_1.SuccessResponse)(pokemon));
             }

@@ -10,8 +10,11 @@ export const SUSPEND_QUEUE_INPUT = {
   CUSTOMER: 2
 }
 
-export const COLLECTION_NAMES = {
+export const TABLE_NAMES = {
   TRAINER: 'trainer',
   POKEMON: 'pokemon',
-  POKEMON_STATS: 'pokemon-stats',
+  POKEMON_STATS: 'pokemon_stats',
+  LEAGUE: 'league',
+  LEAGUE_SLOT: 'league_slots',
+  LEAGUE_PARTICIPANT: 'league_participants',
 }

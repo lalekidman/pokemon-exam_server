@@ -8,8 +8,9 @@ import {
 } from 'typeorm'
 import { TrainerRepositoryEntity } from '../trainer';
 import { PokemonStatsRepositoryEntity } from '../pokemon-stats'
+import { TABLE_NAMES } from '@app/common/constants';
 
-@Entity({name: "pokemon"})
+@Entity({name: TABLE_NAMES.POKEMON})
 export class PokemonRepositoryEntity implements Omit<IPokemonEntity, '_id'> {
 
   @PrimaryGeneratedColumn("uuid")
@@ -26,7 +27,6 @@ export class PokemonRepositoryEntity implements Omit<IPokemonEntity, '_id'> {
 
   @ManyToOne(() => TrainerRepositoryEntity, (trainer) => trainer.id)
   trainer!: string;
-  trainerId!: string;
 
   @Column({type: "double"})
   createdAt!: number ;

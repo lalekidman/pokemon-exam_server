@@ -1,3 +1,4 @@
+import { TABLE_NAMES } from '@app/common/constants'
 import {
   MySQLRepositoryGatewayService
 } from '@app/common/gateway/repository/services/mysql'
@@ -11,6 +12,6 @@ import {
 
 export class LeagueParticipantsRepositoryGateway extends MySQLRepositoryGatewayService<LeagueParticipantsRepositoryEntity> implements ILeagueParticipantsEntityRepositoryGateway  {
   constructor () {
-    super(LeagueParticipantsRepositoryEntity)
+    super(LeagueParticipantsRepositoryEntity, TABLE_NAMES.LEAGUE_PARTICIPANT)
   }
 }

@@ -27,7 +27,7 @@ export interface IGeneralRepositoryGateway<T> {
   insertMany(data: T[]): Promise<T[]>
   findOne(
     query: IRepositoryGatewayQuery<T>
-  ): Promise<T>
+  ): Promise<T|null>
   
   updateById(id: string, data: IRepositoryUpdateProperties<T>): Promise<T|null>
   updateOne(

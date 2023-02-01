@@ -9,8 +9,8 @@ const makePokemonCreateUsecase = ({ repositoryGateway, createPokemonStats }) => 
          *
          * @param data
          */
-        async execute(trainerId, dataInput) {
-            const pokemonEntity = new entity_1.PokemonEntity(Object.assign(Object.assign({}, dataInput), { trainerId }));
+        async execute(trainer, dataInput) {
+            const pokemonEntity = new entity_1.PokemonEntity(Object.assign(Object.assign({}, dataInput), { trainer }));
             // or 
             pokemonEntity.pokemonStats = await createPokemonStats(dataInput.stats);
             const pokemon = await repositoryGateway.insertOne(pokemonEntity.toObject());

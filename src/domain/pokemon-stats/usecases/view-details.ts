@@ -15,15 +15,31 @@ export const makePokemonStatsViewDetailsUsecase = (
 ) => {
   return class PokemonStatsViewDetailsUsecase {
     constructor() {}
-    /***
+    /**
      * 
+     * @param id 
+     * @returns 
      */
     public async getOne (
       id: string
     ) {
       return repositoryGateway.findOne({
-        _id: id
+        id
       })
+    }
+    /**
+     * 
+     * @param id 
+     * @returns 
+     */
+    public async getOneStrict (
+      id: string
+    ) {
+      const pokemonStats = await this.getOne(id)
+      if (!pokemonStats) {
+        throw new Error("No pokemon stats data found.")
+      }
+      return pokemonStats
     }
   }
 }

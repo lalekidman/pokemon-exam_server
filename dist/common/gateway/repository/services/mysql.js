@@ -3,9 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MySQLRepositoryGatewayService = void 0;
 const data_source_1 = require("@app/data-source");
 class MySQLRepositoryGatewayService {
-    constructor(entity) {
+    constructor(entity, tableName) {
         this.entity = entity;
+        this.tableName = tableName;
         this.repository = data_source_1.AppDataSource.getRepository(entity);
+    }
+    generateQuery(query) {
+        return Reflect.ownKeys(query).reduce((previousVal, key) => {
+            if (previousVal !== "") {
+                previousVal += " AND ";
+            }
+            return previousVal + `${this.tableName}.${key} = :${key}`;
+        }, "");
     }
     /**
      * get list
@@ -13,17 +22,25 @@ class MySQLRepositoryGatewayService {
      * @param queryParams
      */
     async list(query, options) {
-        return query ? this.repository.findBy(query) : this.repository.find();
+        if (query) {
+            return this.repository.createQueryBuilder()
+                .select(this.tableName)
+                .from(this.entity, this.tableName)
+                .where(this.generateQuery(query), query)
+                .getMany();
+        }
+        return this.repository.find();
     }
     /**
      * by data by id
      * @param id
      */
     async findOne(query) {
-        const document = await this.repository.findOne({
-            where: query,
-        });
-        return document;
+        return this.repository.createQueryBuilder()
+            .select(this.tableName)
+            .from(this.entity, this.tableName)
+            .where(this.generateQuery(query), query)
+            .getOne();
     }
     /**
      * insert data
@@ -139,9 +156,11 @@ class MySQLRepositoryGatewayService {
      * @returns
      */
     async count(query) {
-        console.log('objequeryquerxxyct :>> ', query);
-        const count = await this.repository.count(query);
-        return count;
+        return this.repository.createQueryBuilder()
+            .select(this.tableName)
+            .from(this.entity, this.tableName)
+            .where(this.generateQuery(query), query)
+            .getCount();
     }
 }
 exports.MySQLRepositoryGatewayService = MySQLRepositoryGatewayService;

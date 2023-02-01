@@ -13,6 +13,7 @@ exports.PokemonRepositoryEntity = void 0;
 const typeorm_1 = require("typeorm");
 const trainer_1 = require("../trainer");
 const pokemon_stats_1 = require("../pokemon-stats");
+const constants_1 = require("@app/common/constants");
 let PokemonRepositoryEntity = class PokemonRepositoryEntity {
 };
 __decorate([
@@ -44,7 +45,7 @@ __decorate([
     __metadata("design:type", Number)
 ], PokemonRepositoryEntity.prototype, "updatedAt", void 0);
 PokemonRepositoryEntity = __decorate([
-    (0, typeorm_1.Entity)({ name: "pokemon" })
+    (0, typeorm_1.Entity)({ name: constants_1.TABLE_NAMES.POKEMON })
 ], PokemonRepositoryEntity);
 exports.PokemonRepositoryEntity = PokemonRepositoryEntity;
 //# sourceMappingURL=entity.js.map

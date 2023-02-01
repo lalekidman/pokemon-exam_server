@@ -1,3 +1,4 @@
+import { TABLE_NAMES } from '@app/common/constants'
 import {
   MySQLRepositoryGatewayService
 } from '@app/common/gateway/repository/services/mysql'
@@ -10,7 +11,7 @@ import {
 
 export class TrainerRepositoryGateway extends MySQLRepositoryGatewayService<TrainerRepositoryEntity> implements ITrainerRepositoryGateway  {
   constructor () {
-    super(TrainerRepositoryEntity)
+    super(TrainerRepositoryEntity, TABLE_NAMES.TRAINER)
   }
   // public async insertOne(data: Trainer): Promise<Trainer> {
   //   const trainer = new Trainer()

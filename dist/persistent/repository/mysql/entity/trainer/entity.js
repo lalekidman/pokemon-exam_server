@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TrainerRepositoryEntity = void 0;
+const constants_1 = require("@app/common/constants");
 const typeorm_1 = require("typeorm");
 let TrainerRepositoryEntity = class TrainerRepositoryEntity {
     constructor() {
@@ -49,7 +50,7 @@ __decorate([
     __metadata("design:type", Number)
 ], TrainerRepositoryEntity.prototype, "updatedAt", void 0);
 TrainerRepositoryEntity = __decorate([
-    (0, typeorm_1.Entity)({ name: "trainers" })
+    (0, typeorm_1.Entity)({ name: constants_1.TABLE_NAMES.TRAINER })
 ], TrainerRepositoryEntity);
 exports.TrainerRepositoryEntity = TrainerRepositoryEntity;
 //# sourceMappingURL=entity.js.map

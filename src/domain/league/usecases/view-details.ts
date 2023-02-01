@@ -19,7 +19,7 @@ export const makeLeagueViewDetailsUsecase = (
       id: string
     ) {
       const league = await repositoryGateway.findOne({
-        _id: id
+        id
       })
       return league
     }

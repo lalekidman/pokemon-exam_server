@@ -17,7 +17,7 @@ import {
 //   stats: Pick<IPokemonStatsEntity, 'attack' | 'speed' | 'defense' | 'total'>
 // }
 interface IPokemonListOptions {
-  trainerId?: string
+  trainer?: string
 }
 
 export const makePokemonListUsecase = (
@@ -37,10 +37,11 @@ export const makePokemonListUsecase = (
     ): Promise<IPokemonEntity[]> {
 
       const {
-        trainerId
+        trainer
       } = options || {}
       return repositoryGateway.list({
-        ...(trainerId ? {trainerId} : {})
+        ...(trainer ? {trainer: trainer} : {})
+        // ...(trainer ? {trainerId: trainer} : {}) as any
       })
     }
   }

@@ -21,7 +21,7 @@ export class TrainerRoute {
     appRoute.get('/',
       appController.listRoute
     )
-    appRoute.get('/:trainer/pokemons',
+    appRoute.get('/:trainerId/pokemons',
       pokemonController.listRoute
     )
     return appRoute

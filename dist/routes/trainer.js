@@ -20,7 +20,7 @@ class TrainerRoute {
         appRoute.post('/', appController.addRoute);
         appRoute.get('/', appController.listRoute);
         appRoute.get('/', appController.listRoute);
-        appRoute.get('/:trainer/pokemons', pokemonController.listRoute);
+        appRoute.get('/:trainerId/pokemons', pokemonController.listRoute);
         return appRoute;
     }
 }
