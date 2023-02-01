@@ -1,10 +1,11 @@
 import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
-import {ErrorCodes, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
+import {ErrorCodes, ErrorResponse, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
 import {
   LeagueCreateUsecase,
   LeagueViewDetailsUsecase,
-  LeagueListUsecase
+  LeagueListUsecase,
+  LeagueUpdateUsecase
 } from '@app/domain/league/usecases'
 export default class PokemonController {
   
@@ -30,10 +31,34 @@ export default class PokemonController {
           requiredSlotSize
         })
       res.status(HttpStatus.CREATED).send(SuccessResponse(league))
-    } catch (error) {
-      new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-          .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
-          .throw()
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
+    }
+  }
+  public updateRoute = async (
+    req: Request,
+    res: Response
+  ) => {
+    const {id = ''} = req.params
+    const {
+      title,
+      location,
+      terrain,
+      pokemonMaxStats,
+      requiredSlotSize
+    } = req.body
+    try {
+      const league = await new LeagueUpdateUsecase()
+        .execute(id, {
+          title,
+          location,
+          terrain,
+          pokemonMaxStats,
+          requiredSlotSize
+        })
+      res.status(HttpStatus.ACCEPTED).send(SuccessResponse(league))
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
     }
   }
 
@@ -48,10 +73,8 @@ export default class PokemonController {
       const league = await new LeagueViewDetailsUsecase()
         .getOne(leagueId)
       res.status(HttpStatus.OK).send(SuccessResponse(league))
-    } catch (error) {
-      new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-          .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
-          .throw()
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
     }
   }
   
@@ -68,10 +91,8 @@ export default class PokemonController {
           trainer
         })
       res.status(HttpStatus.OK).send(SuccessResponse(list))
-    } catch (error) {
-      new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-          .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
-          .throw()
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
     }
   }
 }

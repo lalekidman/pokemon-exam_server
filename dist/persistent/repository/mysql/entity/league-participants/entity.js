@@ -16,9 +16,6 @@ const entity_1 = require("../league/entity");
 const pokemon_1 = require("../pokemon");
 const trainer_1 = require("../trainer");
 let LeagueParticipantsRepositoryEntity = class LeagueParticipantsRepositoryEntity {
-    constructor() {
-        this.id = '';
-    }
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
@@ -31,7 +28,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(() => trainer_1.TrainerRepositoryEntity, (trainer) => trainer.id),
     __metadata("design:type", String)
-], LeagueParticipantsRepositoryEntity.prototype, "trainerId", void 0);
+], LeagueParticipantsRepositoryEntity.prototype, "trainer", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => entity_1.LeagueRepositoryEntity, (league) => league.id),
     __metadata("design:type", String)

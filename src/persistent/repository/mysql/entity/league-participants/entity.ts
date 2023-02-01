@@ -13,16 +13,15 @@ import { TrainerRepositoryEntity } from '../trainer';
 
 @Entity({name: "league_participants"})
 export class LeagueParticipantsRepositoryEntity implements Omit<ILeagueParticipantEntity, '_id'> {
- 
 
   @PrimaryGeneratedColumn("uuid")
-  id: string = '';
+  id!: string;
 
   @ManyToOne(() => PokemonRepositoryEntity, (pokemon) => pokemon.id)
   pokemon!: string;
 
   @ManyToOne(() => TrainerRepositoryEntity, (trainer) => trainer.id)
-  trainerId!: string;
+  trainer!: string;
 
   @ManyToOne(() => LeagueRepositoryEntity, (league) => league.id)
   league!: string;

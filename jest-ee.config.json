@@ -1,11 +1,23 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
   "roots": [
-    "<rootDir>/src/test"
+    "<rootDir>"
   ],
+  "modulePaths": [
+    "<rootDir>"
+  ],
+  "moduleDirectories": ["node_modules", "src"],
+  "moduleNameMapper": {
+    "^@app/common/(.*)$": "<rootDir>/src/common/$1",
+    "^@app/configs/(.*)$": "<rootDir>/src/configs/$1",
+    "^@app/controller/(.*)$": "<rootDir>/src/controller/$1",
+    "^@app/domain/(.*)$": "<rootDir>/src/domain/$1",
+    "^@app/routes/(.*)$": "<rootDir>/src/routes/$1",
+    "^@app/test/(.*)$": "<rootDir>/src/test/$1"
+  },
   "setupFilesAfterEnv": ["jest-extended"],
   "testEnvironment": "node",
-  "testRegex": ".spec.ts$",
+  "testRegex": "spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   }

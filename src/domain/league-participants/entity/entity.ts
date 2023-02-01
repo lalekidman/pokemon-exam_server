@@ -13,7 +13,7 @@ export const makeLeagueParticipantEntity = ({
     readonly id: string;
 
     private _pokemon: string = '';
-    private _trainerId: string = '';
+    private _trainer: string = '';
     private _league: string = '';
     private _leagueSlot: string = '';
 
@@ -25,7 +25,7 @@ export const makeLeagueParticipantEntity = ({
         id = generateId(),
 
         pokemon = this._pokemon,
-        trainerId = this._trainerId,
+        trainer = this._trainer,
         league = this._league,
         leagueSlot = this._leagueSlot,
 
@@ -35,7 +35,7 @@ export const makeLeagueParticipantEntity = ({
 
       this.id = id
       this.pokemon = pokemon
-      this.trainerId = trainerId
+      this.trainer = trainer
       this.league = league
       this.leagueSlot = leagueSlot
 
@@ -62,19 +62,19 @@ export const makeLeagueParticipantEntity = ({
 
 
     /**
-     * Getter trainerId
+     * Getter trainer
      * @return {string }
      */
-	public get trainerId(): string  {
-		return this._trainerId;
+	public get trainer(): string  {
+		return this._trainer;
 	}
 
     /**
-     * Setter trainerId
+     * Setter trainer
      * @param {string } value
      */
-	public set trainerId(value: string ) {
-		this._trainerId = value;
+	public set trainer(value: string ) {
+		this._trainer = value;
 	}
 
 
@@ -120,7 +120,7 @@ export const makeLeagueParticipantEntity = ({
         id: this.id,
         league: this._league,
         leagueSlot: this._leagueSlot,
-        trainerId: this._trainerId,
+        trainer: this._trainer,
         pokemon: this._pokemon,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt

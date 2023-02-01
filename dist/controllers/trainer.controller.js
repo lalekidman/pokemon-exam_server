@@ -35,11 +35,17 @@ class AppController {
                 res.status(HttpStatus.CREATED).send((0, http_response_1.SuccessResponse)(user));
             })
                 .catch((error) => {
-                // ## TODO ##
-                // - how could I support the error from Error object?
-                new http_response_1.HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-                    .track(http_response_1.ErrorCodes.CREATE_USER_DETAILS_FAILED)
-                    .throw();
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
+            });
+        };
+        this.listRoute = (req, res) => {
+            new usecases_1.TrainerListUsecase()
+                .getList()
+                .then((trainers) => {
+                res.status(HttpStatus.CREATED).send((0, http_response_1.SuccessResponse)(trainers));
+            })
+                .catch((error) => {
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             });
         };
     }

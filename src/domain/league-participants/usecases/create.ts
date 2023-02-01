@@ -29,31 +29,35 @@ export const makeLeagueParticipantCreateUsecase = (
     ) {
       const leagueParticipantEntity = new LeagueParticipantEntity({
         ...dataInput,
-        
       })
+      console.log('leagueParticipantEntity :>> ', leagueParticipantEntity);
       // need to check league slot entity.
-      // if the league slot type is solo or pair.
+      // if the league slot type is solo or pair
+      console.log('heereee :>> ', leagueSlot);
       if (leagueSlot.type === LEAGUE_SLOT_TYPE.SOLO) {
+        console.log('@solo :>> ');
         // then check if the slot is already occupied.
         const occupied = await repositoryGateway.findOne({
-          leagueSlot: leagueSlot._id
+          leagueSlot: leagueSlot.id
         })
+        console.log('occupied :>> ', occupied);
         if (occupied) {
           throw new Error("the league slot is already occupied.")
         }
         // else save the data.
       } else if (leagueSlot.type === LEAGUE_SLOT_TYPE.PAIR) {
+        console.log('@pair :>> ');
         const participantsCount = await repositoryGateway.count({
-          leagueSlot: leagueSlot._id
+          leagueSlot: leagueSlot.id
         })
         if (participantsCount >= 2) {
           throw new Error("the league slot is already occupied.")
         }
         // then check if the pair participants have the same pokemon,
         const samePokemonParticipant = await repositoryGateway.findOne({
-          leagueSlot: leagueSlot._id,
+          leagueSlot: leagueSlot.id,
           pokemon: leagueParticipantEntity.pokemon, 
-          trainerId: leagueParticipantEntity.trainerId
+          trainer: leagueParticipantEntity.trainer
         })
         if (samePokemonParticipant) {
           // can't think a best error message, could enhance in the future based on the requirements.

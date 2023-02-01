@@ -11,6 +11,10 @@ import {
 } from './view-details'
 
 import {
+  makePokemonListUsecase
+} from './list'
+
+import {
   PokemonStatsCreateUsecase,
   PokemonStatsViewDetailsUsecase
 } from '@app/domain/pokemon-stats/usecases'
@@ -32,4 +36,8 @@ export const PokemonCreateUsecase = makePokemonCreateUsecase({
 export const PokemonViewDetailsUsecase = makePokemonViewDetailsUsecase({
   repositoryGateway,
   getPokemonStats: new PokemonStatsViewDetailsUsecase().getOne
+})
+
+export const PokemonListUsecase = makePokemonListUsecase({
+  repositoryGateway
 })

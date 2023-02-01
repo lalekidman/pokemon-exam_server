@@ -24,7 +24,7 @@ const makeLeagueValidateUsecase = ({ repositoryGateway }) => {
          * @param maxStats overall stats to validate
          * @returns
          */
-        async validateMaxPokemonStats(league, maxStats) {
+        validateMaxPokemonStats(league, maxStats) {
             if (league) {
                 if (league.pokemonMaxStats < maxStats) {
                     throw new Error("Unable to add slot, reached the maximum stats allowed.");

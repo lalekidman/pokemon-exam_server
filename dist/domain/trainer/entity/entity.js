@@ -20,7 +20,7 @@ const makeTrainerEntity = ({ generateId }) => {
             this._suspendedAt = 0;
             this.createdAt = Date.now();
             this.updatedAt = Date.now();
-            const { id = generateId(), firstName = this.firstName, lastName = this.lastName, suspended = this.suspended, suspendedAt = this.suspendedAt, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
+            const { id = generateId(), firstName = this._firstName, lastName = this._lastName, suspended = this._suspended, suspendedAt = this._suspendedAt, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -99,8 +99,9 @@ const makeTrainerEntity = ({ generateId }) => {
     }
     __decorate([
         (0, decorators_1.IsString)({
-            maxLength: 32,
-            minLength: 2
+        // maxLength: 32,
+        // minLength: 2,
+        // required: true
         }),
         __metadata("design:type", String),
         __metadata("design:paramtypes", [String])
@@ -108,7 +109,8 @@ const makeTrainerEntity = ({ generateId }) => {
     __decorate([
         (0, decorators_1.IsString)({
             maxLength: 32,
-            minLength: 2
+            minLength: 2,
+            required: true
         }),
         (0, decorators_1.IsString)(),
         __metadata("design:type", String),

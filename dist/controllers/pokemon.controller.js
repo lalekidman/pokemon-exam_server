@@ -40,9 +40,31 @@ class PokemonController {
                 res.status(HttpStatus.CREATED).send((0, http_response_1.SuccessResponse)(pokemon));
             }
             catch (error) {
-                new http_response_1.HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-                    .track(http_response_1.ErrorCodes.CREATE_USER_DETAILS_FAILED)
-                    .throw();
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
+            }
+        };
+        this.viewDetailsRoute = async (req, res) => {
+            const { id = '' } = req.params;
+            try {
+                const pokemon = await new usecases_1.PokemonViewDetailsUsecase()
+                    .getOne(id);
+                res.status(HttpStatus.OK).send((0, http_response_1.SuccessResponse)(pokemon));
+            }
+            catch (error) {
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
+            }
+        };
+        this.listRoute = async (req, res) => {
+            const { trainer_id = req.params.trainerId } = req.query;
+            try {
+                const pokemon = await new usecases_1.PokemonListUsecase()
+                    .getList({
+                    trainerId: trainer_id
+                });
+                res.status(HttpStatus.OK).send((0, http_response_1.SuccessResponse)(pokemon));
+            }
+            catch (error) {
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             }
         };
     }

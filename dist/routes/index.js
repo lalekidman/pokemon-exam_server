@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppRoute = void 0;
 const express_1 = require("express");
 const trainer_1 = require("./trainer");
+const pokemon_1 = require("./pokemon");
+const league_1 = require("./league");
 class AppRoute {
     constructor() {
     }
@@ -13,7 +15,10 @@ class AppRoute {
         const appRoute = (0, express_1.Router)({
             mergeParams: true
         });
-        appRoute.use("/users", new trainer_1.TrainerRoute().expose());
+        appRoute.use("/trainers", new trainer_1.TrainerRoute().expose());
+        appRoute.use("/pokemons", new pokemon_1.PokemonRoute().expose());
+        // appRoute.use("/leagues/:id/slot", new LeagueSlotRoute().expose())
+        appRoute.use("/leagues", new league_1.LeagueRoute().expose());
         return appRoute;
     }
     /**

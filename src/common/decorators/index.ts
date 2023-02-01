@@ -19,7 +19,7 @@ export const IsString = (options?: IisStringOptions) => {
     required = false
   } = options ?? {}
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    const setter = function (declaredValue: any) {
+    const setter = (declaredValue: any) => {
       if (!(typeof declaredValue === 'string')) {
         throw new Error(`"${propertyKey}" must be string. found ${typeof declaredValue}.`)
       }
@@ -34,7 +34,9 @@ export const IsString = (options?: IisStringOptions) => {
       }
     }
     Object.defineProperty(target, propertyKey, {
-      ...descriptor,
+      get: descriptor.get,
+      enumerable: true,
+      configurable: true,
       set: setter,
     })
   };

@@ -13,33 +13,7 @@ class MySQLRepositoryGatewayService {
      * @param queryParams
      */
     async list(query, options) {
-        const { limit = 10, offset = 0, sort = 'createdAt:asc', search = '', searchFields = [], fields = null } = options || {};
-        const queryOptions = {};
-        if (limit >= 1) {
-            queryOptions.limit = +limit;
-        }
-        if (offset >= 0) {
-            queryOptions.offset = +offset;
-        }
-        const matches = searchFields.map((field) => ({ [field]: {
-                $regex: new RegExp(search, 'gi')
-            } }));
-        queryOptions.sort = sort.split(',').reduce((sortFields, field) => {
-            const sortValue = field.split(':');
-            return Object.assign(Object.assign({}, sortFields), { [sortValue[0]]: sortValue[1] === 'asc' ? 1 : -1 });
-        }, {});
-        const projections = fields ? fields.split(',').reduce((fields, fieldName) => (Object.assign(Object.assign({}, fields), { [fieldName]: 1 })), {}) : null;
-        const documentQuery = this.repository.find({
-            $and: [
-                query,
-                ...(matches.length >= 1 ? [
-                    {
-                        $or: matches
-                    }
-                ] : [])
-            ]
-        });
-        return documentQuery;
+        return query ? this.repository.findBy(query) : this.repository.find();
     }
     /**
      * by data by id
@@ -165,9 +139,8 @@ class MySQLRepositoryGatewayService {
      * @returns
      */
     async count(query) {
-        const count = await this.repository.count({
-            where: query
-        });
+        console.log('objequeryquerxxyct :>> ', query);
+        const count = await this.repository.count(query);
         return count;
     }
 }

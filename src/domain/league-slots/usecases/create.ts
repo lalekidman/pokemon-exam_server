@@ -15,9 +15,9 @@ import {
 
 interface ILeagueSlotCreateUsecaseDependencies extends ILeagueSlotUsecaseDependencies {
   validateMaximumSlotLimit: (league: ILeagueEntity, slotSize: number) => Promise<boolean>,
-  validatePokemonMaximumStats: (league: ILeagueEntity, slotOverallStats: number) => Promise<boolean>,
+  validatePokemonMaximumStats: (league: ILeagueEntity, slotOverallStats: number) => boolean,
   createLeagueParticipants: (leagueSlot: ILeagueSlotEntity, dataInput: ILeagueParticipantInput) => Promise<ILeagueParticipantEntity>,
-  getPokemonDetails: (pokemon: string) => Promise<IPokemonEntity & {stats: IPokemonStatsEntity}>
+  getPokemonDetails: (pokemon: string) => Promise<IPokemonEntity & {stats: Pick<IPokemonStatsEntity, 'attack' | 'defense' | 'speed' | 'total'>}>
 }
 export const makeLeagueSlotCreateUsecase = (
   {
@@ -48,7 +48,7 @@ export const makeLeagueSlotCreateUsecase = (
       } = dataInput
       // could add limit here?
       const leagueSlotEntity = new LeagueSlotsEntity({
-        league: league._id,
+        league: league.id,
         type
       })
       const size = await repositoryGateway.count({
@@ -67,15 +67,14 @@ export const makeLeagueSlotCreateUsecase = (
       }
       // validate the maximum stats allowed
       await validatePokemonMaximumStats(league, leagueSlotEntity.overallTotal)
-      // save all of the participants.
-      const pokemonParticipants = await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlotEntity, {
-        pokemon: participant.pokemon,
-        trainerId: participant.trainerId
-      })))
-      // then save it to the repository.
-      // could enhance more here like if there's any error, revert the action.
       const leagueSlot = await repositoryGateway.insertOne(leagueSlotEntity.toObject())
-  
+      // save all of the participants.
+      await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlot, {
+        pokemon: participant.pokemon,
+        trainer: participant.trainer
+      })))
+      // could enhance more here like if there's any error, revert the action.
+      
       return leagueSlot
     }
   }

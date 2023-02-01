@@ -13,9 +13,6 @@ exports.LeagueRepositoryEntity = void 0;
 const typeorm_1 = require("typeorm");
 const trainer_1 = require("../trainer");
 let LeagueRepositoryEntity = class LeagueRepositoryEntity {
-    constructor() {
-        this.id = '';
-    }
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),

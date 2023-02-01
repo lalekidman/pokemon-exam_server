@@ -1,8 +1,9 @@
 import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
-import {ErrorCodes, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
+import {ErrorCodes, ErrorResponse, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
 import {
-  TrainerCreateUsecase
+  TrainerCreateUsecase,
+  TrainerListUsecase
 } from '@app/domain/trainer/usecases'
 export default class AppController {
   
@@ -23,11 +24,21 @@ export default class AppController {
         res.status(HttpStatus.CREATED).send(SuccessResponse(user))
       })
       .catch((error) => {
-        // ## TODO ##
-        // - how could I support the error from Error object?
-        new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-          .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
-          .throw()
+        res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
+      })
+  }
+  
+  public listRoute = (
+    req: Request,
+    res: Response
+  ) => {
+    new TrainerListUsecase()
+      .getList()
+      .then((trainers) => {
+        res.status(HttpStatus.CREATED).send(SuccessResponse(trainers))
+      })
+      .catch((error) => {
+        res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
       })
   }
 }

@@ -26,6 +26,7 @@ export class PokemonRepositoryEntity implements Omit<IPokemonEntity, '_id'> {
 
   @ManyToOne(() => TrainerRepositoryEntity, (trainer) => trainer.id)
   trainer!: string;
+  trainerId!: string;
 
   @Column({type: "double"})
   createdAt!: number ;

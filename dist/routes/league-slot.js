@@ -3,10 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TrainerRoute = void 0;
+exports.LeagueSlotRoute = void 0;
 const express_1 = require("express");
 const league_slot_controller_1 = __importDefault(require("@app/controllers/league-slot.controller"));
-class TrainerRoute {
+class LeagueSlotRoute {
     /**
      * expose the routes
      */
@@ -19,5 +19,5 @@ class TrainerRoute {
         return appRoute;
     }
 }
-exports.TrainerRoute = TrainerRoute;
+exports.LeagueSlotRoute = LeagueSlotRoute;
 //# sourceMappingURL=league-slot.js.map

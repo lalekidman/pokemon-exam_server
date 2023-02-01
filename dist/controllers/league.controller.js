@@ -38,9 +38,25 @@ class PokemonController {
                 res.status(HttpStatus.CREATED).send((0, http_response_1.SuccessResponse)(league));
             }
             catch (error) {
-                new http_response_1.HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-                    .track(http_response_1.ErrorCodes.CREATE_USER_DETAILS_FAILED)
-                    .throw();
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
+            }
+        };
+        this.updateRoute = async (req, res) => {
+            const { id = '' } = req.params;
+            const { title, location, terrain, pokemonMaxStats, requiredSlotSize } = req.body;
+            try {
+                const league = await new usecases_1.LeagueUpdateUsecase()
+                    .execute(id, {
+                    title,
+                    location,
+                    terrain,
+                    pokemonMaxStats,
+                    requiredSlotSize
+                });
+                res.status(HttpStatus.ACCEPTED).send((0, http_response_1.SuccessResponse)(league));
+            }
+            catch (error) {
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             }
         };
         this.viewDetailsRoute = async (req, res) => {
@@ -51,9 +67,7 @@ class PokemonController {
                 res.status(HttpStatus.OK).send((0, http_response_1.SuccessResponse)(league));
             }
             catch (error) {
-                new http_response_1.HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-                    .track(http_response_1.ErrorCodes.CREATE_USER_DETAILS_FAILED)
-                    .throw();
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             }
         };
         this.listRoute = async (req, res) => {
@@ -66,9 +80,7 @@ class PokemonController {
                 res.status(HttpStatus.OK).send((0, http_response_1.SuccessResponse)(list));
             }
             catch (error) {
-                new http_response_1.HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-                    .track(http_response_1.ErrorCodes.CREATE_USER_DETAILS_FAILED)
-                    .throw();
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             }
         };
     }

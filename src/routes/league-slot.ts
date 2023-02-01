@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import AppController from '@app/controllers/league-slot.controller'
-export class TrainerRoute {
+export class LeagueSlotRoute {
   /**
    * expose the routes
    */

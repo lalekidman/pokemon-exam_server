@@ -5,15 +5,15 @@ const makeLeagueParticipantEntity = ({ generateId }) => {
     class LeagueParticipantEntity {
         constructor(data) {
             this._pokemon = '';
-            this._trainerId = '';
+            this._trainer = '';
             this._league = '';
             this._leagueSlot = '';
             this.createdAt = Date.now();
             this.updatedAt = Date.now();
-            const { id = generateId(), pokemon = this._pokemon, trainerId = this._trainerId, league = this._league, leagueSlot = this._leagueSlot, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
+            const { id = generateId(), pokemon = this._pokemon, trainer = this._trainer, league = this._league, leagueSlot = this._leagueSlot, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
             this.id = id;
             this.pokemon = pokemon;
-            this.trainerId = trainerId;
+            this.trainer = trainer;
             this.league = league;
             this.leagueSlot = leagueSlot;
             this.createdAt = createdAt;
@@ -34,18 +34,18 @@ const makeLeagueParticipantEntity = ({ generateId }) => {
             this._pokemon = value;
         }
         /**
-         * Getter trainerId
+         * Getter trainer
          * @return {string }
          */
-        get trainerId() {
-            return this._trainerId;
+        get trainer() {
+            return this._trainer;
         }
         /**
-         * Setter trainerId
+         * Setter trainer
          * @param {string } value
          */
-        set trainerId(value) {
-            this._trainerId = value;
+        set trainer(value) {
+            this._trainer = value;
         }
         /**
          * Getter league
@@ -84,7 +84,7 @@ const makeLeagueParticipantEntity = ({ generateId }) => {
                 id: this.id,
                 league: this._league,
                 leagueSlot: this._leagueSlot,
-                trainerId: this._trainerId,
+                trainer: this._trainer,
                 pokemon: this._pokemon,
                 createdAt: this.createdAt,
                 updatedAt: this.updatedAt

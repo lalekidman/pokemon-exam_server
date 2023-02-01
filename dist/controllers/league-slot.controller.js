@@ -26,21 +26,20 @@ const usecases_2 = require("@app/domain/league/usecases");
 class AppController {
     constructor() {
         this.addRoute = async (req, res) => {
-            const { leagueId, type = '', participants = [] } = req.body;
+            const { league, type = '', participants = [] } = req.body;
             try {
-                const league = await new usecases_2.LeagueViewDetailsUsecase().getOneStrict(leagueId);
+                // to validate if the league is existing.
+                const leagueObject = await new usecases_2.LeagueViewDetailsUsecase().getOneStrict(league);
                 // slot create and then add the pokemons.
-                const result = new usecases_1.LeagueSlotCreateUsecase()
-                    .execute(league, {
+                const result = await new usecases_1.LeagueSlotCreateUsecase()
+                    .execute(leagueObject, {
                     type,
                     participants
                 });
                 res.status(HttpStatus.CREATED).send((0, http_response_1.SuccessResponse)(result));
             }
             catch (error) {
-                new http_response_1.HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-                    .track(http_response_1.ErrorCodes.CREATE_USER_DETAILS_FAILED)
-                    .throw();
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             }
         };
     }

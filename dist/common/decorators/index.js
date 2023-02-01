@@ -4,7 +4,7 @@ exports.IsNumeric = exports.IsBoolean = exports.IsString = void 0;
 const IsString = (options) => {
     const { maxLength = -1, minLength = -1, required = false } = options !== null && options !== void 0 ? options : {};
     return function (target, propertyKey, descriptor) {
-        const setter = function (declaredValue) {
+        const setter = (declaredValue) => {
             if (!(typeof declaredValue === 'string')) {
                 throw new Error(`"${propertyKey}" must be string. found ${typeof declaredValue}.`);
             }
@@ -18,7 +18,12 @@ const IsString = (options) => {
                 throw new Error(`"${propertyKey}" exceed the minimum character limit which is ${minLength}.`);
             }
         };
-        Object.defineProperty(target, propertyKey, Object.assign(Object.assign({}, descriptor), { set: setter }));
+        Object.defineProperty(target, propertyKey, {
+            get: descriptor.get,
+            enumerable: true,
+            configurable: true,
+            set: setter,
+        });
     };
 };
 exports.IsString = IsString;

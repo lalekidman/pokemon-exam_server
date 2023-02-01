@@ -6,6 +6,9 @@ import {
   makeLeagueCreateUsecase
 } from './create'
 import {
+  makeLeagueUpdateUsecase
+} from './update'
+import {
   makeLeagueValidateUsecase
 } from './validation'
 
@@ -19,6 +22,9 @@ import {
 const repositoryGateway = new LeagueRepositoryGateway()
 
 export const LeagueCreateUsecase = makeLeagueCreateUsecase({
+  repositoryGateway
+})
+export const LeagueUpdateUsecase = makeLeagueUpdateUsecase({
   repositoryGateway
 })
 

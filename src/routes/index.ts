@@ -2,6 +2,15 @@ import {Router} from 'express'
 import {
   TrainerRoute
 } from './trainer'
+import {
+  PokemonRoute
+} from './pokemon'
+import {
+  LeagueRoute
+} from './league'
+import {
+  LeagueSlotRoute
+} from './league-slot'
 export class AppRoute {
   
   constructor () {
@@ -13,7 +22,10 @@ export class AppRoute {
     const appRoute = Router({
       mergeParams: true
     })
-    appRoute.use("/users", new TrainerRoute().expose())
+    appRoute.use("/trainers", new TrainerRoute().expose())
+    appRoute.use("/pokemons", new PokemonRoute().expose())
+    // appRoute.use("/leagues/:id/slot", new LeagueSlotRoute().expose())
+    appRoute.use("/leagues", new LeagueRoute().expose())
     return appRoute
   }
   /**

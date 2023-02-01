@@ -16,6 +16,8 @@ class PokemonRoute {
         });
         const appController = new pokemon_controller_1.default();
         appRoute.post('/', appController.addRoute);
+        appRoute.get('/', appController.listRoute);
+        appRoute.get('/:id', appController.viewDetailsRoute);
         return appRoute;
     }
 }

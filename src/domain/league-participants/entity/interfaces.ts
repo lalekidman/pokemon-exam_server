@@ -4,14 +4,14 @@ import {
 
 export interface ILeagueParticipantBase {
   pokemon: string // id of pokemon
-  trainerId: string
+  trainer: string
   league: string
   leagueSlot: string
 }
 
 export interface ILeagueParticipantInput extends Pick<ILeagueParticipantBase,
 | 'pokemon'
-| 'trainerId'
+| 'trainer'
 // | 'league'
 // | 'leagueSlot'
 >{

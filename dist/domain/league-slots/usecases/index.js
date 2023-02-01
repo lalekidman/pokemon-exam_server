@@ -9,13 +9,14 @@ const usecases_3 = require("@app/domain/pokemon/usecases");
 const repositoryGateway = new league_slots_1.LeagueSlotRepositoryGateway();
 exports.LeagueSlotCreateUsecase = (0, create_1.makeLeagueSlotCreateUsecase)({
     repositoryGateway,
-    validateMaximumSlotLimit: async (league, slotSize) => await (new usecases_1.LeagueValidateUsecase()).validateMaxSlot(league, slotSize),
-    validatePokemonMaximumStats: async (league, slotOverallStats) => await (new usecases_1.LeagueValidateUsecase()).validateMaxPokemonStats(league, slotOverallStats),
+    validateMaximumSlotLimit: new usecases_1.LeagueValidateUsecase().validateMaxSlot,
+    validatePokemonMaximumStats: (new usecases_1.LeagueValidateUsecase()).validateMaxPokemonStats,
+    // validatePokemonMaximumStats: (league, slotOverallStats) => (new LeagueValidateUsecase()).validateMaxPokemonStats(league, slotOverallStats),
     createLeagueParticipants: (leagueSlot, dataInput) => {
         return new usecases_2.LeagueParticipantCreateUsecase().execute(leagueSlot, dataInput);
     },
-    getPokemonDetails: (id) => new usecases_3.PokemonViewDetailsUsecase().getOne(id)
+    getPokemonDetails: (id) => new usecases_3.PokemonViewDetailsUsecase().getOneStrict(id)
     // can be do in much short way but seems complicated to read.
-    // checkSlotLimit: (new LeagueValidateUsecase()).validateMaxSlot
+    // checkSlotLimit:x (new LeagueValidateUsecase()).validateMaxSlot
 });
 //# sourceMappingURL=index.js.map

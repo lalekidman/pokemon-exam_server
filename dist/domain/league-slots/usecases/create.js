@@ -14,7 +14,7 @@ const makeLeagueSlotCreateUsecase = ({ repositoryGateway, validateMaximumSlotLim
             const { participants, type, } = dataInput;
             // could add limit here?
             const leagueSlotEntity = new entity_1.LeagueSlotsEntity({
-                league: league._id,
+                league: league.id,
                 type
             });
             const size = await repositoryGateway.count({
@@ -33,14 +33,13 @@ const makeLeagueSlotCreateUsecase = ({ repositoryGateway, validateMaximumSlotLim
             }
             // validate the maximum stats allowed
             await validatePokemonMaximumStats(league, leagueSlotEntity.overallTotal);
-            // save all of the participants.
-            const pokemonParticipants = await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlotEntity, {
-                pokemon: participant.pokemon,
-                trainerId: participant.trainerId
-            })));
-            // then save it to the repository.
-            // could enhance more here like if there's any error, revert the action.
             const leagueSlot = await repositoryGateway.insertOne(leagueSlotEntity.toObject());
+            // save all of the participants.
+            await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlot, {
+                pokemon: participant.pokemon,
+                trainer: participant.trainer
+            })));
+            // could enhance more here like if there's any error, revert the action.
             return leagueSlot;
         }
     };

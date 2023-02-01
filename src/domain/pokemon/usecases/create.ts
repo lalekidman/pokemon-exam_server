@@ -29,7 +29,7 @@ export const makePokemonCreateUsecase = (
      * @param data
      */
     public async execute(
-      trainer: string,
+      trainerId: string,
       dataInput: IPokemonInput & {
         stats: IPokemonStatsInput
       },
@@ -37,10 +37,9 @@ export const makePokemonCreateUsecase = (
   
       const pokemonEntity = new PokemonEntity({
         ...dataInput,
-        trainer
+        trainerId
       })
       // or 
-      // pokemonEntity.trainer = trainer
       pokemonEntity.pokemonStats = await createPokemonStats(dataInput.stats)
 
       const pokemon = await repositoryGateway.insertOne(pokemonEntity.toObject())

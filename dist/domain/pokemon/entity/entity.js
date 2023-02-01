@@ -17,15 +17,15 @@ const makePokemonEntity = ({ generateId }) => {
             this._name = '';
             this._type = '';
             this._pokemonStats = '';
-            this._trainer = '';
+            this._trainerId = '';
             this.createdAt = Date.now();
             this.updatedAt = Date.now();
-            const { id = generateId(), name = this._name, type = this._type, pokemonStats = this._pokemonStats, trainer = this._trainer, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
+            const { id = generateId(), name = this._name, type = this._type, pokemonStats = this._pokemonStats, trainerId = this._trainerId, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
             this.id = id;
             this.name = name;
             this.type = type;
             this.pokemonStats = pokemonStats;
-            this.trainer = trainer;
+            this.trainerId = trainerId;
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
         }
@@ -73,18 +73,18 @@ const makePokemonEntity = ({ generateId }) => {
             this._pokemonStats = value;
         }
         /**
-         * Getter trainer
+         * Getter trainerId
          * @return {string }
          */
-        get trainer() {
-            return this._trainer;
+        get trainerId() {
+            return this._trainerId;
         }
         /**
-         * Setter trainer
+         * Setter trainerId
          * @param {string } value
          */
-        set trainer(value) {
-            this._trainer = value;
+        set trainerId(value) {
+            this._trainerId = value;
         }
         toObject() {
             return {
@@ -92,7 +92,7 @@ const makePokemonEntity = ({ generateId }) => {
                 name: this._name,
                 type: this._type,
                 pokemonStats: this._pokemonStats,
-                trainer: this._trainer,
+                trainerId: this._trainerId,
                 createdAt: this.createdAt,
                 updatedAt: this.updatedAt
             };

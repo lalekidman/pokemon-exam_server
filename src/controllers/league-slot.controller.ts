@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
-import {ErrorCodes, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
+import {ErrorCodes, ErrorResponse, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
 import {
   LeagueSlotCreateUsecase
 } from '@app/domain/league-slots/usecases'
@@ -14,23 +14,22 @@ export default class AppController {
     res: Response
   ) => {
     const {
-      leagueId,
+      league,
       type = '',
       participants = []
     } = req.body
     try {
-      const league = await new LeagueViewDetailsUsecase().getOneStrict(leagueId)
+      // to validate if the league is existing.
+      const leagueObject = await new LeagueViewDetailsUsecase().getOneStrict(league)
       // slot create and then add the pokemons.
-      const result = new LeagueSlotCreateUsecase()
-        .execute(league, {
+      const result = await new LeagueSlotCreateUsecase()
+        .execute(leagueObject, {
           type,
           participants
         })
       res.status(HttpStatus.CREATED).send(SuccessResponse(result))
-    } catch (error) {
-      new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-          .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
-          .throw()
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
     }
   }
 }

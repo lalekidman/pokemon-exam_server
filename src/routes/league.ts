@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import AppController from '@app/controllers/league.controller'
-export class TrainerRoute {
+import { LeagueSlotRoute } from './league-slot'
+export class LeagueRoute {
   /**
    * expose the routes
    */
@@ -9,8 +10,13 @@ export class TrainerRoute {
       mergeParams: true
     })
     const appController = new AppController()
+    appRoute.use("/:id/slot", new LeagueSlotRoute().expose())
+
     appRoute.post('/',
       appController.addRoute
+    )
+    appRoute.patch('/:id',
+      appController.updateRoute
     )
     appRoute.get('/',
       appController.listRoute

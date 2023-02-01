@@ -12,6 +12,12 @@ export class PokemonRoute {
     appRoute.post('/',
       appController.addRoute
     )
+    appRoute.get('/',
+      appController.listRoute
+    )
+    appRoute.get('/:id',
+      appController.viewDetailsRoute
+    )
     return appRoute
   }
 }

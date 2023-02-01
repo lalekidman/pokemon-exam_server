@@ -34,10 +34,10 @@ export const makeLeagueValidateUsecase = (
      * @param maxStats overall stats to validate
      * @returns 
      */
-    public async validateMaxPokemonStats(
+    public validateMaxPokemonStats(
       league: ILeagueEntity,
       maxStats: number
-    ): Promise<boolean> {
+    ): boolean {
       if (league) {
         if (league.pokemonMaxStats < maxStats) {
           throw new Error("Unable to add slot, reached the maximum stats allowed.")

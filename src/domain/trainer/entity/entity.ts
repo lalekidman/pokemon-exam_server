@@ -25,11 +25,11 @@ export const makeTrainerEntity = ({
       const {
         id = generateId(),
   
-        firstName = this.firstName,
-        lastName = this.lastName,
+        firstName = this._firstName,
+        lastName = this._lastName,
   
-        suspended = this.suspended,
-        suspendedAt = this.suspendedAt,
+        suspended = this._suspended,
+        suspendedAt = this._suspendedAt,
   
         createdAt = this.createdAt,
         updatedAt = this.updatedAt,
@@ -62,8 +62,9 @@ export const makeTrainerEntity = ({
      * @param {string } value
      */
     @IsString({
-      maxLength: 32,
-      minLength: 2
+      // maxLength: 32,
+      // minLength: 2,
+      // required: true
     })
     public set firstName(value: string) {
       this._firstName = value;
@@ -83,7 +84,8 @@ export const makeTrainerEntity = ({
      */
     @IsString({
       maxLength: 32,
-      minLength: 2
+      minLength: 2,
+      required: true
     })
     @IsString()
     public set lastName(value: string) {

@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PokemonViewDetailsUsecase = exports.PokemonCreateUsecase = void 0;
+exports.PokemonListUsecase = exports.PokemonViewDetailsUsecase = exports.PokemonCreateUsecase = void 0;
 const pokemon_1 = require("@app/persistent/repository/mysql/entity/pokemon");
 const create_1 = require("./create");
 const view_details_1 = require("./view-details");
+const list_1 = require("./list");
 const usecases_1 = require("@app/domain/pokemon-stats/usecases");
 const repositoryGateway = new pokemon_1.PokemonRepositoryGateway();
 exports.PokemonCreateUsecase = (0, create_1.makePokemonCreateUsecase)({
@@ -21,5 +22,8 @@ exports.PokemonCreateUsecase = (0, create_1.makePokemonCreateUsecase)({
 exports.PokemonViewDetailsUsecase = (0, view_details_1.makePokemonViewDetailsUsecase)({
     repositoryGateway,
     getPokemonStats: new usecases_1.PokemonStatsViewDetailsUsecase().getOne
+});
+exports.PokemonListUsecase = (0, list_1.makePokemonListUsecase)({
+    repositoryGateway
 });
 //# sourceMappingURL=index.js.map

@@ -11,6 +11,7 @@ const makeTrainerCreateUsecase = ({ repositoryGateway }) => {
          */
         async execute(dataInput) {
             const trainerEntity = new entity_1.TrainerEntity(dataInput);
+            // trainerEntity.firstName = dataInput.firstName
             const trainer = await repositoryGateway.insertOne(trainerEntity.toObject());
             return trainer;
         }

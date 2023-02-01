@@ -1,8 +1,10 @@
 import {Request, Response, NextFunction, Router} from 'express'
 import * as HttpStatus from 'http-status'
-import {ErrorCodes, HttpErrorResponse, SuccessResponse} from '@app/common/http-response'
+import {SuccessResponse, ErrorResponse} from '@app/common/http-response'
 import {
-  PokemonCreateUsecase
+  PokemonCreateUsecase,
+  PokemonViewDetailsUsecase,
+  PokemonListUsecase
 } from '@app/domain/pokemon/usecases'
 export default class PokemonController {
   
@@ -29,10 +31,43 @@ export default class PokemonController {
           stats
         })
       res.status(HttpStatus.CREATED).send(SuccessResponse(pokemon))
-    } catch (error) {
-      new HttpErrorResponse(res, HttpStatus.BAD_REQUEST)
-          .track(ErrorCodes.CREATE_USER_DETAILS_FAILED)
-          .throw()
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
+    }
+  }
+  public viewDetailsRoute = async (
+    req: Request,
+    res: Response
+  ) => {
+    const {
+      id = ''
+    } = req.params
+
+    try {
+      const pokemon = await new PokemonViewDetailsUsecase()
+        .getOne(id)
+      res.status(HttpStatus.OK).send(SuccessResponse(pokemon))
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
+    }
+  }
+
+  public listRoute = async (
+    req: Request,
+    res: Response
+  ) => {
+    const {
+      trainer_id = req.params.trainerId
+    } = req.query as any
+
+    try {
+      const pokemon = await new PokemonListUsecase()
+        .getList({
+          trainerId: trainer_id
+        })
+      res.status(HttpStatus.OK).send(SuccessResponse(pokemon))
+    } catch (error: any) {
+      res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
     }
   }
 }

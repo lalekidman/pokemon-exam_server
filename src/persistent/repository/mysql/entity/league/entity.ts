@@ -11,7 +11,7 @@ import {
 export class LeagueRepositoryEntity implements Omit<ILeagueEntity, '_id'> { 
 
   @PrimaryGeneratedColumn("uuid")
-  id: string = '';
+  id!: string;
 
   @Column({type: "double", default: Date.now()})
   date!: number;
