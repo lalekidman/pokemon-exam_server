@@ -23,6 +23,7 @@ export class PokemonRepositoryEntity implements Omit<IPokemonEntity, '_id'> {
   type!: string;
 
   @OneToOne(() => PokemonStatsRepositoryEntity, (pokemonStats) => pokemonStats.id)
+  pokemonStatsId!: string;
   pokemonStats!: string;
 
   @ManyToOne(() => TrainerRepositoryEntity, (trainer) => trainer.id)

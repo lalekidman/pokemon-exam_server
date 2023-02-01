@@ -31,7 +31,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.OneToOne)(() => pokemon_stats_1.PokemonStatsRepositoryEntity, (pokemonStats) => pokemonStats.id),
     __metadata("design:type", String)
-], PokemonRepositoryEntity.prototype, "pokemonStats", void 0);
+], PokemonRepositoryEntity.prototype, "pokemonStatsId", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => trainer_1.TrainerRepositoryEntity, (trainer) => trainer.id),
     __metadata("design:type", String)

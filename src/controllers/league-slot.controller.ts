@@ -14,16 +14,19 @@ export default class AppController {
     res: Response
   ) => {
     const {
-      league,
       type = '',
       participants = []
     } = req.body
+    const {
+      leagueId = ''
+    } = req.params
+
     try {
       // to validate if the league is existing.
-      const leagueObject = await new LeagueViewDetailsUsecase().getOneStrict(league)
+      const league = await new LeagueViewDetailsUsecase().getOneStrict(leagueId)
       // slot create and then add the pokemons.
       const result = await new LeagueSlotCreateUsecase()
-        .execute(leagueObject, {
+        .execute(league, {
           type,
           participants
         })

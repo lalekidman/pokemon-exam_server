@@ -11,6 +11,6 @@ import {
 
 export class PokemonStatsRepositoryGateway extends MySQLRepositoryGatewayService<PokemonStatsRepositoryEntity> implements IPokemonStatsRepositoryGateway  {
   constructor () {
-    super(PokemonStatsRepositoryEntity, TABLE_NAMES.POKEMON)
+    super(PokemonStatsRepositoryEntity, TABLE_NAMES.POKEMON_STATS)
   }
 }

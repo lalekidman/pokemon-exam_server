@@ -15,7 +15,7 @@ exports.LeagueSlotCreateUsecase = (0, create_1.makeLeagueSlotCreateUsecase)({
     createLeagueParticipants: (leagueSlot, dataInput) => {
         return new usecases_2.LeagueParticipantCreateUsecase().execute(leagueSlot, dataInput);
     },
-    getPokemonDetails: (id) => new usecases_3.PokemonViewDetailsUsecase().getOneStrict(id)
+    getPokemonDetails: new usecases_3.PokemonViewDetailsUsecase().getOneStrict
     // can be do in much short way but seems complicated to read.
     // checkSlotLimit:x (new LeagueValidateUsecase()).validateMaxSlot
 });

@@ -16,7 +16,7 @@ class LeagueRoute {
             mergeParams: true
         });
         const appController = new league_controller_1.default();
-        appRoute.use("/:id/slot", new league_slot_1.LeagueSlotRoute().expose());
+        appRoute.use("/:leagueId/slot", new league_slot_1.LeagueSlotRoute().expose());
         appRoute.post('/', appController.addRoute);
         appRoute.patch('/:id', appController.updateRoute);
         appRoute.get('/', appController.listRoute);

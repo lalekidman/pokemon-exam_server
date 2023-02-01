@@ -6,7 +6,7 @@ const mysql_1 = require("@app/common/gateway/repository/services/mysql");
 const entity_1 = require("./entity");
 class PokemonRepositoryGateway extends mysql_1.MySQLRepositoryGatewayService {
     constructor() {
-        super(entity_1.PokemonRepositoryEntity, constants_1.TABLE_NAMES.LEAGUE_SLOT);
+        super(entity_1.PokemonRepositoryEntity, constants_1.TABLE_NAMES.POKEMON);
     }
 }
 exports.PokemonRepositoryGateway = PokemonRepositoryGateway;

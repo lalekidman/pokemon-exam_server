@@ -35,7 +35,9 @@ export const PokemonCreateUsecase = makePokemonCreateUsecase({
 
 export const PokemonViewDetailsUsecase = makePokemonViewDetailsUsecase({
   repositoryGateway,
-  getPokemonStats: new PokemonStatsViewDetailsUsecase().getOneStrict
+  getPokemonStats: (id) => {
+    return new PokemonStatsViewDetailsUsecase().getOneStrict(id)
+  }
 })
 
 export const PokemonListUsecase = makePokemonListUsecase({

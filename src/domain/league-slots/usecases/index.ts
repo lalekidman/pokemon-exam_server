@@ -27,7 +27,7 @@ export const LeagueSlotCreateUsecase = makeLeagueSlotCreateUsecase({
   createLeagueParticipants: (leagueSlot, dataInput) => {
     return new LeagueParticipantCreateUsecase().execute(leagueSlot, dataInput)
   },
-  getPokemonDetails: (id) => new PokemonViewDetailsUsecase().getOneStrict(id)
+  getPokemonDetails: new PokemonViewDetailsUsecase().getOneStrict
   // can be do in much short way but seems complicated to read.
   // checkSlotLimit:x (new LeagueValidateUsecase()).validateMaxSlot
 })

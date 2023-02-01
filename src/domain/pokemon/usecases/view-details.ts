@@ -34,22 +34,23 @@ export const makePokemonViewDetailsUsecase = (
      * @param id 
      * @returns 
      */
-    public async getOne (
+    public getOne = async (
       id: string
-    ): Promise<IPokemonViewDetailsEntity|null> {
+    ): Promise<IPokemonViewDetailsEntity|null> => {
       const pokemon = await repositoryGateway.findOne({
         id
       })
       if (pokemon) {
-        const pokemonStats = await getPokemonStats(pokemon.pokemonStats)
+        console.log('pokemon :>> ', pokemon);
+        // const pokemonStats = await getPokemonStats(pokemon.pokemonStats)
         return {
           ...JSON.parse(JSON.stringify(pokemon)),
-          stats: {
-            attack: pokemonStats?.attack || 0,
-            defense: pokemonStats?.defense || 0,
-            speed: pokemonStats?.speed || 0,
-            total: pokemonStats?.total || 0
-          }
+          // stats: {
+          //   attack: pokemonStats?.attack || 0,
+          //   defense: pokemonStats?.defense || 0,
+          //   speed: pokemonStats?.speed || 0,
+          //   total: pokemonStats?.total || 0
+          // }
         }
       }
       return null
@@ -59,10 +60,11 @@ export const makePokemonViewDetailsUsecase = (
      * @param id 
      * @returns 
      */
-    public async getOneStrict (
+    public getOneStrict = async (
       id: string
-    ): Promise<IPokemonViewDetailsEntity> {
+    ): Promise<IPokemonViewDetailsEntity> => {
       const pokemon = await this.getOne(id)
+      console.log('pokemon :>> ', pokemon);
       if (!pokemon) {
         throw new Error("No pokemon details found.")
       }

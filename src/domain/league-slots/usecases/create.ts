@@ -54,6 +54,7 @@ export const makeLeagueSlotCreateUsecase = (
       const size = await repositoryGateway.count({
         league: leagueSlotEntity.league
       })
+      console.log('size :>> ', size);
       const result = await validateMaximumSlotLimit(league, size)
       if (!result) {
         // throw error here that already reached the limit.
@@ -65,6 +66,7 @@ export const makeLeagueSlotCreateUsecase = (
         leagueSlotEntity.totalDefense += pokemon.stats.defense
         leagueSlotEntity.totalSpeed += pokemon.stats.speed
       }
+      console.log('leagueSlotEntity :>> ', leagueSlotEntity);
       // validate the maximum stats allowed
       await validatePokemonMaximumStats(league, leagueSlotEntity.overallTotal)
       const leagueSlot = await repositoryGateway.insertOne(leagueSlotEntity.toObject())
