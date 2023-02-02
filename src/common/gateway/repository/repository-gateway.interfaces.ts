@@ -1,5 +1,3 @@
-// interfaces for
-import {Model} from 'mongoose'
 export interface IAggregatePagination<T> {
   data: T[]
   pages: number
@@ -7,7 +5,7 @@ export interface IAggregatePagination<T> {
 }
 export type IAggregatePaginationResponse<T> = IAggregatePagination<T>
 
-export interface IPaginationQueryParams<T> {
+export interface IListOption<T> {
   limit?: number
   offset?: number
   sort?: string
@@ -17,37 +15,29 @@ export interface IPaginationQueryParams<T> {
 }
 type IRepositoryGatewayData<T> = Omit<Partial<T>, '_id' | 'id' | 'createdAt'>
 
-type IRespositoryGatewayQuery<T> = Parameters<Model<T>['find']>[0]
+export type IRepositoryProjectionOption<T> = Partial<Record<keyof T, 1 | 0>>
+export type IRepositoryGatewayQuery<T> = Partial<T>
+export type IRepositoryUpdateProperties<T> = Partial<Omit<T, 'id' | '_id' | 'createdAt'>>
 export interface IGeneralRepositoryGateway<T> {
   list(
-    query?: IRespositoryGatewayQuery<T>,
-    paginationQuery?: IPaginationQueryParams<T>,
+    query?: IRepositoryGatewayQuery<T>,
+    options?: IListOption<T>,
   ): Promise<T[]>
   insertOne(data: T): Promise<T>
   insertMany(data: T[]): Promise<T[]>
-  findById(id: string): Promise<T|null>
   findOne(
-    query: Parameters<Model<T>['findOne']>[0],
-    projection?: Partial<Record<keyof T, 1 | 0>>
-  ): Promise<T>
+    query: IRepositoryGatewayQuery<T>
+  ): Promise<T|null>
   
-  updateById(id: string, data: IRepositoryGatewayData<T>): Promise<T|null>
+  updateById(id: string, data: IRepositoryUpdateProperties<T>): Promise<T|null>
   updateOne(
-    query: IRespositoryGatewayQuery<T>,
-    data: IRepositoryGatewayData<T>
+    query: IRepositoryGatewayQuery<T>,
+    data: IRepositoryUpdateProperties<T>
   ): Promise<T|null>
 
   removeById(id: string): Promise<T|null>
-  removeOne(query: IRespositoryGatewayQuery<T>): Promise<T|null>
-  remove(query: Parameters<Model<T>['find']>[0]): Promise<boolean|null>
-  count(query: IRespositoryGatewayQuery<T>): Promise<number>
-  aggregate(pipeline: Parameters<Model<T>['aggregate']>[0]): Promise<any[]>
-}
-export interface IGeneralPaginationListGateway<T> {
-  paginationList(
-    filterQuery: IPaginationQueryParams<T>
-  ): Promise<IAggregatePagination<T>>
-}
-export interface IGeneralListGateway<T> {
-  getList(filterQuery: IPaginationQueryParams<T>): Promise<T[]>
+  removeOne(query: IRepositoryGatewayQuery<T>): Promise<T|null>
+  remove(query: IRepositoryGatewayQuery<T>): Promise<boolean|null>
+  count(query: IRepositoryGatewayQuery<T>): Promise<number>
+  // aggregate(pipeline: Parameters<Model<T>['aggregate']>[0]): Promise<any[]>
 }

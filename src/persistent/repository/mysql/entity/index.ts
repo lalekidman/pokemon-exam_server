@@ -1,0 +1,6 @@
+export { TrainerRepositoryEntity } from './trainer/entity'
+export { PokemonRepositoryEntity } from './pokemon/entity'
+export { PokemonStatsRepositoryEntity } from './pokemon-stats/entity'
+export { LeagueRepositoryEntity } from './league/entity'
+export { LeagueSlotRepositoryEntity } from './league-slots/entity'
+export { LeagueParticipantsRepositoryEntity } from './league-participants/entity'
