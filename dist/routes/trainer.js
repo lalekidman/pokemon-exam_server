@@ -7,6 +7,8 @@ exports.TrainerRoute = void 0;
 const express_1 = require("express");
 const trainer_controller_1 = __importDefault(require("@app/controllers/trainer.controller"));
 const pokemon_controller_1 = __importDefault(require("@app/controllers/pokemon.controller"));
+const trainer_middleware_validator_1 = require("./middlewares/trainer.middleware-validator");
+const helper_1 = require("@app/common/helper");
 class TrainerRoute {
     /**
      * expose the routes
@@ -17,7 +19,7 @@ class TrainerRoute {
         });
         const appController = new trainer_controller_1.default();
         const pokemonController = new pokemon_controller_1.default();
-        appRoute.post('/', appController.addRoute);
+        appRoute.post('/', trainer_middleware_validator_1.TrainerValidation.formValidationPipeline, helper_1.formValidatorMiddleware, appController.addRoute);
         appRoute.get('/', appController.listRoute);
         appRoute.get('/', appController.listRoute);
         appRoute.get('/:trainerId/pokemons', pokemonController.listRoute);

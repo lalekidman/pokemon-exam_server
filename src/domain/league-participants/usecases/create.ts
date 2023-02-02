@@ -1,9 +1,10 @@
 
-import { ILeagueSlotEntity, LEAGUE_SLOT_TYPE } from '@app/domain/league-slots'
+import { ILeagueSlotEntity } from '@app/domain/league-slots'
 import {
   LeagueParticipantEntity,
   ILeagueParticipantInput
 } from '../entity'
+import { LEAGUE_PARTICIPANT_TYPE } from '../enums'
 
 import {
   ILeagueParticipantUsecaseDependencies
@@ -36,25 +37,31 @@ export const makeLeagueParticipantCreateUsecase = (
       // need to check league slot entity.
       // if the league slot type is solo or pair
       console.log('heereee :>> ', leagueSlot);
-      if (leagueSlot.type === LEAGUE_SLOT_TYPE.SOLO) {
-        console.log('@solo :>> ');
+      if (leagueParticipantEntity.type === LEAGUE_PARTICIPANT_TYPE.SOLO) {
+        console.log('@solo');
         // then check if the slot is already occupied.
         const occupied = await repositoryGateway.findOne({
           league: leagueParticipantEntity.league,
-          pokemon: leagueParticipantEntity.pokemon,
+          leagueSlot: leagueSlot.id
         })
-        console.log('occupi@@@@ed :>> ', occupied);
         if (occupied) {
           throw new Error("the league slot is already occupied.")
         }
+        const samePokemon = await repositoryGateway.findOne({
+          league: leagueParticipantEntity.league,
+          pokemon: leagueParticipantEntity.pokemon,
+          type: LEAGUE_PARTICIPANT_TYPE.SOLO
+        })
+        if (samePokemon) {
+          throw new Error("Unable to add. can't have the same pokemon in a \"solo\" type participant.")
+        }
         // else save the data.
-      } else if (leagueSlot.type === LEAGUE_SLOT_TYPE.PAIR) {
-        console.log('@pair :>> ');
+      } else if (leagueParticipantEntity.type === LEAGUE_PARTICIPANT_TYPE.PAIR) {
         const participantsCount = await repositoryGateway.count({
           leagueSlot: leagueSlot.id
         })
-        if (participantsCount >= 2) {
-          throw new Error("the league slot is already occupied.")
+        if (participantsCount > 2) {
+          throw new Error("league participants with \"PAIR\" type only allow 2 participants.")
         }
         // then check if the pair participants have the same pokemon,
         const samePokemonParticipant = await repositoryGateway.findOne({
@@ -62,6 +69,7 @@ export const makeLeagueParticipantCreateUsecase = (
           pokemon: leagueParticipantEntity.pokemon, 
           trainer: leagueParticipantEntity.trainer
         })
+        console.log('samePokemonParticipant :>> ', samePokemonParticipant);
         if (samePokemonParticipant) {
           // can't think a best error message, could enhance in the future based on the requirements.
           throw new Error("same pokemon for a pair type is not allowed.")

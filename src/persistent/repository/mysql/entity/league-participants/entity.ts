@@ -18,6 +18,9 @@ export class LeagueParticipantsRepositoryEntity implements Omit<ILeagueParticipa
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
+  @Column({type: "varchar", length: 255})
+  type!: string;
+
   @ManyToOne(() => PokemonRepositoryEntity, (pokemon) => pokemon.id)
   pokemon!: string;
 

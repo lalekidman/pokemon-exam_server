@@ -22,7 +22,7 @@ export const makeLeagueValidateUsecase = (
       slotSize: number
     ): Promise<boolean> {
       if (league) {
-        if (league.requiredSlotSize < slotSize) {
+        if (league.requiredSlotSize <= slotSize) {
           throw new Error("Unable to add slot, reached the maximum required slot.")
         }
       }

@@ -1,40 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeLeagueSlotsEntity = void 0;
-const enums_1 = require("../enums");
 const makeLeagueSlotsEntity = ({ generateId }) => {
     class LeagueSlotsEntity {
         constructor(data) {
-            this._type = enums_1.LEAGUE_SLOT_TYPE.SOLO;
             this._league = '';
             this._totalAttack = 0;
             this._totalDefense = 0;
             this._totalSpeed = 0;
             this.createdAt = Date.now();
             this.updatedAt = Date.now();
-            const { id = generateId(), type = this._type, league = this._league, totalAttack = this._totalAttack, totalDefense = this._totalDefense, totalSpeed = this._totalSpeed, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
+            const { id = generateId(), league = this._league, totalAttack = this._totalAttack, totalDefense = this._totalDefense, totalSpeed = this._totalSpeed, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
             this.id = id;
-            this.type = type;
             this.league = league;
             this.totalAttack = totalAttack;
             this.totalDefense = totalDefense;
             this.totalSpeed = totalSpeed;
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
-        }
-        /**
-         * Getter type
-         * @return {string }
-         */
-        get type() {
-            return this._type;
-        }
-        /**
-         * Setter type
-         * @param {string } value
-         */
-        set type(value) {
-            this._type = value;
         }
         /**
          * Getter league
@@ -107,7 +90,6 @@ const makeLeagueSlotsEntity = ({ generateId }) => {
             return {
                 id: this.id,
                 league: this._league,
-                type: this._type,
                 totalAttack: this._totalAttack,
                 totalDefense: this._totalDefense,
                 totalSpeed: this._totalSpeed,

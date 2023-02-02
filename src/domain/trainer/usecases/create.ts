@@ -24,10 +24,9 @@ export const makeTrainerCreateUsecase = (
     ) {
   
       const trainerEntity = new TrainerEntity(dataInput)
-      // trainerEntity.firstName = dataInput.firstName
-      const trainer = await repositoryGateway.insertOne(trainerEntity.toObject())
+      // const trainer = await repositoryGateway.insertOne(trainerEntity.toObject())
   
-      return trainer
+      return trainerEntity.toObject()
     }
   }
 }

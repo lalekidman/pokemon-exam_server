@@ -46,6 +46,8 @@ const generateSearchFields = (searchFields, searchText) => (searchFields.map((fi
 exports.generateSearchFields = generateSearchFields;
 const formValidatorMiddleware = (req, res, next) => {
     const result = (0, express_validator_1.validationResult)(req);
+    console.log('@form validator middleware :>> ');
+    console.log("ERROR: ", result);
     if (result.errors.length !== 0) {
         return res.status(HttpStatus.BAD_REQUEST)
             .json(result);

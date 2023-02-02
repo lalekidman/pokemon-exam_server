@@ -15,8 +15,8 @@ export default class AppController {
     res: Response
   ) => {
     const {
-      type = '',
-      participants = []
+      participants = [],
+      type = ''
     } = req.body
     const {
       leagueId = ''

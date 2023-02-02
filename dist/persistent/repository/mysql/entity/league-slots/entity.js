@@ -24,10 +24,6 @@ __decorate([
     __metadata("design:type", String)
 ], LeagueSlotRepositoryEntity.prototype, "league", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
-    __metadata("design:type", String)
-], LeagueSlotRepositoryEntity.prototype, "type", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: "float" }),
     __metadata("design:type", Number)
 ], LeagueSlotRepositoryEntity.prototype, "totalAttack", void 0);

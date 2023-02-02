@@ -12,7 +12,7 @@ const makeLeagueValidateUsecase = ({ repositoryGateway }) => {
          */
         async validateMaxSlot(league, slotSize) {
             if (league) {
-                if (league.requiredSlotSize < slotSize) {
+                if (league.requiredSlotSize <= slotSize) {
                     throw new Error("Unable to add slot, reached the maximum required slot.");
                 }
             }

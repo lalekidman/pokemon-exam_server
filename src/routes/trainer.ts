@@ -1,6 +1,8 @@
 import {Router} from 'express'
 import AppController from '@app/controllers/trainer.controller'
 import PokemonController from '@app/controllers/pokemon.controller'
+import { TrainerValidation } from './middlewares/trainer.middleware-validator'
+import { formValidatorMiddleware } from '@app/common/helper'
 export class TrainerRoute {
   /**
    * expose the routes
@@ -12,6 +14,8 @@ export class TrainerRoute {
     const appController = new AppController()
     const pokemonController = new PokemonController()
     appRoute.post('/',
+      TrainerValidation.formValidationPipeline,
+      formValidatorMiddleware,
       appController.addRoute
     )
     appRoute.get('/',

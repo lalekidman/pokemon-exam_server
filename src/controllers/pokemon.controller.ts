@@ -22,16 +22,20 @@ export default class PokemonController {
         speed: 0,
       }
     } = req.body
-
     try {
       const pokemon = await new PokemonCreateUsecase()
         .execute(trainer, {
           name,
           type,
-          stats
+          stats: {
+            attack: +stats.attack,
+            speed: +stats.speed,
+            defense: +stats.defense,
+          }
         })
       res.status(HttpStatus.CREATED).send(SuccessResponse(pokemon))
     } catch (error: any) {
+      console.log('error :>> ', error);
       res.status(HttpStatus.BAD_REQUEST).send(ErrorResponse([error.message]))
     }
   }

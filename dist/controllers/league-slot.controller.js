@@ -26,7 +26,7 @@ const usecases_2 = require("@app/domain/league/usecases");
 class AppController {
     constructor() {
         this.addRoute = async (req, res) => {
-            const { type = '', participants = [] } = req.body;
+            const { participants = [], type = '' } = req.body;
             const { leagueId = '' } = req.params;
             try {
                 // to validate if the league is existing.

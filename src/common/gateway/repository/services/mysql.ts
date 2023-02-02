@@ -178,10 +178,10 @@ export abstract class MySQLRepositoryGatewayService<T extends ObjectLiteral & {i
    * @returns 
    */
   public async count(query: IRepositoryGatewayQuery<T>) {
-    return this.repository.createQueryBuilder()
+    const cursor = this.repository.createQueryBuilder()
       .select(this.tableName)
       .from(this.entity, this.tableName)
       .where(this.generateQuery(query), query)
-      .getCount()
+    return (await cursor.getMany()).length
   }
 }

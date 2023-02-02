@@ -39,7 +39,7 @@ export default class PokemonController {
     req: Request,
     res: Response
   ) => {
-    const {id = ''} = req.params
+    const {leagueId = ''} = req.params
     const {
       title,
       location,
@@ -49,7 +49,7 @@ export default class PokemonController {
     } = req.body
     try {
       const league = await new LeagueUpdateUsecase()
-        .execute(id, {
+        .execute(leagueId, {
           title,
           location,
           terrain,
@@ -69,6 +69,7 @@ export default class PokemonController {
     const {
       leagueId
     } = req.params
+    console.log('req.params :>> ', req.params);
     try {
       const league = await new LeagueViewDetailsUsecase()
         .getOne(leagueId)

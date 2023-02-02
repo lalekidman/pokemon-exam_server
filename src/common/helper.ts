@@ -43,6 +43,8 @@ export const generateSearchFields = (searchFields: string[], searchText: string)
 
 export const formValidatorMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const result: any = validationResult(req)
+  console.log('@form validator middleware :>> ');
+  console.log("ERROR: ", result)
   if (result.errors.length !== 0) {
     return res.status(HttpStatus.BAD_REQUEST)
     .json(result)

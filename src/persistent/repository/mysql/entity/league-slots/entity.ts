@@ -15,10 +15,7 @@ export class LeagueSlotRepositoryEntity implements Omit<ILeagueSlotEntity, '_id'
 
   @ManyToOne(() => LeagueRepositoryEntity, (league) => league.id)
   league!: string;
-
-  @Column({type: "varchar", length: 255})
-  type!: string;
-
+  
   @Column({type: "float"})
   totalAttack!: number;
 

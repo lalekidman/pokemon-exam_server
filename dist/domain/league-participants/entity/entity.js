@@ -1,23 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeLeagueParticipantEntity = void 0;
+const enums_1 = require("../enums");
 const makeLeagueParticipantEntity = ({ generateId }) => {
     class LeagueParticipantEntity {
         constructor(data) {
+            this._type = enums_1.LEAGUE_PARTICIPANT_TYPE.SOLO;
             this._pokemon = '';
             this._trainer = '';
             this._league = '';
             this._leagueSlot = '';
             this.createdAt = Date.now();
             this.updatedAt = Date.now();
-            const { id = generateId(), pokemon = this._pokemon, trainer = this._trainer, league = this._league, leagueSlot = this._leagueSlot, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
+            const { id = generateId(), type = this._type, pokemon = this._pokemon, trainer = this._trainer, league = this._league, leagueSlot = this._leagueSlot, createdAt = this.createdAt, updatedAt = this.updatedAt, } = data;
             this.id = id;
+            this.type = type;
             this.pokemon = pokemon;
             this.trainer = trainer;
             this.league = league;
             this.leagueSlot = leagueSlot;
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
+        }
+        /**
+         * Getter type
+         * @return {string }
+         */
+        get type() {
+            return this._type;
+        }
+        /**
+         * Setter type
+         * @param {string } value
+         */
+        set type(value) {
+            this._type = value;
         }
         /**
          * Getter pokemon
@@ -82,6 +99,7 @@ const makeLeagueParticipantEntity = ({ generateId }) => {
         toObject() {
             return {
                 id: this.id,
+                type: this._type,
                 league: this._league,
                 leagueSlot: this._leagueSlot,
                 trainer: this._trainer,

@@ -5,7 +5,6 @@ import { IPokemonEntity } from '@app/domain/pokemon'
 import { IPokemonStatsEntity } from '@app/domain/pokemon-stats'
 import {
   LeagueSlotsEntity,
-  ILeagueSlotInput,
   ILeagueSlotEntity
 } from '../entity'
 
@@ -38,18 +37,18 @@ export const makeLeagueSlotCreateUsecase = (
      */
     public async execute(
       league: ILeagueEntity,
-      dataInput: ILeagueSlotInput & {
-        participants: ILeagueParticipantInput[]
+      dataInput: {
+        type: string,
+        participants: Omit<ILeagueParticipantInput, 'type'>[]
       },
     ) {
       const {
         participants,
-        type,
+        type
       } = dataInput
       // could add limit here?
       const leagueSlotEntity = new LeagueSlotsEntity({
         league: league.id,
-        type
       })
       const size = await repositoryGateway.count({
         league: leagueSlotEntity.league
@@ -70,14 +69,28 @@ export const makeLeagueSlotCreateUsecase = (
       // validate the maximum stats allowed
       await validatePokemonMaximumStats(league, leagueSlotEntity.overallTotal)
       const leagueSlot = await repositoryGateway.insertOne(leagueSlotEntity.toObject())
+      try {
       // save all of the participants.
-      await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlot, {
-        pokemon: participant.pokemon,
-        trainer: participant.trainer
-      })))
+      for (const participant of participants) {
+        await createLeagueParticipants(leagueSlot, {
+          type,
+          pokemon: participant.pokemon,
+          trainer: participant.trainer
+        })
+      }
+        // await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlotEntity, {
+        //   type,
+        //   pokemon: participant.pokemon,
+        //   trainer: participant.trainer
+        // })))
+        return leagueSlot
+      } catch (error) {
+        // will not work since one participants got created. unless I'll remove it too.
+        repositoryGateway.removeOne({id: leagueSlot.id})
+        throw error
+      }
       // could enhance more here like if there's any error, revert the action.
       
-      return leagueSlot
     }
   }
 }

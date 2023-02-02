@@ -158,11 +158,11 @@ class MySQLRepositoryGatewayService {
      * @returns
      */
     async count(query) {
-        return this.repository.createQueryBuilder()
+        const cursor = this.repository.createQueryBuilder()
             .select(this.tableName)
             .from(this.entity, this.tableName)
-            .where(this.generateQuery(query), query)
-            .getCount();
+            .where(this.generateQuery(query), query);
+        return (await cursor.getMany()).length;
     }
 }
 exports.MySQLRepositoryGatewayService = MySQLRepositoryGatewayService;

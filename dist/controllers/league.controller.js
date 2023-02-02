@@ -42,11 +42,11 @@ class PokemonController {
             }
         };
         this.updateRoute = async (req, res) => {
-            const { id = '' } = req.params;
+            const { leagueId = '' } = req.params;
             const { title, location, terrain, pokemonMaxStats, requiredSlotSize } = req.body;
             try {
                 const league = await new usecases_1.LeagueUpdateUsecase()
-                    .execute(id, {
+                    .execute(leagueId, {
                     title,
                     location,
                     terrain,
@@ -61,6 +61,7 @@ class PokemonController {
         };
         this.viewDetailsRoute = async (req, res) => {
             const { leagueId } = req.params;
+            console.log('req.params :>> ', req.params);
             try {
                 const league = await new usecases_1.LeagueViewDetailsUsecase()
                     .getOne(leagueId);

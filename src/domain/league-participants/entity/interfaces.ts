@@ -3,6 +3,7 @@ import {
 } from '@app/common/interfaces'
 
 export interface ILeagueParticipantBase {
+  type: string
   pokemon: string // id of pokemon
   trainer: string
   league: string
@@ -12,8 +13,7 @@ export interface ILeagueParticipantBase {
 export interface ILeagueParticipantInput extends Pick<ILeagueParticipantBase,
 | 'pokemon'
 | 'trainer'
-// | 'league'
-// | 'leagueSlot'
+| 'type'
 >{
 }
 

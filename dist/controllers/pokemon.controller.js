@@ -35,11 +35,16 @@ class PokemonController {
                     .execute(trainer, {
                     name,
                     type,
-                    stats
+                    stats: {
+                        attack: +stats.attack,
+                        speed: +stats.speed,
+                        defense: +stats.defense,
+                    }
                 });
                 res.status(HttpStatus.CREATED).send((0, http_response_1.SuccessResponse)(pokemon));
             }
             catch (error) {
+                console.log('error :>> ', error);
                 res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             }
         };

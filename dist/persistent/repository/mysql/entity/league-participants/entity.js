@@ -23,6 +23,10 @@ __decorate([
     __metadata("design:type", String)
 ], LeagueParticipantsRepositoryEntity.prototype, "id", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
+    __metadata("design:type", String)
+], LeagueParticipantsRepositoryEntity.prototype, "type", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => pokemon_1.PokemonRepositoryEntity, (pokemon) => pokemon.id),
     __metadata("design:type", String)
 ], LeagueParticipantsRepositoryEntity.prototype, "pokemon", void 0);

@@ -11,11 +11,10 @@ const makeLeagueSlotCreateUsecase = ({ repositoryGateway, validateMaximumSlotLim
          * @returns
          */
         async execute(league, dataInput) {
-            const { participants, type, } = dataInput;
+            const { participants, type } = dataInput;
             // could add limit here?
             const leagueSlotEntity = new entity_1.LeagueSlotsEntity({
                 league: league.id,
-                type
             });
             const size = await repositoryGateway.count({
                 league: leagueSlotEntity.league
@@ -36,13 +35,28 @@ const makeLeagueSlotCreateUsecase = ({ repositoryGateway, validateMaximumSlotLim
             // validate the maximum stats allowed
             await validatePokemonMaximumStats(league, leagueSlotEntity.overallTotal);
             const leagueSlot = await repositoryGateway.insertOne(leagueSlotEntity.toObject());
-            // save all of the participants.
-            await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlot, {
-                pokemon: participant.pokemon,
-                trainer: participant.trainer
-            })));
+            try {
+                // save all of the participants.
+                for (const participant of participants) {
+                    await createLeagueParticipants(leagueSlot, {
+                        type,
+                        pokemon: participant.pokemon,
+                        trainer: participant.trainer
+                    });
+                }
+                // await Promise.all(participants.map((participant) => createLeagueParticipants(leagueSlotEntity, {
+                //   type,
+                //   pokemon: participant.pokemon,
+                //   trainer: participant.trainer
+                // })))
+                return leagueSlot;
+            }
+            catch (error) {
+                // will not work since one participants got created. unless I'll remove it too.
+                repositoryGateway.removeOne({ id: leagueSlot.id });
+                throw error;
+            }
             // could enhance more here like if there's any error, revert the action.
-            return leagueSlot;
         }
     };
 };

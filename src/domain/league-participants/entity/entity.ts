@@ -1,7 +1,7 @@
 import {
   IGeneralEntityDependencies
 } from "@app/common/interfaces";
-import { LEAGUE_SLOT_TYPE } from "../enums";
+import { LEAGUE_PARTICIPANT_TYPE } from "../enums";
 import {
   ILeagueParticipantEntity
 } from './interfaces'
@@ -12,6 +12,7 @@ export const makeLeagueParticipantEntity = ({
   class LeagueParticipantEntity implements ILeagueParticipantEntity {
     readonly id: string;
 
+    private _type:string = LEAGUE_PARTICIPANT_TYPE.SOLO;
     private _pokemon: string = '';
     private _trainer: string = '';
     private _league: string = '';
@@ -24,6 +25,8 @@ export const makeLeagueParticipantEntity = ({
       const {
         id = generateId(),
 
+        type = this._type,
+
         pokemon = this._pokemon,
         trainer = this._trainer,
         league = this._league,
@@ -34,6 +37,7 @@ export const makeLeagueParticipantEntity = ({
       } = data
 
       this.id = id
+      this.type = type
       this.pokemon = pokemon
       this.trainer = trainer
       this.league = league
@@ -43,6 +47,22 @@ export const makeLeagueParticipantEntity = ({
       this.updatedAt = updatedAt
     }
 
+
+    /**
+     * Getter type
+     * @return {string }
+     */
+	public get type(): string  {
+		return this._type;
+	}
+
+    /**
+     * Setter type
+     * @param {string } value
+     */
+	public set type(value: string ) {
+		this._type = value;
+	}
 
     /**
      * Getter pokemon
@@ -118,6 +138,7 @@ export const makeLeagueParticipantEntity = ({
     public toObject(): ILeagueParticipantEntity {
       return {
         id: this.id,
+        type: this._type,
         league: this._league,
         leagueSlot: this._leagueSlot,
         trainer: this._trainer,
