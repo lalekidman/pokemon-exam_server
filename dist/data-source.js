@@ -9,7 +9,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     host: "localhost",
     port: 5506,
     username: "root",
-    password: "admin54321",
+    password: "admin",
     database: "pokemon_exam",
     synchronize: true,
     logging: false,

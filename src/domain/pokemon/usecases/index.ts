@@ -26,7 +26,7 @@ export const PokemonCreateUsecase = makePokemonCreateUsecase({
   createPokemonStats: async (stats) => {
     try {
       const pokemonStats = await (new PokemonStatsCreateUsecase().execute(stats))
-      return pokemonStats._id
+      return pokemonStats.id
     } catch (error: any) {
       throw new Error("Failed to create pokemon stats. \nMessage: " + error.message)
     }
@@ -35,9 +35,9 @@ export const PokemonCreateUsecase = makePokemonCreateUsecase({
 
 export const PokemonViewDetailsUsecase = makePokemonViewDetailsUsecase({
   repositoryGateway,
-  getPokemonStats: (id) => {
-    return new PokemonStatsViewDetailsUsecase().getOneStrict(id)
-  }
+  // getPokemonStats: (id) => {
+  //   return new PokemonStatsViewDetailsUsecase().getOneStrict(id)
+  // }
 })
 
 export const PokemonListUsecase = makePokemonListUsecase({

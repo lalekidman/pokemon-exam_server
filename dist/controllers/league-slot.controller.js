@@ -43,6 +43,18 @@ class AppController {
                 res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
             }
         };
+        this.listRoute = async (req, res) => {
+            const { type = '', participants = [] } = req.body;
+            const { leagueId = '' } = req.params;
+            try {
+                const result = await new usecases_1.LeagueSlotListUsecase()
+                    .getList(leagueId);
+                res.status(HttpStatus.OK).send((0, http_response_1.SuccessResponse)(result));
+            }
+            catch (error) {
+                res.status(HttpStatus.BAD_REQUEST).send((0, http_response_1.ErrorResponse)([error.message]));
+            }
+        };
     }
 }
 exports.default = AppController;

@@ -16,6 +16,7 @@ class LeagueSlotRoute {
         });
         const appController = new league_slot_controller_1.default();
         appRoute.post('/', appController.addRoute);
+        appRoute.get('/', appController.listRoute);
         return appRoute;
     }
 }

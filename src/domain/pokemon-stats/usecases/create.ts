@@ -23,11 +23,11 @@ export const makePokemonStatsCreateUsecase = (
       dataInput: IPokemonStatsInput,
     ) {
   
-      const pokemonEntity = new PokemonStatsEntity(dataInput)
+      const pokemonStatsEntity = new PokemonStatsEntity(dataInput)
 
-      const pokemon = await repositoryGateway.insertOne(pokemonEntity.toObject())
+      const pokemonStats = await repositoryGateway.insertOne(pokemonStatsEntity.toObject())
   
-      return pokemon
+      return pokemonStats
     }
   }
 }

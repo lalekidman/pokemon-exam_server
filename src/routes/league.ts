@@ -10,7 +10,7 @@ export class LeagueRoute {
       mergeParams: true
     })
     const appController = new AppController()
-    appRoute.use("/:leagueId/slot", new LeagueSlotRoute().expose())
+    appRoute.use("/:leagueId/slots", new LeagueSlotRoute().expose())
 
     appRoute.post('/',
       appController.addRoute

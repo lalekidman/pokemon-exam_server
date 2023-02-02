@@ -28,9 +28,9 @@ const makeLeagueSlotCreateUsecase = ({ repositoryGateway, validateMaximumSlotLim
             }
             for (const participant of participants) {
                 const pokemon = await getPokemonDetails(participant.pokemon);
-                leagueSlotEntity.totalAttack += pokemon.stats.attack;
-                leagueSlotEntity.totalDefense += pokemon.stats.defense;
-                leagueSlotEntity.totalSpeed += pokemon.stats.speed;
+                leagueSlotEntity.totalAttack += pokemon.pokemonStats.attack;
+                leagueSlotEntity.totalDefense += pokemon.pokemonStats.defense;
+                leagueSlotEntity.totalSpeed += pokemon.pokemonStats.speed;
             }
             console.log('leagueSlotEntity :>> ', leagueSlotEntity);
             // validate the maximum stats allowed

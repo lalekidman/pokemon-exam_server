@@ -17,7 +17,7 @@ interface ILeagueSlotCreateUsecaseDependencies extends ILeagueSlotUsecaseDepende
   validateMaximumSlotLimit: (league: ILeagueEntity, slotSize: number) => Promise<boolean>,
   validatePokemonMaximumStats: (league: ILeagueEntity, slotOverallStats: number) => boolean,
   createLeagueParticipants: (leagueSlot: ILeagueSlotEntity, dataInput: ILeagueParticipantInput) => Promise<ILeagueParticipantEntity>,
-  getPokemonDetails: (pokemon: string) => Promise<IPokemonEntity & {stats: Pick<IPokemonStatsEntity, 'attack' | 'defense' | 'speed' | 'total'>}>
+  getPokemonDetails: (pokemon: string) => Promise<Omit<IPokemonEntity, 'pokemonStats'> & {pokemonStats: Pick<IPokemonStatsEntity, 'attack' | 'defense' | 'speed' | 'total'>}>
 }
 export const makeLeagueSlotCreateUsecase = (
   {
@@ -62,9 +62,9 @@ export const makeLeagueSlotCreateUsecase = (
       }
       for (const participant of participants) {
         const pokemon = await getPokemonDetails(participant.pokemon)
-        leagueSlotEntity.totalAttack += pokemon.stats.attack
-        leagueSlotEntity.totalDefense += pokemon.stats.defense
-        leagueSlotEntity.totalSpeed += pokemon.stats.speed
+        leagueSlotEntity.totalAttack += pokemon.pokemonStats.attack
+        leagueSlotEntity.totalDefense += pokemon.pokemonStats.defense
+        leagueSlotEntity.totalSpeed += pokemon.pokemonStats.speed
       }
       console.log('leagueSlotEntity :>> ', leagueSlotEntity);
       // validate the maximum stats allowed

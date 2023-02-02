@@ -41,7 +41,6 @@ export const makePokemonCreateUsecase = (
       })
       // or 
       pokemonEntity.pokemonStats = await createPokemonStats(dataInput.stats)
-
       const pokemon = await repositoryGateway.insertOne(pokemonEntity.toObject())
   
       return pokemon

@@ -12,6 +12,9 @@ export class LeagueSlotRoute {
     appRoute.post('/',
       appController.addRoute
     )
+    appRoute.get('/',
+      appController.listRoute
+    )
     return appRoute
   }
 }

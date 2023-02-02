@@ -5,6 +5,10 @@ import {
 import {
   makeLeagueSlotCreateUsecase
 } from './create'
+
+import {
+  makeLeagueSlotListUsecase
+} from './list'
 import {
   LeagueValidateUsecase
 } from '@app/domain/league/usecases'
@@ -30,4 +34,7 @@ export const LeagueSlotCreateUsecase = makeLeagueSlotCreateUsecase({
   getPokemonDetails: new PokemonViewDetailsUsecase().getOneStrict
   // can be do in much short way but seems complicated to read.
   // checkSlotLimit:x (new LeagueValidateUsecase()).validateMaxSlot
+})
+export const LeagueSlotListUsecase = makeLeagueSlotListUsecase({
+  repositoryGateway
 })

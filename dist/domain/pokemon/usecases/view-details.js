@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makePokemonViewDetailsUsecase = void 0;
-const makePokemonViewDetailsUsecase = ({ repositoryGateway, getPokemonStats }) => {
+const makePokemonViewDetailsUsecase = ({ repositoryGateway,
+// getPokemonStats
+ }) => {
     return class PokemonViewDetailsUsecase {
         constructor() {
             /**
@@ -10,15 +12,18 @@ const makePokemonViewDetailsUsecase = ({ repositoryGateway, getPokemonStats }) =
              * @returns
              */
             this.getOne = async (id) => {
-                const pokemon = await repositoryGateway.findOne({
+                const pokemon = (await repositoryGateway.findOne({
                     id
-                });
+                }));
                 if (pokemon) {
-                    console.log('pokemon :>> ', pokemon);
-                    // const pokemonStats = await getPokemonStats(pokemon.pokemonStats)
-                    return Object.assign({}, JSON.parse(JSON.stringify(pokemon)));
+                    pokemon.pokemonStats = {
+                        attack: pokemon.pokemonStats.attack,
+                        speed: pokemon.pokemonStats.speed,
+                        defense: pokemon.pokemonStats.defense,
+                        total: pokemon.pokemonStats.total,
+                    };
                 }
-                return null;
+                return pokemon;
             };
             /**
              *

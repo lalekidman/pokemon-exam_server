@@ -4,10 +4,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToOne
+  OneToOne,
+  JoinColumn
 } from 'typeorm'
 import { TrainerRepositoryEntity } from '../trainer';
 import { PokemonStatsRepositoryEntity } from '../pokemon-stats'
+import { LeagueRepositoryEntity } from '../league';
 import { TABLE_NAMES } from '@app/common/constants';
 
 @Entity({name: TABLE_NAMES.POKEMON})
@@ -22,8 +24,8 @@ export class PokemonRepositoryEntity implements Omit<IPokemonEntity, '_id'> {
   @Column({type: "varchar", length: 255})
   type!: string;
 
-  @OneToOne(() => PokemonStatsRepositoryEntity, (pokemonStats) => pokemonStats.id)
-  pokemonStatsId!: string;
+  @OneToOne(() => PokemonStatsRepositoryEntity)
+  @JoinColumn()
   pokemonStats!: string;
 
   @ManyToOne(() => TrainerRepositoryEntity, (trainer) => trainer.id)

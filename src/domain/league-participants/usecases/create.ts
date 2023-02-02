@@ -29,6 +29,8 @@ export const makeLeagueParticipantCreateUsecase = (
     ) {
       const leagueParticipantEntity = new LeagueParticipantEntity({
         ...dataInput,
+        league: leagueSlot.league,
+        leagueSlot: leagueSlot.id,
       })
       console.log('leagueParticipantEntity :>> ', leagueParticipantEntity);
       // need to check league slot entity.
@@ -38,9 +40,10 @@ export const makeLeagueParticipantCreateUsecase = (
         console.log('@solo :>> ');
         // then check if the slot is already occupied.
         const occupied = await repositoryGateway.findOne({
-          leagueSlot: leagueSlot.id
+          league: leagueParticipantEntity.league,
+          pokemon: leagueParticipantEntity.pokemon,
         })
-        console.log('occupied :>> ', occupied);
+        console.log('occupi@@@@ed :>> ', occupied);
         if (occupied) {
           throw new Error("the league slot is already occupied.")
         }
@@ -68,7 +71,7 @@ export const makeLeagueParticipantCreateUsecase = (
       // seems like I need to get the pokemon stats right? and
       // hmm. need to get the pokemon stats right?
       // then I need to get the stats right?
-
+      console.log('leagueParticipantEntity.toObject() :>> ', leagueParticipantEntity.toObject());
       // should also validate the maximum stats
       // then if all of the business usecase is good or pass, then just create the participant
       const leagueParticipant = await repositoryGateway.insertOne(leagueParticipantEntity.toObject())

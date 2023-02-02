@@ -12,7 +12,7 @@ exports.PokemonCreateUsecase = (0, create_1.makePokemonCreateUsecase)({
     createPokemonStats: async (stats) => {
         try {
             const pokemonStats = await (new usecases_1.PokemonStatsCreateUsecase().execute(stats));
-            return pokemonStats._id;
+            return pokemonStats.id;
         }
         catch (error) {
             throw new Error("Failed to create pokemon stats. \nMessage: " + error.message);
@@ -21,9 +21,9 @@ exports.PokemonCreateUsecase = (0, create_1.makePokemonCreateUsecase)({
 });
 exports.PokemonViewDetailsUsecase = (0, view_details_1.makePokemonViewDetailsUsecase)({
     repositoryGateway,
-    getPokemonStats: (id) => {
-        return new usecases_1.PokemonStatsViewDetailsUsecase().getOneStrict(id);
-    }
+    // getPokemonStats: (id) => {
+    //   return new PokemonStatsViewDetailsUsecase().getOneStrict(id)
+    // }
 });
 exports.PokemonListUsecase = (0, list_1.makePokemonListUsecase)({
     repositoryGateway

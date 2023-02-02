@@ -13,12 +13,12 @@ import { AppDataSource } from '@app/data-source'
 export abstract class MySQLRepositoryGatewayService<T extends ObjectLiteral & {id: string}> implements IGeneralRepositoryGateway<T> {
   protected readonly repository: Repository<T>
   constructor(
-    private readonly entity: new () => T,
-    private readonly tableName: string
+    protected readonly entity: new () => T,
+    protected readonly tableName: string
   ) {
     this.repository = AppDataSource.getRepository(entity)
   }
-  private generateQuery (query: IRepositoryGatewayQuery<T>) {
+  protected generateQuery (query: IRepositoryGatewayQuery<T>) {
     return Reflect.ownKeys(query).reduce((previousVal: string, key: any) => {
       if (previousVal !== "") {
         previousVal += " AND "
@@ -51,11 +51,13 @@ export abstract class MySQLRepositoryGatewayService<T extends ObjectLiteral & {i
   public async findOne(
     query: IRepositoryGatewayQuery<T>
   ) {
+    console.log('this.generateQuery(query) :>> ', this.generateQuery(query));
+    console.log('this.generateQuery(query) :>> ', query);
     return this.repository.createQueryBuilder()
-    .select(this.tableName)
-    .from(this.entity, this.tableName)
-    .where(this.generateQuery(query), query)
-    .getOne()
+      .select(this.tableName)
+      .from(this.entity, this.tableName)
+      .where(this.generateQuery(query), query)
+      .getOne()
   }
 
   /**

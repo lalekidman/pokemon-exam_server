@@ -10,9 +10,9 @@ const makePokemonStatsCreateUsecase = ({ repositoryGateway }) => {
          * @param data
          */
         async execute(dataInput) {
-            const pokemonEntity = new entity_1.PokemonStatsEntity(dataInput);
-            const pokemon = await repositoryGateway.insertOne(pokemonEntity.toObject());
-            return pokemon;
+            const pokemonStatsEntity = new entity_1.PokemonStatsEntity(dataInput);
+            const pokemonStats = await repositoryGateway.insertOne(pokemonStatsEntity.toObject());
+            return pokemonStats;
         }
     };
 };

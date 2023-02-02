@@ -13,19 +13,15 @@ import {
   IPokemonStatsInput
 } from '@app/domain/pokemon-stats/entity/interfaces'
 
-interface IPokemonViewDetailsEntity extends IPokemonEntity {
-  stats: Pick<IPokemonStatsEntity, 'attack' | 'speed' | 'defense' | 'total'>
-}
-
-interface IPokemonViewDetailsUsecaseDependencies extends IPokemonUsecaseDependencies {
-  getPokemonStats: (id: string) => Promise<IPokemonStatsEntity> 
+export interface IPokemonViewDetailsEntity extends Omit<IPokemonEntity, 'pokemonStats'> {
+  pokemonStats: Pick<IPokemonStatsEntity, 'attack' | 'speed' | 'defense' | 'total'>
 }
 
 export const makePokemonViewDetailsUsecase = (
   {
     repositoryGateway,
-    getPokemonStats
-  }: IPokemonViewDetailsUsecaseDependencies
+    // getPokemonStats
+  }: IPokemonUsecaseDependencies<IPokemonEntity>
 ) => {
   return class PokemonViewDetailsUsecase {
     constructor() {}
@@ -36,24 +32,19 @@ export const makePokemonViewDetailsUsecase = (
      */
     public getOne = async (
       id: string
-    ): Promise<IPokemonViewDetailsEntity|null> => {
-      const pokemon = await repositoryGateway.findOne({
+    ) => {
+      const pokemon = (await repositoryGateway.findOne({
         id
-      })
+      })) as IPokemonViewDetailsEntity|null
       if (pokemon) {
-        console.log('pokemon :>> ', pokemon);
-        // const pokemonStats = await getPokemonStats(pokemon.pokemonStats)
-        return {
-          ...JSON.parse(JSON.stringify(pokemon)),
-          // stats: {
-          //   attack: pokemonStats?.attack || 0,
-          //   defense: pokemonStats?.defense || 0,
-          //   speed: pokemonStats?.speed || 0,
-          //   total: pokemonStats?.total || 0
-          // }
+        pokemon.pokemonStats = {
+          attack: pokemon.pokemonStats.attack,
+          speed: pokemon.pokemonStats.speed,
+          defense: pokemon.pokemonStats.defense,
+          total: pokemon.pokemonStats.total,
         }
       }
-      return null
+      return pokemon
     }
     /**
      * 

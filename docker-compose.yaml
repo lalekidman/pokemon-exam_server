@@ -13,7 +13,7 @@ services:
       # NOT RECOMMENDED, could use env files instead but just for this exam.
       # MYSQL_USER: pokemon_admin
       # MYSQL_PASSWORD: admin54321
-      MYSQL_ROOT_PASSWORD: admin54321
+      MYSQL_ROOT_PASSWORD: admin
     # volumes:
     #   - '../mysql:/var/lib/mysql'
     networks: 

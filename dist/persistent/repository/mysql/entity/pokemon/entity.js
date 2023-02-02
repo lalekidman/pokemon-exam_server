@@ -29,9 +29,10 @@ __decorate([
     __metadata("design:type", String)
 ], PokemonRepositoryEntity.prototype, "type", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => pokemon_stats_1.PokemonStatsRepositoryEntity, (pokemonStats) => pokemonStats.id),
+    (0, typeorm_1.OneToOne)(() => pokemon_stats_1.PokemonStatsRepositoryEntity),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", String)
-], PokemonRepositoryEntity.prototype, "pokemonStatsId", void 0);
+], PokemonRepositoryEntity.prototype, "pokemonStats", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => trainer_1.TrainerRepositoryEntity, (trainer) => trainer.id),
     __metadata("design:type", String)

@@ -36,6 +36,8 @@ class MySQLRepositoryGatewayService {
      * @param id
      */
     async findOne(query) {
+        console.log('this.generateQuery(query) :>> ', this.generateQuery(query));
+        console.log('this.generateQuery(query) :>> ', query);
         return this.repository.createQueryBuilder()
             .select(this.tableName)
             .from(this.entity, this.tableName)
