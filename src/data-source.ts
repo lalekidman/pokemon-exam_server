@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+import { MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE_NAME } from "@app/common/constants"
 import {
     LeagueParticipantsRepositoryEntity,
     LeagueRepositoryEntity,
@@ -13,9 +14,9 @@ export const AppDataSource = new DataSource({
     type: "mysql",
     host: "localhost",
     port: 5506,
-    username: "root",
-    password: "admin",
-    database: "pokemon_exam",
+    username: MYSQL_USERNAME,
+    password: MYSQL_PASSWORD,
+    database: MYSQL_DATABASE_NAME,
     synchronize: true,
     logging: false,
     entities: [
