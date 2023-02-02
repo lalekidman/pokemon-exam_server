@@ -1,6 +1,13 @@
 # Pokemon Trainer
-
 a basic pokemon trainer app that can add trainer, add pokemon, add league, and join as participants in a league.
+
+## Project Directory
+ - **common**: all of the common/global files.
+ - **configs**: all of the configs related like initiation of database, configuration of cache app(redis.)
+ - **domain**: all of the business domain related.
+ - **persistent**: all of the persistent 3rd pt library is here, like database related, 3rd party API, etc...
+ - **controllers**: here where the business usecases are most likely use.
+ - **routes**: here are all of the routes that needed to expose using the framework we use like express JS.
 
 ## Prerequisite
 - docker.
